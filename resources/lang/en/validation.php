@@ -133,6 +133,23 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        "email" => [
+            "required" => "* Por favor registrar el Correo del Comercio",
+            "max" => "* La cantidad de caracteres del Correo del Comercio no debe de ser mayor a 50",
+            "email" => "* El correo del Comercio no cumple con el formato standar: nombre@dominio.com"
+        ],
+        "email2" => [
+            "required" => "* Por favor registrar el Correo del Cliente",
+            "max" => "* La cantidad de caracteres del Correo del Cliente no debe de ser mayor a 50",
+            "email" => "* TuCorreo no cumple con el formato standar: nombre@dominio.com"
+        ],
+        "subject" => [
+            "required" => "* Por favor registrar el monto",
+            "numeric" => "* El monto ingresado no es numérico"
+        ],
+        "content" => [
+            "required" => "* Por favor registrar la descripción del Producto o Servicio"
+        ]
     ],
 
     /*
