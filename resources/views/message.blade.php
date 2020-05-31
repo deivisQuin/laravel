@@ -103,8 +103,8 @@
           },
           success:function(response){
             console.log(response);
-			/*$(window).attr('location','http://localhost/laravelPrueba/public/gracias');*/
-			$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
+			/*$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');*/
+			$(window).attr('location','https://comparadordeventas.com/pagolibre/public/gracias');
           },
 
           error: function(response) {
