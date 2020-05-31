@@ -20,3 +20,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//Pago libre:
+Route::get("ajaxRequest", "AjaxController@create");
+
+Route::post("ajaxRequest", "MessageReceivedController@sendMail");
+
+Route::post("envioCorreoComercio", "MessageReceivedController@enviarCorreoComercio");
+
+Route::post("envioCorreoCliente", "MessageReceivedController@enviarCorreoCliente");
+
+Route::get("gracias", "AjaxController@index");
+
+//cambiamos la linea
