@@ -103,7 +103,8 @@
           },
           success:function(response){
             console.log(response);
-            $(window).attr('location','http://localhost/laravelPrueba/public/gracias');
+			/*$(window).attr('location','http://localhost/laravelPrueba/public/gracias');*/
+			$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
           },
 
           error: function(response) {
