@@ -53,8 +53,7 @@ class MessageReceivedController extends Controller
             $request->input("enviarCorreoTipo"),
             $request->input("_token"),
             "",
-            "",
-    	);
+            "");
 
     	Mail::to($request->input("email"))
     			->cc($request->input("email2"))
