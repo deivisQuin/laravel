@@ -15,9 +15,13 @@
 			$tipoComercioCliente = 2;	
 		}
 	?>
-
-	<a href='http://localhost/laravelPrueba/public/nuevoEstado/{{$transaccionId}}/{{$transaccionComercioClientePasswordLink}}/{{$tipoComercioCliente}}'><strong>Dar Click en la siguiente Página</strong></a>
+<!--  Para Produccion  -->
+	<a href='https://comparadordeventas.com/pagolibre/public/nuevoEstado/{{$transaccionId}}/{{$transaccionComercioClientePasswordLink}}/{{$tipoComercioCliente}}'><strong>Dar Click en la siguiente Página</strong></a>
 	
+
+<!-- Entorno Local 
+	<a href='http://localhost/laravelPrueba/public/nuevoEstado/{{$transaccionId}}/{{$transaccionComercioClientePasswordLink}}/{{$tipoComercioCliente}}'><	strong>Dar Click en la siguiente Página</strong></a>
+-->
 	<h2>Paso 2</h2> 
 	Utilizarás el siguiente password antes de hacer click en el botón {{ $enviarCorreoTipo == 2 ? " Entregado " : " Recibido " }}<br>
 	Password: <strong>{{ $transaccionComercioClientePassword }}</strong>
