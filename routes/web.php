@@ -34,6 +34,9 @@ Route::get("gracias", "AjaxController@index");
 
 //cambiamos la linea
 
-Route::post("/", function(){
-	return "holaaa";
-});
+//respuesta de comercio y cliente
+Route::get("nuevoEstado/{nuevoEstado}/{passwordLink}/{tipoTransaccion}", "TransaccionController@editarEstado");
+Route::post("nuevoEstado/{nuevoEstado}", "TransaccionController@modificarEstado");
+Route::get("nuevoEstado/{nuevoEstado}/gracias", "TransaccionController@gracias");
+
+//Fin a respuesta de comercio y cliente
