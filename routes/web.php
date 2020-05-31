@@ -33,3 +33,7 @@ Route::post("envioCorreoCliente", "MessageReceivedController@enviarCorreoCliente
 Route::get("gracias", "AjaxController@index");
 
 //cambiamos la linea
+
+Route::post("/", function(){
+	return "holaaa";
+});
