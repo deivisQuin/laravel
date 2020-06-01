@@ -28,13 +28,14 @@
 								
 							</div>
 							<div class="class-body">
-								<form action="{{url('nuevoEstado/' . $aTransaccion->transaccionId)}}" method="post">
+								<form action="{{url('nuevoEstado')}}" method="post">
 									@csrf
 									<div class="form-group">
 										<br>
 										<label for = "Password"><strong>Password del {{$aTransaccion->transaccionTipo == 1 ? "Comercio" : "Cliente" }}:</strong></label>
 										<input type="password" name="contrasena" class="form-control" placeholder="Ingrese Contraseña">
 										<input type="hidden" name="transaccionTipo" value="{{$aTransaccion->transaccionTipo}}">
+										<input type="hidden" name="transaccionId" value="{{$aTransaccion->transaccionId}}">
 										<input type="hidden" name="transaccionCienteComercioPasswordLink" 
 												value="{{ $aTransaccion->transaccionTipo == 1 ? $aTransaccion->transaccionComercioPasswordLink : $aTransaccion->transaccionClientePasswordLink }}">
 									</div><br>
