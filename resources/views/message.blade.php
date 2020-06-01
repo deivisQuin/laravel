@@ -59,19 +59,19 @@
      
   
 </div>
-<!--<script src="https://checkout.culqi.com/js/v3"></script>-->
+<script src="https://checkout.culqi.com/js/v3"></script>
 <script src="../resources/js/jquery/jquery-3.0.0.min.js"></script>
 
 <script type="text/javascript">
-/*
+
     Culqi.publicKey = 'pk_test_4838227e3d8eadce';
 
 	var producto = "";
 	var precio = "";
 	var monto = "";
-*/
+
   	$("#enviarId").on("click", function(event){
-/*
+
         monto = $('#subjectId').val();
         precio = monto * 100;
         producto = $('#contentId').val();
@@ -85,10 +85,10 @@
 		});
 
 	    // Abre el formulario con la configuración en Culqi.settings
-	    Culqi.open();*/
+	    Culqi.open();
 	    event.preventDefault();
 
-
+/*
 	    email = $('#emailId').val();
         email2 = $('#email2Id').val();
         subject = $('#subjectId').val();
@@ -122,11 +122,11 @@
            }
 
          });
-		
+		*/
      
     });
 
-/*
+
     function culqi() {
 		if (Culqi.token) { // ¡Objeto Token creado exitosamente!
 			var token = Culqi.token.id;
@@ -168,12 +168,15 @@
 		            enviarCorreoTipo:"1",
 		          },
 		          success:function(response){
-		            console.log(response);
-		            $(window).attr('location','http://localhost/laravelPrueba/public/gracias');
+		            if (document.domain == "localhost") {
+						$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
+					} else {
+						$(window).attr('location','https://comparadordeventas.com/pagolibre/public/gracias');
+					}
 		          },
 
 		          error: function(response) {
-		              $('#nameError').text(response.responseJSON.errors.name);
+		              //$('#nameError').text(response.responseJSON.errors.name);
 		              $('#emailError').text(response.responseJSON.errors.email);
 		              $('#mobileNumberError').text(response.responseJSON.errors.mobile_number);
 		              $('#aboutError').text(response.responseJSON.errors.about);
@@ -187,7 +190,7 @@
 			alert(Culqi.error.user_message);
 		}
 	};
-*/
+
 
 </script>
 

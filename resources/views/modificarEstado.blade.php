@@ -28,12 +28,11 @@
 								
 							</div>
 							<div class="class-body">
-								@if ($_SERVER['SERVER_NAME'] == "localhost")
-									<form action="{{url('nuevoEstado')}}" method="post">
-								@else
-									<form action="https://comparadordeventas.com/pagolibre/public/nuevoEstado" method="post">
-								@endif
-								
+							@if ($_SERVER['SERVER_NAME'] == "localhost")
+								<form action="{{url('nuevoEstado')}}" method="post">
+							@else
+								<form action="https://comparadordeventas.com/pagolibre/public/nuevoEstado" method="post">
+							@endif
 									@csrf
 									<div class="form-group">
 										<br>

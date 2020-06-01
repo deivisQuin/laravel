@@ -36,7 +36,6 @@ Route::get("gracias", "AjaxController@index");
 
 //respuesta de comercio y cliente
 Route::get("nuevoEstado/{transaccionId}/{passwordLink}/{transaccionTipo}", "TransaccionController@editarEstado");
-//Route::post("nuevoEstado/{transaccionId}", "TransaccionController@modificarEstado");
 Route::post("nuevoEstado", "TransaccionController@modificarEstado");
 Route::get("nuevoEstado/{transaccionId}/gracias", "TransaccionController@gracias");
 
