@@ -47,10 +47,6 @@
 		<div class="container">
 			@if($aTransaccion->transaccionComercioEstado == 2 && $aTransaccion->transaccionClienteEstado == 2)
 				<h2><strong>Felicidades transaccion concluida con éxito.</strong></h2>
-				{{$_SERVER['SERVER_NAME']}}
-				{{$_SERVER['SERVER_PORT']}}
-				{{$_SERVER['PHP_SELF']}}
-				{{url()}}
 			@endif
 		</div>
 	</div>
