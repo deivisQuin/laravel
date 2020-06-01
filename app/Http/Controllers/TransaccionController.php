@@ -124,7 +124,7 @@ class TransaccionController extends Controller
         $password = $request->input("contrasena");
         $transaccionTipo = $request->input("transaccionTipo");
         $transaccionCienteComercioPasswordLink = $request->input("transaccionCienteComercioPasswordLink");
-
+dd($password);
         //Se obtiene los datos de la transaccion
         if ($transaccionTipo == 1) {
             $aTransaccion = Transaccion::where([["transaccionId", "=", $transaccionId],["transaccionComercioPasswordLink", "=", $transaccionCienteComercioPasswordLink], ["transaccionComercioPassword", "=", $password]])->first();
