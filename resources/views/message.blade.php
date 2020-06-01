@@ -143,12 +143,14 @@
 							email:email
 						};
 			
-			//var url = "proceso.php";
-			var url = "/laravelPrueba/public/culqui/proceso.php";
+			var url = "";
+			if (document.domain == "localhost") {
+				url = "/laravelPrueba/public/culqui/proceso.php";
+			} else {
+				url = "/pagolibre/public/culqui/proceso.php";
+			}
 
 			$.post(url, data, function(resp){
-				//alert(resp);
-
 				email = $('#emailId').val();
 		        email2 = $('#email2Id').val();
 		        //monto = $('#subjectId').val();
