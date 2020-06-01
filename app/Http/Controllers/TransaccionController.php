@@ -120,11 +120,11 @@ class TransaccionController extends Controller
         return "usted no tiene acceso a la página";
     }
 
-    public function modificarEstado(Request $request, $transaccionId){
+    public function modificarEstado(Request $request, $transaccionId){dd($transaccionId);
         $password = $request->input("contrasena");
         $transaccionTipo = $request->input("transaccionTipo");
         $transaccionCienteComercioPasswordLink = $request->input("transaccionCienteComercioPasswordLink");
-dd($password);
+
         //Se obtiene los datos de la transaccion
         if ($transaccionTipo == 1) {
             $aTransaccion = Transaccion::where([["transaccionId", "=", $transaccionId],["transaccionComercioPasswordLink", "=", $transaccionCienteComercioPasswordLink], ["transaccionComercioPassword", "=", $password]])->first();
