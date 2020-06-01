@@ -28,7 +28,7 @@
 								
 							</div>
 							<div class="class-body">
-								<form action="{{url('nuevoEstado')}}" method="post">
+								<form action="nuevoEstado" method="post">
 									@csrf
 									<div class="form-group">
 										<br>
