@@ -2,9 +2,14 @@
 <head>
     <title>Pago Libre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <link rel="stylesheet" href="../public/estilo/bootstrap4/bootstrap.min.css">
-    <link rel="stylesheet" href="../public/estilo/css/all.min.css">
+
+	@if ($_SERVER['SERVER_NAME'] == "localhost")
+		<link rel="stylesheet" href="{{url('estilo/bootstrap4/bootstrap.min.css')}}">
+		<link rel="stylesheet" href="{{url('estilo/css/all.min.css')}}">
+	@else
+		<link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.css">
+		<link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/estilo/css/all.min.css">
+	@endif
     <style>
       .alert-message {
         color: red;
@@ -102,13 +107,14 @@
             enviarCorreoTipo:"1",
           },
           success:function(response){
-            console.log(response);
-			/*$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');*/
-			$(window).attr('location','https://comparadordeventas.com/pagolibre/public/gracias');
+            if (document.domain == "localhost") {
+				$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
+			} else {
+				$(window).attr('location','https://comparadordeventas.com/pagolibre/public/gracias');
+			}
           },
 
           error: function(response) {
-              //$('#nameError').text(response.responseJSON.errors.name);
               $('#emailError').text(response.responseJSON.errors.email);
               $('#email2Error').text(response.responseJSON.errors.email2);
               $('#subjectError').text(response.responseJSON.errors.subject);

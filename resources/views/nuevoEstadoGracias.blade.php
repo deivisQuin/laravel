@@ -2,14 +2,6 @@
 <head>
     <title>Pago Libre</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- en local
-    <link rel="stylesheet" href="{{url('estilo/bootstrap4/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{url('estilo/css/all.min.css')}}">-->
-
-    <!-- En produccion 
-    <link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.css">
-    <link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/estilo/css/all.min.css">
-    -->
 
 	@if ($_SERVER['SERVER_NAME'] == "localhost")
 		<link rel="stylesheet" href="{{url('estilo/bootstrap4/bootstrap.min.css')}}">
