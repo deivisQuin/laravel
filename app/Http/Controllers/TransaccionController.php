@@ -57,7 +57,7 @@ class TransaccionController extends Controller
                 $update = DB::update("update transaccion set transaccionClienteEstado = 2 where transaccionId  = ?", [$transaccionId]);
             }
     
-            return redirect("nuevoEstado/$transaccionId/gracias");
+            return redirect("nuevoEstado/$transaccionId/graciasCambioEstado");
 
         } else {
             return "Los datos ingresados no son los correctos";
@@ -69,7 +69,7 @@ class TransaccionController extends Controller
         $aTransaccion = Transaccion::findOrFail($transaccionId);
         return view("nuevoEstadoGracias", compact("aTransaccion")); 
     }
-    
+
     public function tarjetaNoProcede(){
         return view("tarjetaNoProcede");   
     }
