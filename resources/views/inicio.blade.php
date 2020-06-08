@@ -297,12 +297,12 @@
 		    console.log( "La solicitud a fallado: " +  textStatus);
          	$('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
          	$('#modal').modal('hide');
-
+/*
          	if (document.domain == "localhost") {
 				$(window).attr('location','http://localhost/laravelPrueba/public/tarjetaNoProcede');
 			} else {
 				$(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede');
-			}
+			}*/
 		});
     }
 
