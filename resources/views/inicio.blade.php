@@ -3,8 +3,13 @@
     <title>Pago Libre</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{url('estilo/bootstrap4/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{url('estilo/css/all.min.css')}}">
+    @if ($_SERVER['SERVER_NAME'] == "localhost")
+		<link rel="stylesheet" href="{{url('estilo/bootstrap4/bootstrap.min.css')}}">
+		<link rel="stylesheet" href="{{url('estilo/css/all.min.css')}}">
+	@else
+		<link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.css">
+		<link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/estilo/css/all.min.css">
+	@endif
 
     <style>
       .alert-message {
@@ -71,6 +76,15 @@
 <script src="https://checkout.culqi.com/js/v3"></script>
 <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
 <script src="{{url('estilo/bootstrap4/bootstrap.min.js')}}"></script>
+
+@if ($_SERVER['SERVER_NAME'] == "localhost")
+    <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
+    <script src="{{url('estilo/bootstrap4/bootstrap.min.js')}}"></script>
+@else
+<script src="https://comparadordeventas.com/pagolibre/public/js/jquery/jquery-3.0.0.min.js"></script>
+<script src="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.js"></script>
+@endif
+
 
 <script type="text/javascript">
 
