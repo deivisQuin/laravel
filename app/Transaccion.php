@@ -8,7 +8,7 @@ class Transaccion extends Model
 {
 	protected $table = "transaccion";
     protected $primaryKey = "transaccionId";
-    protected $fillable = ["transaccionComercioCorreo", "transaccionComercioPassword", "transaccionComercioPasswordLink", "transaccionClienteCorreo", "transaccionClientePassword", "transaccionClientePasswordLink", "transaccionMonto", "transaccionDescripcion", "transaccionEstado", "transaccionUsuarioCrea", "transaccionFechaCrea", "transaccionComercioEstado", "transaccionComercioFechaModifica", "transaccionClienteEstado", "transaccionClienteFechaModifica"];
+    protected $fillable = ["transaccionComercioCorreo", "transaccionComercioPassword", "transaccionComercioPasswordLink", "transaccionComercioEstado", "transaccionComercioFechaModifica", "transaccionClienteCorreo", "transaccionClientePassword", "transaccionClientePasswordLink", "transaccionClienteEstado", "transaccionClienteFechaModifica", "transaccionMonto", "transaccionDescripcion", "transaccionEstadoId", "transaccionUsuarioCrea", "transaccionFechaCrea", "transaccionPasarelaPedidoId", "transaccionPasarelaToken", "transaccionPasarelaMonedaCodigo", "transaccionPasarelaBancoNombre", "transaccionPasarelaBancoPaisNombre", "transaccionPasarelaBancoPaisCodigo", "transaccionPasarelaTarjetaMarca", "transaccionPasarelaTarjetaTipo", "transaccionPasarelaTarjetaCategoria", "transaccionPasarelaTarjetaNumero", "transaccionPasarelaDispositivoIp", "transaccionPasarelaCodigoAutorizacion", "transaccionPasarelaCodigoReferencia", "transaccionPasarelaCodigoRespuesta", "transaccionPasarelaComision", "transaccionPasarelaIgv", "transaccionPasarelaMontoDepositar", "empresaId"];
     
     public $timestamps = false;
 }

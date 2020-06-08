@@ -22,21 +22,17 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Pago libre:
-Route::get("ajaxRequest", "AjaxController@create");
 
-Route::post("ajaxRequest", "MessageReceivedController@sendMail");
 
-Route::post("envioCorreoComercio", "MessageReceivedController@enviarCorreoComercio");
+//Problemas con la terjeta
+Route::get("tarjetaNoProcede", "TransaccionController@tarjetaNoProcede");
 
-Route::post("envioCorreoCliente", "MessageReceivedController@enviarCorreoCliente");
+//Otro inicio con el RUC
+Route::get("empresa/{empresaRuc}", "EmpresaController@obtenerRuc");
+Route::post("empresa/transaccion", "CorreoController@sendMail");
 
-Route::get("gracias", "AjaxController@index");
+//Se valida datos del formulairio
+Route::post("empresa/validarFormulario", "EmpresaController@validarFormulario");
 
-//cambiamos la linea
-
-//respuesta de comercio y cliente
-Route::get("nuevoEstado/{transaccionId}/{passwordLink}/{transaccionTipo}", "TransaccionController@editarEstado");
-Route::post("nuevoEstado", "TransaccionController@modificarEstado");
-Route::get("nuevoEstado/{transaccionId}/gracias", "TransaccionController@gracias");
-
-//Fin a respuesta de comercio y cliente
+//Se concluye gtransacción
+Route::get("gracias", "TransaccionController@gracias");
