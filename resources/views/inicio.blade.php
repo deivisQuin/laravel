@@ -244,7 +244,7 @@
 			//url = "http://localhost/laravelPrueba/public/culqi/proceso.php";
             url = "http://localhost/pagolibre/laravel/public/culqi/proceso.php";
 		} else {
-			url = "/pagolibre/public/culqui/proceso.php";
+			url = "/pagolibre/public/culqi/proceso.php";
 		}
 
 		$.ajax({
