@@ -26,11 +26,12 @@ class TransaccionController extends Controller
         return "usted no tiene acceso a la página";
     }
 
-    public function modificarEstado(Request $request, $transaccionId){
+    public function modificarEstado(Request $request){
 
         $password = $request->input("contrasena");
         $transaccionTipo = $request->input("transaccionTipo");
         $transaccionCienteComercioPasswordLink = $request->input("transaccionCienteComercioPasswordLink");
+        $transaccionId = $request->input("transaccionId");
 
         //Se obtiene los datos de la transaccion
         if ($transaccionTipo == 1) {
