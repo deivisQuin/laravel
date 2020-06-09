@@ -74,7 +74,7 @@
 	</div>
 </div>
 
-<script src="https://checkout.culqi.com/js/v3"></script>
+<!--<script src="https://checkout.culqi.com/js/v3"></script>-->
 
 @if ($_SERVER['SERVER_NAME'] == "localhost")
     <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
@@ -87,7 +87,7 @@
 
 <script type="text/javascript">
 
-    Culqi.publicKey = 'pk_test_4838227e3d8eadce';
+    //Culqi.publicKey = 'pk_test_4838227e3d8eadce';
 
 	var producto = "";
 	var precio = "";
@@ -104,7 +104,7 @@
         if (monto && producto) {
         	//Validamos datos desde el servidor
         	validarDatos(monto, producto, empresaEmail, empresaRuc);
-
+/*
         	Culqi.options({
 			    lang: 'auto',
 			    modal: true,
@@ -128,7 +128,7 @@
 		    // Abre el formulario con la configuración en Culqi.settings
 		    Culqi.open();
 		    event.preventDefault();
-			/*
+			*/
 		    $token = "ggtbfrjjbhgrffr"; //Este valor lo obtenemos desde el modal de culqi desde: culqi.token
 		    clienteEmail = "deivis.quin@hotmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
 			transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
@@ -151,7 +151,7 @@
 
 		    registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);
 		    event.preventDefault();
-*/
+
         } else {
 	  		//Validar campos por parte del front
 			console.log("Datos ingresados incorrecto desde el front");
@@ -234,7 +234,7 @@
 			data: data,
 			success:function(response){
 				console.log("se hizo el registro");
-				$('#modal').modal('hide');
+				//$('#modal').modal('hide');
 				if (document.domain == "localhost") {
 					$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
 				} else {

@@ -19,7 +19,7 @@
 -->
 				Para terminar el proceso de compra le hemos enviado dos correos:<br>
 				<strong>1.- Detalle del Pedido</strong><br>
-				<strong>2.- Confirmación de la Entrega o Recepción del Pedido</strong><br><br>
+				<strong>2.- Confirmar el recibimiento del Pedido</strong><br><br>
 				Que tenga un buen día. 				
 			</div>
 		</div>
