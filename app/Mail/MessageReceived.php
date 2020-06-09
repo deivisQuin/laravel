@@ -43,13 +43,16 @@ class MessageReceived extends Mailable
     public function build()
     {
         if ($this->enviarCorreoTipo === "1") {
-            $this->view('emails.message-received')->subject("Pago Libre - Anuncio de Compra");
+            //$this->view('emails.message-received')->subject("Pago Libre - Anuncio de Compra");
+            $this->view('emails.mensajeAnuncio')->subject("Pago Libre - Detalle del Pedido");
         }
         if ($this->enviarCorreoTipo === "2") {
-            $this->view('emails.message-comercio')->subject("Pago Libre - Link del Cambio de estado de Comercio");
+            //$this->view('emails.message-comercio')->subject("Pago Libre - Link del Cambio de estado de Comercio");
+            $this->view('emails.mensajeConfirmacion')->subject("Pago Libre - Confirmaci&oacute;n del Pedido");
         }
         if ($this->enviarCorreoTipo === "3") {
-            $this->view('emails.message-comercio')->subject("Pago Libre - Link del Cambio de estado de Cliente");
+            //$this->view('emails.message-comercio')->subject("Pago Libre - Link del Cambio de estado de Cliente");
+            $this->view('emails.mensajeConfirmacion')->subject("Pago Libre - Confirmaci&oacute;n de la Entrega del Pedido");
         }
     }
 }

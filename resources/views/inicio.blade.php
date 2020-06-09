@@ -128,11 +128,9 @@
 		    // Abre el formulario con la configuración en Culqi.settings
 		    Culqi.open();
 		    event.preventDefault();
-		/*			    
+			/*
 		    $token = "ggtbfrjjbhgrffr"; //Este valor lo obtenemos desde el modal de culqi desde: culqi.token
 		    clienteEmail = "deivis.quin@hotmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
-		    //enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteEmail);
-
 			transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
 			transaccionPasarelaToken = "tkn_test_yla14jhxmnJnDBGE";
 			transaccionPasarelaMonedaCodigo = "PEN";
@@ -235,7 +233,8 @@
 			type: "POST",
 			data: data,
 			success:function(response){
-				console.log("se hizo el regisyto");
+				console.log("se hizo el registro");
+				//$('#modal').modal('hide');
 				if (document.domain == "localhost") {
 					$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
 				} else {
@@ -307,8 +306,8 @@
 
 			    registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);
 
-		         $('#contenedor_de_cargador').fadeIn(1000).html("Se realizó con éxito la transferencia");
-		         $('#modal').modal('hide');
+		        $('#contenedor_de_cargador').fadeIn(1000).html("Se realizó con éxito la transferencia");
+		        //$('#modal').modal('hide');
 
 		 	} else {
 		 		console.log( "No se realizó la transacción." );
