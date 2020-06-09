@@ -234,7 +234,7 @@
 			data: data,
 			success:function(response){
 				console.log("se hizo el registro");
-				//$('#modal').modal('hide');
+				$('#modal').modal('hide');
 				if (document.domain == "localhost") {
 					$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
 				} else {
