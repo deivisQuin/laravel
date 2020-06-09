@@ -24,7 +24,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 //Pago libre:
 Route::get("nuevoEstado/{transaccionId}/{passwordLink}/{transaccionTipo}", "TransaccionController@editarEstado");
 Route::post("nuevoEstado", "TransaccionController@modificarEstado");
-Route::get("nuevoEstado/{transaccionId}/graciasCambioEstado", "TransaccionController@graciasCambioEstado");
+
+Route::get("gracias/graciasCambioEstado/{transaccionId}/{transaccionTipo}", "TransaccionController@graciasCambioEstado");
 
 //Problemas con la terjeta
 Route::get("tarjetaNoProcede", "TransaccionController@tarjetaNoProcede");

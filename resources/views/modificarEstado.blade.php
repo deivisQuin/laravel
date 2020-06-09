@@ -27,7 +27,14 @@
 							
 								<h4>{{$aTransaccion->transaccionTipo == 1 ? "Comercio" : "Cliente" }}</h4>
 								
-								@if($aTransaccion->transaccionTipo == 2) <br><strong>(Antes de Cambiar el estado a "Recibido" el comercio deberá de haberte entregado el producto y/o servicio)</strong>
+								@if($aTransaccion->transaccionTipo == 2) 
+									@if($aTransaccion->transaccionComercioEstado == 2)
+									<br><strong>(El Comercio indica que ya le entregó el producto y/o Servicio, por lo tanto 
+											ya puede registrar su contraseña e informar que ya recibió su pedido)</strong>
+										@else
+										<br><strong>(Antes de registrar su Contraseña y Cambiar el estado a "Producto Recibido" el comercio deberá de haberle 
+													entregado el producto y/o servicio)</strong>
+									@endif
 								@endif
 								
 							</div>
@@ -48,8 +55,13 @@
 												value="{{ $aTransaccion->transaccionTipo == 1 ? $aTransaccion->transaccionComercioPasswordLink : $aTransaccion->transaccionClientePasswordLink }}">
 									</div><br>
 									<div class="form-group">
-										<div class="text-center">	
-											<button type="submit" disabled {{ ($aTransaccion->transaccionTipo == 2 && $aTransaccion->transaccionComercioEstado == 1) ? "disabled" : ""}} class="btn btn-primary" onclick="return confirm('¿Seguro que desea modificar de estado?');" id = "botonId">{{$aTransaccion->transaccionTipo == 1 ? "Entregado" : "Recibido" }}</button>
+										<div class="text-center">
+											@if($aTransaccion->transaccionTipo == 2 && $aTransaccion->transaccionComercioEstado == 1)
+												@else
+													<button type="submit" disabled class="btn btn-primary" onclick="return confirm('¿Seguro que desea modificar de estado?');" 
+														id = "botonId">{{$aTransaccion->transaccionTipo == 1 ? "Producto Entregado" : "Producto Recibido" }}</button>
+											@endif
+											<!--<button type="submit" disabled {{ ($aTransaccion->transaccionTipo == 2 && $aTransaccion->transaccionComercioEstado == 1) ? "disabled" : ""}} class="btn btn-primary" onclick="return confirm('¿Seguro que desea modificar de estado?');" id = "botonId">{{$aTransaccion->transaccionTipo == 1 ? "Entregado" : "Recibido" }}</button>-->
 										</div>
 									</div>
 								</form>

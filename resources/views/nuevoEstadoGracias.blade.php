@@ -45,9 +45,22 @@
 		</div>
 		<br>
 		<div class="container">
-			@if($aTransaccion->transaccionComercioEstado == 2 && $aTransaccion->transaccionClienteEstado == 2)
-				<h2><strong>Felicidades transaccion concluida con éxito.</strong></h2>
-			@endif
+			<div class="card">
+				<div class="card-body" style="color:green">
+					@if($aTransaccion->transaccionComercioEstado == 2 && $aTransaccion->transaccionClienteEstado == 2)
+						<h2><strong>Felicidades transacción concluida con éxito.</strong></h2>
+						@else
+							<h3><strong>Aun no se concluye la transacción...</strong><br>
+							Para culminar faltaría que:</h3>
+							@if($aTransaccion->transaccionTipo == 1 && $aTransaccion->transaccionClienteEstado == 1)
+								<h3>El Cliente registre en el sistema que ya Recibió el producto y/o Servicio</h3>
+							@endif
+							@if($aTransaccion->transaccionTipo == 2 && $aTransaccion->transaccionComercioEstado == 1)
+								<h3>El Comercio registre en el sistema que ya entregó el producto y/o servicio.</h3>
+							@endif
+					@endif
+				</div>
+			</div>
 		</div>
 	</div>
 </body>

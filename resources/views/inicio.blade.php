@@ -74,7 +74,7 @@
 	</div>
 </div>
 
-<script src="https://checkout.culqi.com/js/v3"></script>
+<!--<script src="https://checkout.culqi.com/js/v3"></script>-->
 
 @if ($_SERVER['SERVER_NAME'] == "localhost")
     <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
@@ -87,7 +87,7 @@
 
 <script type="text/javascript">
 
-    Culqi.publicKey = 'pk_test_4838227e3d8eadce';
+    //Culqi.publicKey = 'pk_test_4838227e3d8eadce';
 
 	var producto = "";
 	var precio = "";
@@ -104,7 +104,7 @@
         if (monto && producto) {
         	//Validamos datos desde el servidor
         	validarDatos(monto, producto, empresaEmail, empresaRuc);
-
+/*
         	Culqi.options({
 			    lang: 'auto',
 			    modal: true,
@@ -118,7 +118,6 @@
 			    }
 			});
 			  
-
 			Culqi.settings({
 				title: producto,
 				currency: 'PEN',
@@ -128,6 +127,31 @@
 
 		    // Abre el formulario con la configuración en Culqi.settings
 		    Culqi.open();
+		    event.preventDefault();*/
+					    
+		    $token = "ggtbfrjjbhgrffr"; //Este valor lo obtenemos desde el modal de culqi desde: culqi.token
+		    clienteEmail = "deivis.quin@hotmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
+		    //enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteEmail);
+
+			transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
+			transaccionPasarelaToken = "tkn_test_yla14jhxmnJnDBGE";
+			transaccionPasarelaMonedaCodigo = "PEN";
+			transaccionPasarelaBancoNombre = "BBVA";
+			transaccionPasarelaBancoPaisNombre = "PERU";
+			transaccionPasarelaBancoPaisCodigo = "PE";
+			transaccionPasarelaTarjetaMarca = "Visa";
+			transaccionPasarelaTarjetaTipo = "crédito";
+			transaccionPasarelaTarjetaCategoria = "clásica";
+			transaccionPasarelaTarjetaNumero = "411111******1111";
+			transaccionPasarelaDispositivoIp = "181.176.97.94";
+			transaccionPasarelaCodigoAutorizacion = "u9TJeX";
+			transaccionPasarelaCodigoReferencia = "M2oW0m5O8p";
+			transaccionPasarelaCodigoRespuesta = "venta_exitosa";
+			transaccionPasarelaComision = "0.042";
+			transaccionPasarelaIgv = "4536";
+			transaccionPasarelaMontoDepositar = "570264";
+
+		    registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);
 		    event.preventDefault();
 
         } else {
@@ -214,7 +238,6 @@
 				console.log("se hizo el regisyto");
 				if (document.domain == "localhost") {
 					$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
-					//$(window).attr('location','http://localhost/laravelPrueba/public/gracias');
 				} else {
 					$(window).attr('location','https://comparadordeventas.com/pagolibre/public/gracias');
 				}
@@ -242,7 +265,6 @@
 		var url = "";
 
 		if (document.domain == "localhost") {
-			//url = "http://localhost/laravelPrueba/public/culqi/proceso.php";
             url = "http://localhost/pagolibre/laravel/public/culqi/proceso.php";
 		} else {
 			url = "/pagolibre/public/culqi/proceso.php";
@@ -300,7 +322,6 @@
          	$('#modal').modal('hide');
 
          	if (document.domain == "localhost") {
-				//$(window).attr('location','http://localhost/laravelPrueba/public/tarjetaNoProcede');
                 $(window).attr('location','http://localhost/pagolibre/laravel/public/tarjetaNoProcede');
 			} else {
 				$(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede');

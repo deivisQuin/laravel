@@ -80,12 +80,13 @@ class TransaccionController extends Controller
             return "No se ha modificado el estado del pedido";
         }
 
-        return redirect("nuevoEstado/$transaccionId/gracias");
+        return redirect("gracias/graciasCambioEstado/$transaccionId/$transaccionTipo");
     }
 
-    public function graciasCambioEstado($transaccionId){
+    public function graciasCambioEstado($transaccionId, $transaccionTipo){
         //Obtenemos los estados del pedido
         $aTransaccion = Transaccion::findOrFail($transaccionId);
+        $aTransaccion->transaccionTipo = $transaccionTipo;
         return view("nuevoEstadoGracias", compact("aTransaccion")); 
     }
 
