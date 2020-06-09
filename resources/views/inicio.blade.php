@@ -26,12 +26,13 @@
 		</div>
 		<div class="class-body">
 
-			<div id="modal" class="modal fade" role="dialog">
+			<div id="modal" class="modal fade border border-success" role="dialog" data-keyboard="false" data-backdrop="static">
 			  <div class="modal-dialog">
 			    <!-- Contenido del modal -->
 			    <div class="modal-content" align="center">
 			      <div class="loading"><img src="{{url('imagen/cargador_nuevo_sol.gif')}}" alt="loading" width="200" height="200"/><br/>
-			      		Un momento, por favor, estamos procesando su pago...</div>
+				  	<h4 style="color: green"><strong>Un momento por favor, estamos procesando su pago...</strong></h4>
+				  </div>
 			    </div>
 			  </div>
 			</div>
@@ -110,10 +111,10 @@
 			    installments: false,
 			    customButton: 'Pagar',
 			    style: {
-			      maincolor: 'red',
-			      buttontext: 'blue',
-			      maintext: 'yellow',
-			      desctext: 'purple'
+					maincolor: 'green',
+			      	buttontext: 'white',
+			      	maintext: 'green',
+			      	desctext: 'purple'
 			    }
 			});
 			  

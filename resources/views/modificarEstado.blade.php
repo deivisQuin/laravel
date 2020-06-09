@@ -13,8 +13,12 @@
 </head>
 <body>
 	@if(isset($aTransaccion))
+		{{$mostrarMensajeComercio = false}}
+		{{$mostrarMensajeCliente = false}}
 		@if($aTransaccion->transaccionTipo == 1 && $aTransaccion->transaccionComercioEstado == 2)
+			<?php $mostrarMensajeComercio = true; ?>
 			@elseif($aTransaccion->transaccionTipo == 2 && $aTransaccion->transaccionClienteEstado == 2)
+				<?php $mostrarMensajeCliente = true; ?>
 				@else
 					<div class="container panel panel-default">
 						<div class="card">
@@ -37,7 +41,7 @@
 									<div class="form-group">
 										<br>
 										<label for = "Password"><strong>Password del {{$aTransaccion->transaccionTipo == 1 ? "Comercio" : "Cliente" }}:</strong></label>
-										<input type="password" name="contrasena" class="form-control" placeholder="Ingrese Contraseña">
+										<input type="password" name="contrasena" id="contrasenaId" class="form-control" placeholder="Ingrese Contraseña">
 										<input type="hidden" name="transaccionTipo" value="{{$aTransaccion->transaccionTipo}}">
 										<input type="hidden" name="transaccionId" value="{{$aTransaccion->transaccionId}}">
 										<input type="hidden" name="transaccionCienteComercioPasswordLink" 
@@ -45,7 +49,7 @@
 									</div><br>
 									<div class="form-group">
 										<div class="text-center">	
-											<button type="submit" {{ ($aTransaccion->transaccionTipo == 2 && $aTransaccion->transaccionComercioEstado == 1) ? "disabled" : ""}} class="btn btn-primary" onclick="return confirm('¿Seguro que desea modificar de estado?');" id = "botonId">{{$aTransaccion->transaccionTipo == 1 ? "Entregado" : "Recibido" }}</button>
+											<button type="submit" disabled {{ ($aTransaccion->transaccionTipo == 2 && $aTransaccion->transaccionComercioEstado == 1) ? "disabled" : ""}} class="btn btn-primary" onclick="return confirm('¿Seguro que desea modificar de estado?');" id = "botonId">{{$aTransaccion->transaccionTipo == 1 ? "Entregado" : "Recibido" }}</button>
 										</div>
 									</div>
 								</form>
@@ -85,5 +89,32 @@
 			@endif
 		</div>
 	</div>
+	<br>
+	@if($mostrarMensajeComercio || $mostrarMensajeCliente)
+	<div class="container">
+		<div class="card">
+			<div class="card-body" style="color:green">
+				<h3><strong>Aun no se concluye la transacción...</strong><br>
+				Para culminar faltaría que:</h3>
+				@if($aTransaccion->transaccionComercioEstado == 1)
+					<h3>El Comercio registre en el sistema que ya entregó el producto y/o servicio.</h3>
+					@else
+						<h3>El Cliente registre en el sistema que ya Recibió el producto y/o Servicio</h3>
+				@endif
+			</div>
+		</div>
+	</div>
+	@endif
+	<script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
+	<script type="text/javascript">
+		//validaciones desde el front
+		$("#contrasenaId").keyup(function(){
+			if ($(this).val().length > 0) {
+				$("#botonId").prop("disabled", false);
+			} else {
+				$("#botonId").prop("disabled", true);
+			}
+		})
+	</script>
 </body>
 </html>
