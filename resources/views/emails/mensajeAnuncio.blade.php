@@ -6,7 +6,7 @@
 <body>
 	<h2>Gracias por utilizar el servicio de Pago Libre.</h2>
 	Acabas de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
-	Por el servicio de: <h3>{{$content}}.</h3><br>
+	Por el producto y/o servicio de: <h3>{{$content}}.</h3><br>
 
 	Que disfrutes de tu nueva adquisición.<br>
 

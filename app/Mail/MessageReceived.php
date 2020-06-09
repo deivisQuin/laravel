@@ -44,7 +44,7 @@ class MessageReceived extends Mailable
     {
         if ($this->enviarCorreoTipo === "1") {
             //$this->view('emails.message-received')->subject("Pago Libre - Anuncio de Compra");
-            $this->view('emails.mensajeAnuncio')->subject("Pago Libre - Detalle del Pedido");
+            $this->view('emails.mensajeAnuncio')->subject("Pago Libre - Informe del Pedido");
         }
         if ($this->enviarCorreoTipo === "2") {
             //$this->view('emails.message-comercio')->subject("Pago Libre - Link del Cambio de estado de Comercio");
@@ -52,7 +52,7 @@ class MessageReceived extends Mailable
         }
         if ($this->enviarCorreoTipo === "3") {
             //$this->view('emails.message-comercio')->subject("Pago Libre - Link del Cambio de estado de Cliente");
-            $this->view('emails.mensajeConfirmacion')->subject("Pago Libre - Confirmar el recibimiento del Pedido");
+            $this->view('emails.mensajeConfirmacion')->subject("Pago Libre - Confirmar Recibimiento del Pedido");
         }
     }
 }

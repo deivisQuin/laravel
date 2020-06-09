@@ -10,17 +10,17 @@
 	<div class="container panel panel-default">
 		<div class="card">
 			<div class="card-header">
-				<h3>Muchas gracias por vuestra preferencia.</h3>
+				<h3>Muchas gracias por tu preferencia.</h3>
 			</div>
 			<div class="card-body">
 <!--				En estos momentos se le ha enviado 2 correos:<br>
 				<strong>1.-</strong> El primer correo tiene registrado el monto de la transación y la descripción del producto y/o servicio.<br>
 				<strong>2.-</strong> El segundo correo tiene la dirección web y su contraseña para informar la recepción del producto o Servicio.<br><br>
 -->
-				Para terminar el proceso de compra le hemos enviado dos correos:<br>
-				<strong>1.- Detalle del Pedido</strong><br>
-				<strong>2.- Confirmar el recibimiento del Pedido</strong><br><br>
-				Que tenga un buen día. 				
+				<strong style="color:green">Para terminar el proceso de tu compra</strong>, te hemos enviado dos correos:<br><br>
+				<strong>1.- Podrás ver la Información de tu Pedido</strong><br><br>
+				<strong>2.- Deberás Confirmar el recibimiento de tu Pedido</strong><br><br><br>
+				Que tengas un buen día. 				
 			</div>
 		</div>
 	</div>

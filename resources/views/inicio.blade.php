@@ -244,7 +244,6 @@
 			error: function(response) {
 				console.log("error");
 			}
-
 		});
     }
 
@@ -279,11 +278,10 @@
 
 
 		.done(function( data, textStatus, jqXHR ) {
-		 	console.log(data.outcome.type);
+		 	//console.log(data.outcome.type);
 		 	tipoVenta = data.outcome.type;
 		 	transaccionPasarelaPedidoId = data.id;
 		 	transaccionPasarelaToken = data.source.id;
-		 	//transaccionPasarelaToken = token;
 		 	transaccionPasarelaMonedaCodigo = data.currency_code;
 		 	transaccionPasarelaBancoNombre = data.source.iin.issuer.name;
 		 	transaccionPasarelaBancoPaisNombre = data.source.iin.issuer.country;
@@ -302,7 +300,7 @@
 
 		 	//$tipoVenta = "venta_exitosa";
 		 	if (tipoVenta == "venta_exitosa") {
-		 		console.log( "La solicitud se ha completado correctamente." );
+		 		//console.log( "La solicitud se ha completado correctamente." );
 
 			    registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);
 
