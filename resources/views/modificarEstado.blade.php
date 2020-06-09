@@ -58,10 +58,9 @@
 										<div class="text-center">
 											@if($aTransaccion->transaccionTipo == 2 && $aTransaccion->transaccionComercioEstado == 1)
 												@else
-													<button type="submit" disabled class="btn btn-primary" onclick="return confirm('¿Seguro que desea modificar de estado?');" 
+													<button type="submit" class="btn btn-primary" onclick="return confirm('¿Seguro que desea modificar de estado?');" 
 														id = "botonId">{{$aTransaccion->transaccionTipo == 1 ? "Producto Entregado" : "Producto Recibido" }}</button>
 											@endif
-											<!--<button type="submit" disabled {{ ($aTransaccion->transaccionTipo == 2 && $aTransaccion->transaccionComercioEstado == 1) ? "disabled" : ""}} class="btn btn-primary" onclick="return confirm('¿Seguro que desea modificar de estado?');" id = "botonId">{{$aTransaccion->transaccionTipo == 1 ? "Entregado" : "Recibido" }}</button>-->
 										</div>
 									</div>
 								</form>
@@ -126,13 +125,13 @@
 
 	<script type="text/javascript">
 		//validaciones desde el front
-		$("#contrasenaId").keyup(function(){
+		/*$("#contrasenaId").keyup(function(){
 			if ($(this).val().length > 0) {
 				$("#botonId").prop("disabled", false);
 			} else {
 				$("#botonId").prop("disabled", true);
 			}
-		})
+		})*/
 	</script>
 </body>
 </html>
