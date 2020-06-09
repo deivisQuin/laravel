@@ -105,7 +105,13 @@
 		</div>
 	</div>
 	@endif
-	<script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
+
+	@if ($_SERVER['SERVER_NAME'] == "localhost")
+		<script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
+	@else
+		<script src="https://comparadordeventas.com/pagolibre/public/js/jquery/jquery-3.0.0.min.js"></script>
+	@endif
+
 	<script type="text/javascript">
 		//validaciones desde el front
 		$("#contrasenaId").keyup(function(){
