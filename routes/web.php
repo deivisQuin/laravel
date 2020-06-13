@@ -27,15 +27,15 @@ Route::post("nuevoEstado", "TransaccionController@modificarEstado");
 
 Route::get("gracias/graciasCambioEstado/{transaccionId}/{transaccionTipo}", "TransaccionController@graciasCambioEstado");
 
-//Problemas con la terjeta
+//Problemas con la tarjeta
 Route::get("tarjetaNoProcede", "TransaccionController@tarjetaNoProcede");
 
 //Otro inicio con el RUC
 Route::get("empresa/{empresaRuc}", "EmpresaController@obtenerRuc");
 Route::post("empresa/transaccion", "CorreoController@sendMail");
 
-//Se valida datos del formulairio
+//Se valida datos del formulario
 Route::post("empresa/validarFormulario", "EmpresaController@validarFormulario");
 
-//Se concluye gtransacción
+//Se concluye transacción
 Route::get("gracias", "TransaccionController@gracias");

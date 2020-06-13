@@ -30,8 +30,13 @@
 			  <div class="modal-dialog">
 			    <!-- Contenido del modal -->
 			    <div class="modal-content" align="center">
-			      <div class="loading"><img src="{{url('imagen/cargador_nuevo_sol.gif')}}" alt="loading" width="200" height="200"/><br/>
-				  	<h4 style="color: green"><strong>Un momento por favor, estamos procesando su pago...</strong></h4>
+			      <div class="loading">
+				  	@if ($_SERVER['SERVER_NAME'] == "localhost")
+				  		<img src="{{url('imagen/cargador_nuevo_sol.gif')}}" alt="loading" width="200" height="200"/><br/>
+				  	@else
+					  <img src="https://comparadordeventas.com/pagolibre/public/imagen/cargador_nuevo_sol.gif" alt="loading" width="200" height="200"/><br/>
+					@endif
+					  <h4 style="color: green"><strong>Un momento por favor, estamos procesando su pago...</strong></h4>
 				  </div>
 			    </div>
 			  </div>
