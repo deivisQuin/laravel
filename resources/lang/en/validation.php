@@ -135,11 +135,14 @@ return [
         ],
         /*Se agregan las validaciones para la nueva plataforma de Pago Libre*/
         "monto" => [
-            "required" => "* Por favor registrar el monto",
-            "numeric" => "* El monto ingresado no es numérico"
+            "required" => "* Por favor registrar el valor del monto",
+            "numeric" => "* El valor del monto ingresado no es numérico",
+            "min" => "* El valor del monto no puede se menor a 5 Soles",
+            "max" => "* El valor del monto no puede ser mayor a 5000 Soles"
         ],
         "producto" => [
-            "required" => "* Por favor registrar la descripción del Producto o Servicio"
+            "required" => "* Por favor registrar la descripción del Producto o Servicio",
+            "between" => "* La cantidad de caracteres no pueden ser menor a 5 ni mayor a 250"
         ]
     ],
 

@@ -8,8 +8,6 @@ $SECRET_KEY = "sk_test_086297f9e4572b08";
 
 $culqi = new Culqi\Culqi(array('api_key' => $SECRET_KEY));
 
-
-
 $charge = $culqi->Charges->create(
     array(
       "amount" => $_POST["precio"],
@@ -20,12 +18,18 @@ $charge = $culqi->Charges->create(
       "email" => $_POST["email"],
       "installments" => 0,
       "antifraud_details" => array(
-          "address" => "Av. Lima 123",
+          /*"address" => "Av. Lima 123",
           "address_city" => "LIMA",
           "country_code" => "PE",
           "first_name" => "Will",
           "last_name" => "Muro",
-          "phone_number" => "9889678986",
+          "phone_number" => "9889678986",*/
+          "address" => "Jr. Pilar Lara 335",
+          "address_city" => "LIMA",
+          "country_code" => "PE",
+          "first_name" => "Guddaive",
+          "last_name" => "Quin",
+          "phone_number" => "993083387",
       ),
       "source_id" => $_POST["token"]
     )

@@ -95,18 +95,41 @@ class EmpresaController extends Controller
     }
 
     public function validarFormulario(Request $request){
-        //Se valida si el Ruc pertenece a la empresa
         $aEmpresa = Empresa::where([["empresaRuc", "=", $request->input("empresaRuc")]])->first();
 
+        if(!$aEmpresa){
+            return response()->json(["success" => false, "mensajeError"=>"Comercio no registrado en el Sistema"]);
+        }
+
         if($request->input("empresaEmail") != $aEmpresa->empresaEmail) {
-            return response()->json(["mensajeError"=>"El correo de la empresa no pertence al RUC registrado"]);
+            return response()->json(["success" => false, "mensajeError"=>"El correo de la empresa no pertence al RUC registrado"]);
         }
 
         $validaciones = $request->validate([
-            'monto' => 'required|numeric',
-            'producto' => 'required',
+            'monto' => 'required|numeric|min:5|max:5000',
+            'producto' => 'required|between:5,250',
         ]);
 
-         return response()->json($validaciones);
+        return response()->json(["success" => false, "mensajeError"=>false]);
     }
+/*
+    public function validacionFormulario(Request $request){
+        $aEmpresa = Empresa::where([["empresaRuc", "=", $request->input("empresaRuc")]])->first();
+
+        if(!$aEmpresa){
+            return response()->json(["success" => false, "mensajeError"=>"Comercio no registrado en el Sistema"]);
+        }
+
+        if($request->input("empresaEmail") != $aEmpresa->empresaEmail) {
+            return response()->json(["success" => false, "mensajeError"=>"El correo de la empresa no pertence al RUC registrado"]);
+        }
+
+        $validaciones = $request->validate([
+            'monto' => 'required|numeric|min:5|max:5000',
+            'producto' => 'required|between:5,250',
+        ]);
+
+        return response()->json(["success" => false, "mensajeError"=>false]);
+    }*/
+
 }

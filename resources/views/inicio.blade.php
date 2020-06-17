@@ -4,8 +4,8 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @if ($_SERVER['SERVER_NAME'] == "localhost")
-		<link rel="stylesheet" href="{{url('estilo/bootstrap4/bootstrap.min.css')}}">
-		<link rel="stylesheet" href="{{url('estilo/css/all.min.css')}}">
+		<link rel="stylesheet" href="{{url('/estilo/bootstrap4/bootstrap.min.css')}}">
+		<link rel="stylesheet" href="{{url('/estilo/css/all.min.css')}}">
 	@else
 		<link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.css">
 		<link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/estilo/css/all.min.css">
@@ -46,7 +46,9 @@
 				
 			</div>
 
-			<form id="myForm"><br>
+			<form id="myForm" method="POST" action="validacionFormulario">
+				@csrf
+				<br>
 				<div class="form-group">
 		            <h4 style='color:green'><strong>RUC: {{$aEmpresa->empresaRuc}}</strong></h4>
 		        </div>
@@ -61,13 +63,13 @@
 		     
 		        <div class="form-group">
 		            <strong>Monto en soles</strong>
-		            <input type="number" step="any" name="monto" class="form-control" placeholder="Registrar el Monto" id="montoId">
-		            <div class="alert-message" id="montoError"></div>
+		            <input type="number" step=".01" name="monto" class="form-control" placeholder="Registrar el Monto" id="montoId" min="5" max="5000" required>
+					<div class="alert-message" id="montoError"></div>
 		        </div>
 		        
 		        <div class="form-group">
 		            <strong>Servicio</strong>
-		            <textarea class="form-control" name="descripcion" placeholder="Ingresar el servicio" id="descripcionId"></textarea>
+		            <textarea class="form-control" name="descripcion" placeholder="Ingresar el servicio" id="descripcionId" maxlength="250" minlength="5" required></textarea>
 		            <div class="alert-message" id="descripcionError"></div>
 		        </div>
 
@@ -99,40 +101,34 @@
 	var empresaEmail = "";
 	var empresaRuc = "";
 
+	//Se valida entrada del monto debe ser mayor a 5 soles, permitir 2 decimales y no negativos
+	$("#montoId").on("keypress", function(e){
+		if((e.keyCode>=48 && e.keyCode<=57) || e.keyCode == 46){
+			return true;
+		}else{
+			return false;
+		}
+	});
+
+	$( "#montoId" ).blur(function() {
+		this.value = parseFloat(this.value).toFixed(2);
+	});
+
   	$("#enviarId").on("click", function(event){
+		$("#divMensajeError").hide();
+		$("#montoError").hide();
+		$("#descripcionError").hide();
+
   		monto = $('#montoId').val();
         precio = monto * 100;
         producto = $('#descripcionId').val();
         empresaEmail = $('#empresaEmailId').val();
         empresaRuc = $("#empresaRucId").val();
-
-        if (monto && producto) {
+		event.preventDefault();
+        if ((monto >= 5) && (monto <= 5000) && (producto.length >= 5) && (producto.length <= 250)) {
         	//Validamos datos desde el servidor
         	validarDatos(monto, producto, empresaEmail, empresaRuc);
 
-        	Culqi.options({
-			    lang: 'auto',
-			    modal: true,
-			    installments: false,
-			    customButton: 'Pagar',
-			    style: {
-					maincolor: 'green',
-			      	buttontext: 'white',
-			      	maintext: 'green',
-			      	desctext: 'purple'
-			    }
-			});
-			  
-			Culqi.settings({
-				title: producto,
-				currency: 'PEN',
-				description: producto,
-				amount: precio
-			});
-
-		    // Abre el formulario con la configuración en Culqi.settings
-		    Culqi.open();
-		    event.preventDefault();
 			/*
 		    $token = "ggtbfrjjbhgrffr"; //Este valor lo obtenemos desde el modal de culqi desde: culqi.token
 		    clienteEmail = "deivis.quin@hotmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
@@ -159,10 +155,18 @@
 */
         } else {
 	  		//Validar campos por parte del front
-			console.log("Datos ingresados incorrecto desde el front");
-			$("#descripcionId").val().length < 5 ? $("#descripcionError").text("Debe de tener mas de 5 caracteres") : $("#descripcionError").text("");
-			$("#montoId").val().length < 1 ? $("#montoError").text("Debe registrar un monto") : $("#montoError").text("");
-
+			//console.log("Datos ingresados incorrecto desde el front");
+			mensajeMontoError = "";
+			mensajeDescripcionError = "";
+			mensajeDescripcionError += $("#descripcionId").val().length < 5 ? " El Producto o Servicio debe tener mas de 5 caracteres." : "";
+			mensajeDescripcionError += $("#descripcionId").val().length > 250 ? " El producto o Servicio debe tener menos de 250 caracteres." : "";
+			mensajeMontoError += $("#montoId").val().length < 1 ? " Debe registrar un monto." : "";
+			mensajeMontoError += (parseFloat(monto) < 5) ? " El monto debe superar la cifra de 5 soles." : "";
+			mensajeMontoError += parseFloat(monto) > 5000 ? " El monto no debe superar la cifra de 5000 soles." : "";
+			$("#montoError").show();
+			$("#descripcionError").show();
+			$("#montoError").text(mensajeMontoError);
+			$("#descripcionError").text(mensajeDescripcionError);
 			event.preventDefault();
         }
         
@@ -183,26 +187,62 @@
 		    type: "POST",
 		    dataType: "json",
 		    url: "validarFormulario",
-		})
-		.done(function( data, textStatus, jqXHR ) {
-			if (data.mensajeError) {
+			success:function(response){
+				//No llegó a la validación
+				if (response.mensajeError) {
+					$("#divMensajeError").show();
+					$("#divMensajeError").text(response.mensajeError);
+				} else {
+					iniciaCulqi();
+				}
+			},
+			error: function(response) {//Si hubo algún problema en el servidor o no pasó la validación
+				if (response.responseJSON) {
+					mensajeError = "";
+					if (response.responseJSON.errors.producto) {
+						mensajeError += response.responseJSON.errors.producto + ". ";
+					}
+					if (response.responseJSON.errors.monto) {
+						mensajeError += '\n' + response.responseJSON.errors.monto + ". ";
+					}
+				}
+
 				$("#divMensajeError").show();
-				$("#divMensajeError").text(data.mensajeError);
+				
+				if (mensajeError) {
+					$("#divMensajeError").text(mensajeError);
+				} else {
+					$("#divMensajeError").text("Los datos enviados al formulario no son los correctos");
+				}
 			}
-		})
-		.fail(function( jqXHR, textStatus, errorThrown ) {
-			mensajeError = "";
-			if(jqXHR.responseJSON.errors.descripcion){
-				mensajeError += jqXHR.responseJSON.errors.descripcion;
-			}
-			if (jqXHR.responseJSON.errors.monto) {
-				mensajeError += '\n' + jqXHR.responseJSON.errors.monto;
-			}
-			$("#divMensajeError").show();
-			$("#divMensajeError").text(mensajeError);
-			console.log(mensajeError);
 		})
     }
+
+	function iniciaCulqi(){
+		Culqi.options({
+			lang: 'auto',
+			modal: true,
+			installments: false,
+			customButton: 'Pagar',
+			style: {
+				maincolor: 'green',
+				buttontext: 'white',
+				maintext: 'green',
+				desctext: 'purple'
+			}
+		});
+			
+		Culqi.settings({
+			title: producto,
+			currency: 'PEN',
+			description: producto,
+			amount: precio
+		});
+
+		// Abre el formulario con la configuración en Culqi.settings
+		Culqi.open();
+		//event.preventDefault();
+	}
 
     //Se registran los datos al servidor 
     function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar){
@@ -284,7 +324,7 @@
 
 		.done(function( data, textStatus, jqXHR ) {
 		 	//console.log(data.outcome.type);
-		 	tipoVenta = data.outcome.type;
+		 	/*tipoVenta = data.outcome.type;
 		 	transaccionPasarelaPedidoId = data.id;
 		 	transaccionPasarelaToken = data.source.id;
 		 	transaccionPasarelaMonedaCodigo = data.currency_code;
@@ -301,32 +341,54 @@
 		 	transaccionPasarelaCodigoRespuesta = tipoVenta;
 		 	transaccionPasarelaComision = data.fee_details.variable_fee.total;
 		 	transaccionPasarelaIgv = data.total_fee_taxes;
-		 	transaccionPasarelaMontoDepositar = data.transfer_amount;
+		 	transaccionPasarelaMontoDepositar = data.transfer_amount;*/
 
+			if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
+			if(typeof data.id !== "undefined"){transaccionPasarelaPedidoId = data.id;}else{transaccionPasarelaPedidoId = null};
+			if(typeof data.source !== "undefined"){transaccionPasarelaToken = data.source.id;}else{transaccionPasarelaToken = null};
+			if(typeof data.currency_code !== "undefined"){transaccionPasarelaMonedaCodigo = data.currency_code;}else{transaccionPasarelaMonedaCodigo = null};
+			if(typeof data.source !== "undefined"){transaccionPasarelaBancoNombre = data.source.iin.issuer.name;}else{transaccionPasarelaBancoNombre = null};
+			if(typeof data.source !== "undefined"){transaccionPasarelaBancoPaisNombre = data.source.iin.issuer.country;}else{transaccionPasarelaBancoPaisNombre = null};
+			if(typeof data.source !== "undefined"){transaccionPasarelaBancoPaisCodigo = data.source.iin.issuer.country_code;}else{transaccionPasarelaBancoPaisCodigo = null};
+			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaMarca = data.source.iin.card_brand;}else{transaccionPasarelaTarjetaMarca = null};
+			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaTipo = data.source.iin.card_type;}else{transaccionPasarelaTarjetaTipo = null};
+			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaCategoria = data.source.iin.card_category;}else{transaccionPasarelaTarjetaCategoria = null};
+			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaNumero = data.source.card_number;}else{transaccionPasarelaTarjetaNumero = null};
+			if(typeof data.source !== "undefined"){transaccionPasarelaDispositivoIp = data.source.client.ip;}else{transaccionPasarelaDispositivoIp = null};
+			if(typeof data.authorization_code !== "undefined"){transaccionPasarelaCodigoAutorizacion = data.authorization_code;}else{transaccionPasarelaCodigoAutorizacion = null};
+			if(typeof data.reference_code !== "undefined"){transaccionPasarelaCodigoReferencia = data.reference_code;}else{transaccionPasarelaCodigoReferencia = null};
+			if(typeof tipoVenta !== "undefined"){transaccionPasarelaCodigoRespuesta = tipoVenta;}else{transaccionPasarelaCodigoRespuesta = null};
+			if(typeof data.fee_details !== "undefined"){transaccionPasarelaComision = data.fee_details.variable_fee.total;}else{transaccionPasarelaComision = null};
+			if(typeof data.total_fee_taxes !== "undefined"){transaccionPasarelaIgv = data.total_fee_taxes;}else{transaccionPasarelaIgv = null};
+			if(typeof data.transfer_amount !== "undefined"){transaccionPasarelaMontoDepositar = data.transfer_amount;}else{transaccionPasarelaMontoDepositar = null};
+			 
 		 	//$tipoVenta = "venta_exitosa";
-		 	if (tipoVenta == "venta_exitosa") {
-		 		//console.log( "La solicitud se ha completado correctamente." );
-
+		 	if ( (typeof tipoVenta !== 'undefined') && (tipoVenta == "venta_exitosa")) {
 			    registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);
 
 		        $('#contenedor_de_cargador').fadeIn(1000).html("Se realizó con éxito la transferencia");
-		        //$('#modal').modal('hide');
-
 		 	} else {
-		 		console.log( "No se realizó la transacción." );
 		         $('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
-		         $('#modal').modal('hide');
+				 $('#modal').modal('hide');
+
+				mensajeRespuestaUsuario = data.user_message.replace(/[^a-zA-Z ]/g, "");
+
+				if (document.domain == "localhost") {
+					$(window).attr('location','http://localhost/pagolibre/laravel/public/tarjetaNoProcede/' + mensajeRespuestaUsuario);
+				} else {
+					$(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede/' + mensajeRespuestaUsuario);
+				}
 		 	}
 		})
 		.fail(function( jqXHR, textStatus, errorThrown ) {
 		    console.log( "La solicitud a fallado: " +  textStatus);
          	$('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
          	$('#modal').modal('hide');
-
+			mensajeUsuario = null;
          	if (document.domain == "localhost") {
-                $(window).attr('location','http://localhost/pagolibre/laravel/public/tarjetaNoProcede');
+                $(window).attr('location','http://localhost/pagolibre/laravel/public/tarjetaNoProcede/' + mensajeUsuario);
 			} else {
-				$(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede');
+				$(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede/' + mensajeUsuario);
 			}
 		});
     }

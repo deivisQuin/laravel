@@ -36,6 +36,9 @@ class Client {
         if ($response->status_code >= 200 && $response->status_code <= 206) {
             return json_decode($response->body);
         }
+        if ($response->status_code == 402) {
+            return json_decode($response->body);
+        }
         if ($response->status_code == 400) {
             throw new Errors\UnhandledError($response->body, $response->status_code);
         }

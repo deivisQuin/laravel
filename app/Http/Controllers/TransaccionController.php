@@ -90,8 +90,8 @@ class TransaccionController extends Controller
         return view("nuevoEstadoGracias", compact("aTransaccion")); 
     }
 
-    public function tarjetaNoProcede(){
-        return view("tarjetaNoProcede");   
+    public function tarjetaNoProcede($mensajeUsuario = null){
+        return view("tarjetaNoProcede",compact("mensajeUsuario"));   
     }
 
     public function gracias(){
