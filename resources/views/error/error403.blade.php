@@ -3,7 +3,13 @@
 <head>
 	<title>No existe</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="{{url('/estilo/bootstrap4/bootstrap.min.css')}}">
+    
+    @if ($_SERVER['SERVER_NAME'] == "localhost")
+		<link rel="stylesheet" href="{{url('/estilo/bootstrap4/bootstrap.min.css')}}">
+	@else
+		<link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.css">
+	@endif
+
 </head>
 <body>
 	<br>
