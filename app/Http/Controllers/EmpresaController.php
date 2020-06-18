@@ -112,5 +112,4 @@ class EmpresaController extends Controller
 
         return response()->json(["success" => false, "mensajeError"=>false]);
     }
-
 }

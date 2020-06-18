@@ -23,30 +23,34 @@ Route::get('/', function () {
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes(["reset" => false, "register" => false]);
+Auth::routes(["reset" => false, "register" => true]);//register=>true si desea registrar usuario;false si no desea registrar usuario
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware("auth");
 
 //Pago libre:
-//Otro inicio con el RUC
-Route::get("empresa/{empresaRuc}", "EmpresaController@obtenerRuc");
+//Se inicia con el RUC
+Route::get("empresa/{empresaRuc}", "EmpresaController@obtenerRuc")->middleware("throttle:3");//throttle:3 max número de intentos
+
+//Se valida datos del formulario
+Route::post("empresa/validarFormulario", "EmpresaController@validarFormulario");
+
+//Problemas con la tarjeta (Si la tarjeta no es aceptada por la pasarella)
+Route::get("tarjetaNoProcede/{mensajeUsuario}", "TransaccionController@tarjetaNoProcede");
+
+//Registra la transacción y envía los correos
 Route::post("empresa/transaccion", "CorreoController@sendMail");
 
-//Al concluir la transaccion el sistema le muestra la respuesta de agradecimiento
-Route::get("gracias/graciasCambioEstado/{transaccionId}/{transaccionTipo}", "TransaccionController@graciasCambioEstado");
+//Se concluye transacción
+Route::get("gracias", "TransaccionController@gracias");
+
 
 //Cambiar estado de los pedidos cliente a Recepcionado y Comercio a Entregado
 Route::get("nuevoEstado/{transaccionId}/{passwordLink}/{transaccionTipo}", "TransaccionController@editarEstado");
 Route::post("nuevoEstado", "TransaccionController@modificarEstado");
 
-//Problemas con la tarjeta (Si la tarjeta no es aceptada por la pasarella)
-Route::get("tarjetaNoProcede/{mensajeUsuario}", "TransaccionController@tarjetaNoProcede");
+//Al concluir la transaccion el sistema le muestra la respuesta de agradecimiento
+Route::get("gracias/graciasCambioEstado/{transaccionId}/{transaccionTipo}", "TransaccionController@graciasCambioEstado");
 
-//Se valida datos del formulario
-Route::post("empresa/validarFormulario", "EmpresaController@validarFormulario");
-
-//Se concluye transacción
-Route::get("gracias", "TransaccionController@gracias");
 
 //Paginas de errores (Se redireccionan)
 Route::any('{catchall}', function() {
