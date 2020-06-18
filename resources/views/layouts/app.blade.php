@@ -10,14 +10,21 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
+    @if ($_SERVER['SERVER_NAME'] == "localhost")
+        <script src="{{ asset('js/app.js') }}" defer></script>
+    @else
+        <script src="https://comparadordeventas.com/pagolibre/public/js/app.js"></script>
+    @endif
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @if ($_SERVER['SERVER_NAME'] == "localhost")
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @else
+        <link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/css/app.css">
+    @endif
 </head>
 <body>
     <div id="app">

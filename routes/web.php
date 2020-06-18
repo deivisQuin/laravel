@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes(["reset" => false, "register" => true]);//register=>true si desea registrar usuario;false si no desea registrar usuario
+Auth::routes(["reset" => false, "register" => false]);//register=>true si desea registrar usuario;false si no desea registrar usuario
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware("auth");
 
