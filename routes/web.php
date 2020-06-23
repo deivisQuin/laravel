@@ -52,6 +52,12 @@ Route::post("nuevoEstado", "TransaccionController@modificarEstado");
 Route::get("gracias/graciasCambioEstado/{transaccionId}/{transaccionTipo}", "TransaccionController@graciasCambioEstado");
 
 
+ //Usuarios pueden entrar a visualizar sus ventas
+ Route::get("comercio/{empresaRuc}","EmpresaController@visualizarVentas")->middleware("auth");
+
+
+
+
 //Paginas de errores (Se redireccionan)
 Route::any('{catchall}', function() {
     return Response::view('error.error404', [], 404);
