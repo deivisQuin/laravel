@@ -83,5 +83,11 @@
             @yield('content')
         </main>
     </div>
+    @if ($_SERVER['SERVER_NAME'] == "localhost")
+        <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
+    @else
+        <script src="https://comparadordeventas.com/pagolibre/public/js/jquery/jquery-3.0.0.min.js"></script>
+    @endif
+        @yield('js')
 </body>
 </html>

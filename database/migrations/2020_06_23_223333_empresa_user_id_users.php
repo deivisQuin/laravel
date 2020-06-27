@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUsersidToEmpresa extends Migration
+class EmpresaUserIdUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,8 @@ class AddUsersidToEmpresa extends Migration
     public function up()
     {
         Schema::table('empresa', function (Blueprint $table) {
-            /*$table->bigInteger("empresaUsersId")->unsigned()->after('empresaFechaModifica');
-            $table->foreign('empresaUsersId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');*/
-
-            $table->bigInteger('empresaUsersId')->unsigned();
-            $table->foreign('empresaUsersId')->references('id')->on('users');
-
+            $table->unsignedBigInteger('empresaUsersId');
+            $table->foreign('empresaUsersId')->references('id')->on('users')->nullable()->constrained();
         });
     }
 

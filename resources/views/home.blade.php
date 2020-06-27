@@ -13,8 +13,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    @if(Auth::user()->usersRolId == 2)
+                        holaaa empresa
+                        @else
+                            You are logged in!
+                            {{ Auth::user()->usersRolId }}
+                    @endif
+                    
                 </div>
             </div>
         </div>

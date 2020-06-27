@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transaccion;
+use App\Empresa;
 use Illuminate\Support\Facades\DB;
 
 class TransaccionController extends Controller
@@ -96,5 +97,17 @@ class TransaccionController extends Controller
 
     public function gracias(){
         return view("gracias");
+    }
+
+    public function ventasEmpresa(Request $request) {
+        $empresaId = $request->all()["empresaId"];
+        
+        //Se obtiene los datos de la empresa
+        $aEmpresa = Empresa::where("empresaId", "=", $empresaId)->get();
+
+        //Se obtiene las ventas de la empresa
+        $aTransaccion = Transaccion::where("empresaId", "=", $empresaId)->get();
+        return view("empresaTransaccion.empresaTransaccion", compact("aTransaccion"));
+        
     }
 }

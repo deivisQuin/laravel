@@ -115,7 +115,7 @@ class EmpresaController extends Controller
     }
 
     //visualizar las ventas de la empresa
-    public function visualizarVentas($empresaRuc){
+    /*public function visualizarVentas($empresaRuc){
         $empresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
 
         if (!$empresa) {
@@ -156,5 +156,5 @@ class EmpresaController extends Controller
 //dump($aEmpresaTransaccion);
 //        return "entro a ver las ventas";
         return view("empresaTransaccion/empresaTransaccion", compact("aEmpresaTransaccion"));
-    }
+    }*/
 }

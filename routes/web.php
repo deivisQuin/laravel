@@ -27,6 +27,12 @@ Auth::routes(["reset" => false, "register" => false]);//register=>true si desea 
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware("auth");
 
+//Transaccion
+Route::post("transaccion/ventasEmpresa", "TransaccionController@ventasEmpresa");
+
+
+
+
 //Pago libre:
 //Se inicia con el RUC
 Route::get("empresa/{empresaRuc}", "EmpresaController@obtenerRuc")->middleware("throttle:3");//throttle:3 max número de intentos
@@ -53,7 +59,7 @@ Route::get("gracias/graciasCambioEstado/{transaccionId}/{transaccionTipo}", "Tra
 
 
  //Usuarios pueden entrar a visualizar sus ventas
- Route::get("comercio/{empresaRuc}","EmpresaController@visualizarVentas")->middleware("auth");
+ //Route::get("comercio/{empresaRuc}","EmpresaController@visualizarVentas")->middleware("auth");
 
 
 
