@@ -13,12 +13,16 @@
                         <th>Descuento</th>
                         <th>Monto Realizado</th>
                         <th>Estado</th>
+                        <th>Entregado</th>
+                        <th>Recibido</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($aTransaccion as $venta) 
                     <?php 
                         $colorEstado = ($venta->transaccionEstadoId == 1) ? "red": "green";
+                        $colorComercioEstado = ($venta->transaccionComercioEstado == 1) ? "red": "blue";
+                        $colorClienteEstado = ($venta->transaccionClienteEstado == 1) ? "red": "blue";
                         $montoDepositarAcumulado += $venta->transaccionPasarelaMontoDepositar;
                         $comisionAcumulado += $venta->transaccionPasarelaComision;
                         $montoAcumulado += $venta->transaccionMonto;
@@ -29,6 +33,8 @@
                         <td>{{$venta->transaccionPasarelaComision}}</td>
                         <td>{{$venta->transaccionMonto}}</td>
                         <td><span style="color:<?php echo $colorEstado;?>"><strong>{{$venta->estado->estadoNombre}}</strong></span></td>
+                        <td><span style="color:<?php echo $colorComercioEstado;?>"><strong>{{($venta->transaccionComercioEstado == 1) ? "PENDIENTE" : "RECIBIDO" }}</strong></span></td>
+                        <td><span style="color:<?php echo $colorClienteEstado;?>"><strong>{{($venta->transaccionClienteEstado == 1) ? "PENDIENTE" : "RECIBIDO" }}</strong></span></td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -101,12 +101,15 @@ class TransaccionController extends Controller
 
     public function ventasEmpresa(Request $request) {
         $empresaId = $request->all()["empresaId"];
+        $transaccionFechaCrea = $request->all()["transaccionFechaCrea"];
         
         //Se obtiene los datos de la empresa
         $aEmpresa = Empresa::where("empresaId", "=", $empresaId)->get();
 
         //Se obtiene las ventas de la empresa
-        $aTransaccion = Transaccion::where("empresaId", "=", $empresaId)->get();
+        $aTransaccion = Transaccion::where("empresaId", "=", $empresaId)
+                        ->where("transaccionFechaCrea", "like", "$transaccionFechaCrea%")
+                        ->get();
         return view("empresaTransaccion.empresaTransaccion", compact("aTransaccion"));
         
     }

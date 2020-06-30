@@ -1,9 +1,16 @@
 $(document).ready(function() {
-	$("#idSelectEmpresa").on("change", function(){
-		
-		empresaId = $(this).val();
+	$("#idSelectEmpresa, #idAnio, #idMes, #idDia").on("change", function(){
+		empresaId = $("#idSelectEmpresa").val();
+		idAnio = $("#idAnio option:selected").val();
+		idMes = $("#idMes option:selected").val()
+		mesFormato = (idMes < 10) ? "0" + idMes : idMes;
+		idDia = $("#idDia option:selected").val();
+		diaFormato = (idDia < 10) ? "0" + idDia : idDia;
+	
+		fechaTransaccion = idAnio + "-" + mesFormato + "-" + diaFormato;
+
 		$.ajax({
-		    data: {"empresaId" : empresaId, "_token": $("meta[name='csrf-token']").attr("content")},
+		    data: {"empresaId" : empresaId, "transaccionFechaCrea" : fechaTransaccion,  "_token": $("meta[name='csrf-token']").attr("content")},
 		    type: "POST",
 		    dataType: "html",
 		    url: "transaccion/ventasEmpresa",

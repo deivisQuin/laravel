@@ -1,64 +1,75 @@
 @extends('layouts.app')
 
 @section('content')
+<?php
+$fechaActual = getdate();
+?>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <form name="formularioEmpresa" method="POST" action="transaccion/ventasEmpresa">
                         @csrf
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
+                        <div class="row mb-3">
+                            <div class="col-sx-12 col-md-12 col-lg-2">
                                 <label class="input-group-text" for="idSelectEmpresa">Empresa:</label>
                             </div>
-                            <select name = "selectEmpresa" id = "idSelectEmpresa" class="custom-select">
-                                <option value = "">Seleccione Empresa</option>
-                                @foreach($aEmpresa as $empresa)
-                                    <option value = "{{$empresa->empresaId}}">{{$empresa->empresaNombre}}</option>
-                                @endforeach
-                            </select>
+                            <div class="col-sx-12 col-md-12 col-lg-10">
+                                <select name = "selectEmpresa" id = "idSelectEmpresa" class="custom-select">
+                                    <option value = "">Seleccione Empresa</option>
+                                    @foreach($aEmpresa as $empresa)
+                                        <option value = "{{$empresa->empresaId}}">{{$empresa->empresaNombre}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                             
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
+                        <div class="row">
+                            <div class="col-sx-12 col-md-12 col-lg-2">
                                 <label class="input-group-text" for="idAnio">Año:</label>
                             </div>
-                            <select name = "selectAnio" id = "idAnio" class="custom-select">
-                                <option value = "2020">2020</option>
-                                <option value = "2021">2021</option>
-                            </select>
-                        </div>
+                            <div class="col-sx-12  col-md-12 col-lg-2">
+                                <select name = "selectAnio" id = "idAnio" class="custom-select">
+                                    <option value = "2020" <?php echo ($fechaActual["year"] == "2020") ? "selected" : "" ;?>>2020</option>
+                                    <option value = "2021" <?php echo ($fechaActual["year"] == "2021") ? "selected" : "" ;?>>2021</option>
+                                </select>
+                            </div>
+                        
 
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
+                        
+                            <div class="col-sx-12 col-md-12 col-lg-2">
                                 <label class="input-group-text" for="idMes">Mes:</label>
                             </div>
-                            <select name = "selectMes" id = "idMes" class="custom-select">
-                                <option value = "1">Enero</option>
-                                <option value = "2">Febrero</option>
-                                <option value = "3">Marzo</option>
-                                <option value = "4">Abril</option>
-                                <option value = "5">Mayo</option>
-                                <option value = "6">Junio</option>
-                                <option value = "7">Julio</option>
-                                <option value = "8">Agosto</option>
-                                <option value = "9">Setiembre</option>
-                                <option value = "10">Octubre</option>
-                                <option value = "11">Noviembre</option>
-                                <option value = "12">Diciembre</option>
-                            </select>
-                        </div>
+                            <div class="col-sx-12  col-md-12 col-lg-2">
+                                <select name = "selectMes" id = "idMes" class="custom-select">
+                                    <option value = "1" <?php echo ($fechaActual["mon"] == "1") ? "selected" : "" ;?>>Enero</option>
+                                    <option value = "2" <?php echo ($fechaActual["mon"] == "2") ? "selected" : "" ;?>>Febrero</option>
+                                    <option value = "3" <?php echo ($fechaActual["mon"] == "3") ? "selected" : "" ;?>>Marzo</option>
+                                    <option value = "4" <?php echo ($fechaActual["mon"] == "4") ? "selected" : "" ;?>>Abril</option>
+                                    <option value = "5" <?php echo ($fechaActual["mon"] == "5") ? "selected" : "" ;?>>Mayo</option>
+                                    <option value = "6" <?php echo ($fechaActual["mon"] == "6") ? "selected" : "" ;?>>Junio</option>
+                                    <option value = "7" <?php echo ($fechaActual["mon"] == "7") ? "selected" : "" ;?>>Julio</option>
+                                    <option value = "8" <?php echo ($fechaActual["mon"] == "8") ? "selected" : "" ;?>>Agosto</option>
+                                    <option value = "9" <?php echo ($fechaActual["mon"] == "9") ? "selected" : "" ;?>>Setiembre</option>
+                                    <option value = "10" <?php echo ($fechaActual["mon"] == "10") ? "selected" : "" ;?>>Octubre</option>
+                                    <option value = "11" <?php echo ($fechaActual["mon"] == "11") ? "selected" : "" ;?>>Noviembre</option>
+                                    <option value = "12" <?php echo ($fechaActual["mon"] == "12") ? "selected" : "" ;?>>Diciembre</option>
+                                </select>
+                            </div>
+                        
 
-                        <div class="input-group mb-3">
-                            <div class="input-group-prepend">
+                        
+                            <div class="col-sx-12  col-md-12 col-lg-2">
                                 <label class="input-group-text" for="idDia">Día:</label>
                             </div>
-                            <select name = "selectDia" id = "idDia" class="custom-select">
-                                @for($i = 1; $i <= 31; $i++)
-                                    <option value = "<?php echo $i;?>"><?php echo $i;?></option>
-                                @endfor
-                            </select>
+                            <div class="col-sx-12  col-md-12 col-lg-2">
+                                <select name = "selectDia" id = "idDia" class="custom-select">
+                                    @for($i = 1; $i <= 31; $i++)
+                                        <option value = "<?php echo $i;?>" <?php echo ($fechaActual["mday"] == $i) ? "selected" : "" ;?>><?php echo $i;?></option>
+                                    @endfor
+                                </select>
+                            </div>
                         </div>
 
                     </form>
