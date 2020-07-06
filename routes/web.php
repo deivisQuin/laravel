@@ -18,12 +18,10 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Auth::routes();
+//Auth::routes();
+//Route::get('/home', 'HomeController@index')->name('home');$2y$10$sdPrO6vlqqn454t7WWHL2OlCxdjLWDE3n784EFcLVnuD/aUG.x3F.  http://localhost/pagolibre/laravel/public/password/reset/777cf119e41b14cb53ff0b1f8db42b37d56ea2cfe24498f4735fb60f0d281545?email=deivis.quin%40hotmail.com
 
-
-//Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes(["reset" => false, "register" => false]);//register=>true si desea registrar usuario;false si no desea registrar usuario
+Auth::routes(["reset" => true, "register" => false]);//register=>true si desea registrar usuario;false si no desea registrar usuario
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware("auth");
 
@@ -34,7 +32,7 @@ Route::post("transaccion/ventasEmpresa", "TransaccionController@ventasEmpresa");
 
 
 //Pago libre:
-//Se inicia con el RUC
+//Los clientes inician con el RUC del comercio (Empresa)
 Route::get("empresa/{empresaRuc}", "EmpresaController@obtenerRuc")->middleware("throttle:3");//throttle:3 max número de intentos
 
 //Se valida datos del formulario

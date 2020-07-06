@@ -113,48 +113,4 @@ class EmpresaController extends Controller
 
         return response()->json(["success" => false, "mensajeError"=>false]);
     }
-
-    //visualizar las ventas de la empresa
-    /*public function visualizarVentas($empresaRuc){
-        $empresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
-
-        if (!$empresa) {
-            return "La empresa no está habilitado.";
-        }
-
-        $aEmpresa["empresaId"] = $empresa->empresaId;
-        $aEmpresa["empresaNombre"] = $empresa->empresaNombre;
-        $aEmpresa["empresaEmail"] = $empresa->empresaEmail;
-        $aEmpresa["empresaRuc"] = $empresa->empresaRuc;
-        $aEmpresa["empresaRazonSocial"] = $empresa->empresaRazonSocial;
-        
-        //Se obtiene las ventas de la empresa
-        $transaccion = Transaccion::where('transaccionComercioCorreo', "=", "juangalarza1234@gmail.com")->get();
-
-        if (!$transaccion) {
-            return "La empresa no tiene transacciones realizadas";
-        }
-        
-        $i = 0;
-        foreach ($transaccion as $a_transaccion) {    
-            $aTransaccion[$i]["transaccionComercioEstado"] = $a_transaccion->transaccionComercioEstado;
-            $aTransaccion[$i]["transaccionClienteEstado"] = $a_transaccion->transaccionClienteEstado;
-            $aTransaccion[$i]["transaccionMonto"] = $a_transaccion->transaccionMonto;
-            $aTransaccion[$i]["transaccionDescripcion"] = $a_transaccion->transaccionDescripcion;
-            $aTransaccion[$i]["transaccionEstadoId"] = $a_transaccion->transaccionEstadoId;
-            $aTransaccion[$i]["transaccionFechaCrea"] = $a_transaccion->transaccionFechaCrea;
-            $aTransaccion[$i]["transaccionPasarelaMonedaCodigo"] = $a_transaccion->transaccionPasarelaMonedaCodigo;
-            $aTransaccion[$i]["transaccionPasarelaBancoNombre"] = $a_transaccion->transaccionPasarelaBancoNombre;
-            $aTransaccion[$i]["transaccionPasarelaBancoPaisNombre"] = $a_transaccion->transaccionPasarelaBancoPaisNombre;
-            $aTransaccion[$i]["transaccionPasarelaTarjetaMarca"] = $a_transaccion->transaccionPasarelaTarjetaMarca;
-            $aTransaccion[$i]["transaccionPasarelaTarjetaTipo"] = $a_transaccion->transaccionPasarelaTarjetaTipo;
-            $aTransaccion[$i]["transaccionPasarelaTarjetaTipo"] = $a_transaccion->transaccionPasarelaTarjetaTipo;
-            $i++;
-        }
-
-        $aEmpresaTransaccion = array("aEmpresa"=>$aEmpresa,"aTransaccion"=>$aTransaccion);
-//dump($aEmpresaTransaccion);
-//        return "entro a ver las ventas";
-        return view("empresaTransaccion/empresaTransaccion", compact("aEmpresaTransaccion"));
-    }*/
 }

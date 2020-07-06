@@ -8,7 +8,12 @@
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
                 <div class="card-body">
+                @if ($_SERVER['SERVER_NAME'] == "localhost")
                     <form method="POST" action="{{ route('password.update') }}">
+                @else
+                    <form action="https://comparadordeventas.com/pagolibre/public/password/reset" method="POST">
+                @endif
+                    
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
