@@ -10,4 +10,8 @@ class Empresa extends Model
     protected $primaryKey = "empresaId";
 	protected $fillable = ["empresaNombre", "empresaRuc", "empresaRazonSocial", "empresaNombreComecial", "empresaNumeroCuenta", "empresaTelefono", "empresaDireccion", "empresaRepresentante", "empresaEstadoId", "empresaUsuarioCrea", "empresaFechaCrea", "empresaUsuarioModifica", "empresaFechaModifica"];
     public $timestamps = false;
+
+    public function estado(){
+        return $this->belongsTo("App\Estado", "empresaEstadoId");
+    }
 }

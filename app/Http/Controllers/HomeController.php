@@ -30,17 +30,22 @@ class HomeController extends Controller
         $usersRolId = Auth::user()->usersRolId;
         $usersId = Auth::id();
 
-        //Se consulta si el usuario es empresa o no
+        //Si el usuario no tiene rol asignado
+        if(!$usersRolId){
+            return view('home');
+        }
+
         if($usersRolId == 2){
             //Se obtiene los datos de la empresa
             $aEmpresa = Empresa::where("empresaUsersId", "=", $usersId)->get();
-
-            return view('empresa.homeEmpresa', compact("aEmpresa"));
-        } else {
-            return view('home');            
         }
-        
 
-        //return view('home');
+        if($usersRolId == 1){
+            //Se obtiene los datos de todas las empresa
+            $aEmpresa = Empresa::all();
+        }
+
+        return view('empresa.homeEmpresa', compact("aEmpresa", "usersRolId"));
+
     }
 }

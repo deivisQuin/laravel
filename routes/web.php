@@ -21,12 +21,15 @@ Route::get('/', function () {
 //Auth::routes();
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes(["reset" => true, "register" => false]);//register=>true si desea registrar usuario;false si no desea registrar usuario
+Auth::routes(["reset" => true, "register" => true]);//register=>true si desea registrar usuario;false si no desea registrar usuario
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware("auth");
 
-//Transaccion
+//Transaccion (Se obtienen las ventas del comercio)
 Route::post("transaccion/ventasEmpresa", "TransaccionController@ventasEmpresa");
+
+//Listado de las empresas
+Route::get("empresa/listar", "EmpresaController@index")->middleware("auth");
 
 
 

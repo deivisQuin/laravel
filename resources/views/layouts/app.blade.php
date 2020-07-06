@@ -23,19 +23,29 @@
     @if ($_SERVER['SERVER_NAME'] == "localhost")
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <?php $urlLogout = route('logout');?>
+        <?php $urlEmpresaListado = url('/empresa/listar');?>
     @else
         <link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/css/app.css">
         <?php $urlLogout = "https://comparadordeventas.com/pagolibre/public/logout";?>
+        <?php $urlEmpresaListado = "https://comparadordeventas.com/pagolibre/public/empresa/listar";?>
     @endif
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <!--<a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>-->
-                <strong>{{ config('app.name', 'Laravel') }}</strong>
+                <strong>{{ config('app.name', 'Laravel') }} &emsp;&emsp;</strong>
+                @auth
+                    @if(isset($usersRolId) && $usersRolId==1)
+                        <a class="navbar-brand" href="{{ $urlEmpresaListado }}">
+                            Empresa
+                        </a>
+                        <a class="navbar-brand" href="{{ route('register') }}">
+                            Usuario
+                        </a>
+                        
+                    @endif
+                @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -54,9 +64,9 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
-                                <li class="nav-item">
+                                <!--<li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                                </li>-->
                             @endif
                         @else
                             <li class="nav-item dropdown">

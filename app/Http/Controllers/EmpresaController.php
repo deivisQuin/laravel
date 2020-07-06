@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Empresa;
 use App\Transaccion;
 
@@ -15,7 +17,17 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        //
+        $usersRolId = Auth::user()->usersRolId;
+        //Se consulta si el usuario es empresa o no
+        if($usersRolId == 1){
+            //Se obtiene los datos de las empresas
+            $aEmpresa = Empresa::all();
+
+            return view("empresa.listarEmpresa", compact("aEmpresa"));
+        } else {
+            return view('home');            
+        }
+        
     }
 
     /**
