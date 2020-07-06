@@ -22,8 +22,10 @@
     <!-- Styles -->
     @if ($_SERVER['SERVER_NAME'] == "localhost")
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <?php $urlLogout = route('logout');?>
     @else
         <link rel="stylesheet" href="https://comparadordeventas.com/pagolibre/public/css/app.css">
+        <?php $urlLogout = "https://comparadordeventas.com/pagolibre/public/logout";?>
     @endif
 </head>
 <body>
