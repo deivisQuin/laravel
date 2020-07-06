@@ -33,8 +33,8 @@
                         <td>{{$venta->transaccionPasarelaComision}}</td>
                         <td>{{$venta->transaccionMonto}}</td>
                         <td><span style="color:<?php echo $colorEstado;?>"><strong>{{$venta->estado->estadoNombre}}</strong></span></td>
-                        <td><span style="color:<?php echo $colorComercioEstado;?>"><strong>{{($venta->transaccionComercioEstado == 1) ? "PENDIENTE" : "RECIBIDO" }}</strong></span></td>
-                        <td><span style="color:<?php echo $colorClienteEstado;?>"><strong>{{($venta->transaccionClienteEstado == 1) ? "PENDIENTE" : "RECIBIDO" }}</strong></span></td>
+                        <td><span style="color:<?php echo $colorComercioEstado;?>"><strong>{{($venta->transaccionComercioEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>
+                        <td><span style="color:<?php echo $colorClienteEstado;?>"><strong>{{($venta->transaccionClienteEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>
                     </tr>
                     @endforeach
                 </tbody>
