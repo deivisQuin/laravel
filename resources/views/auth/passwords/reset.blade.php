@@ -13,7 +13,7 @@
                 @else
                     <form action="https://comparadordeventas.com/pagolibre/public/password/reset" method="POST">
                 @endif
-                    
+
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">

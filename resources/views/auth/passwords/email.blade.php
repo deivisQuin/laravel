@@ -13,8 +13,12 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
+                    @if ($_SERVER['SERVER_NAME'] == "localhost")
+                        <form method="POST" action="{{ route('password.email') }}">
+                    @else
+                        <form action="https://comparadordeventas.com/pagolibre/public/password/email" method="POST">
+                    @endif
+                    
                         @csrf
 
                         <div class="form-group row">
