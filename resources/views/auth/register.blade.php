@@ -8,7 +8,12 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
+                @if ($_SERVER['SERVER_NAME'] == "localhost")
                     <form method="POST" action="{{ route('register') }}">
+                @else
+                    <form action="https://comparadordeventas.com/pagolibre/public/register" method="POST">
+                @endif
+                    
                         @csrf
 
                         <div class="form-group row">
