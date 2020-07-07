@@ -1,4 +1,5 @@
-$(document).on("click", ".pagination a",function(e){
+$(document).ready(function() {
+    $(document).on("click", ".pagination a",function(e){
         e.preventDefault();
         let page = $(this).attr("href").split("page=")[1];
         let url = "listar";
@@ -13,3 +14,4 @@ $(document).on("click", ".pagination a",function(e){
             }
         })        
     })
+})
