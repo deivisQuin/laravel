@@ -48,4 +48,5 @@
                 </tfoot>
                 
             </table>
+            {{$aTransaccion->links()}}
         </div>

@@ -15,17 +15,19 @@ class EmpresaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $usersRolId = Auth::user()->usersRolId;
         //Se consulta si el usuario es empresa o no
         if($usersRolId == 1){
             //Se obtiene los datos de las empresas
-            $aEmpresa = Empresa::all();
-
+            $aEmpresa = Empresa::paginate(10);
+            if($request->ajax()){
+                return response()->json(view("empresa.listarEmpresaPartial", compact("aEmpresa"))->render());
+            }
             return view("empresa.listarEmpresa", compact("aEmpresa"));
         } else {
-            return view('home');            
+            return view('home');         
         }
         
     }
@@ -39,6 +41,10 @@ class EmpresaController extends Controller
     {
         //
     }
+    public function crear()
+    {
+        return view('empresa.crearEmpresa');
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -48,7 +54,11 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $validaciones = $request->validate([
+            'nameEmpresaRuc' => 'required|numeric||min:11|max:11',
+            
+        ]);
     }
 
     /**

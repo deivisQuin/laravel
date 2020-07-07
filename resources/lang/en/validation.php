@@ -143,6 +143,12 @@ return [
         "producto" => [
             "required" => "* Por favor registrar la descripción del Producto o Servicio",
             "between" => "* La cantidad de caracteres no pueden ser menor a 5 ni mayor a 250"
+        ],
+        //Se agregan validaciones al formuario de la Empresa
+        "nameEmpresaRuc" => [
+            "required" => "* Por favor registrar el NUmero de RUC",
+            "min" => "* La cantidad de dígitos debe ser 11",
+            "mix" => "* La cantidad de dígitos debe ser 11",
         ]
     ],
 

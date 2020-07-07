@@ -25,14 +25,19 @@ Auth::routes(["reset" => true, "register" => true]);//register=>true si desea re
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware("auth");
 
+//Se agrega el registro de usuarios
+//Route::get("/registrar", "Auth\RegisterController@registrarUsuario");
+
 //Transaccion (Se obtienen las ventas del comercio)
 Route::post("transaccion/ventasEmpresa", "TransaccionController@ventasEmpresa");
 
 //Listado de las empresas
 Route::get("empresa/listar", "EmpresaController@index")->middleware("auth");
+//Route::post("empresa/listar", "EmpresaController@listar")->middleware("auth"); //Para la ejecución del listado por ajax
 
+Route::get("empresa/crear", "EmpresaController@crear")->middleware("auth");
 
-
+Route::post("empresa/crear", "EmpresaController@store")->middleware("auth");
 
 //Pago libre:
 //Los clientes inician con el RUC del comercio (Empresa)

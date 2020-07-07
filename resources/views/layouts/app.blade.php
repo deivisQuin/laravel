@@ -36,11 +36,11 @@
             <div class="container">
                 <strong>{{ config('app.name', 'Laravel') }} &emsp;&emsp;</strong>
                 @auth
-                    @if(isset($usersRolId) && $usersRolId==1)
+                    @if(isset(Auth::user()->usersRolId) && Auth::user()->usersRolId==1)
                         <a class="navbar-brand" href="{{ $urlEmpresaListado }}">
                             Empresa
                         </a>
-                        <a class="navbar-brand" href="{{ route('register') }}">
+                        <a class="navbar-brand" href="{{ url('register') }}">
                             Usuario
                         </a>
                         
@@ -64,9 +64,9 @@
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
-                                <li class="nav-item">
+                                <!--<li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                                </li>-->
                             @endif
                         @else
                             <li class="nav-item dropdown">

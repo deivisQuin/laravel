@@ -8,13 +8,16 @@
                 <div class="card-header">Listado de Empresas</div>
 
                 <div class="card-body">
+                    
                 @if ($_SERVER['SERVER_NAME'] == "localhost")
-                    <form method="POST" action="{{ route('password.update') }}">
+                    <!--<form method="POST" action="{{ route('password.update') }}">-->
+                    <?php $urlCrearEmpresa = "crear";?>
                 @else
-                    <form action="https://comparadordeventas.com/pagolibre/public/password/reset" method="POST">
+                    <!--<form action="https://comparadordeventas.com/pagolibre/public/password/reset" method="POST">-->
+                        <?php $urlCrearEmpresa = "https://comparadordeventas.com/pagolibre/public/empresa/crear";?>
                 @endif
-
-                        <div class="col-sm-12 col-md-12 col-xl-12">
+                        <a href="{{$urlCrearEmpresa}}" class="btn btn-success mb-3">Crear Empresa</a>
+                        <div id = "idDivListadoEmpresa" class = "col-sm-12 col-md-12 col-xl-12">
                         @if(!isset($aEmpresa))
                             No hay Empresas registrado
                             @else
@@ -30,7 +33,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($aEmpresa as $empresa) 
-                                    <?php $colorEstado = ($empresa->empresaEstadoId == 1) ? "red": "green";?>
+                                    <?php $colorEstado = ($empresa->empresaEstadoId == 1) ? "green": "red";?>
                                     <tr>
                                         <td>{{$num++}}</td>
                                         <td>{{$empresa->empresaRuc}}</td>
@@ -41,15 +44,23 @@
                                     </tr>
                                     @endforeach
                                 </tbody>
-                                
                             </table>
+                            {{$aEmpresa->links()}}
                         @endif
                         </div>
 
-                    </form>
+                    <!--</form>-->
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+    @if ($_SERVER['SERVER_NAME'] == "localhost")
+        <script src="{{url('js/empresa/listarEmpresa.js')}}"></script>
+    @else
+        <script src="https://comparadordeventas.com/pagolibre/public/js/empresa/listarEmpresa.js"></script>
+    @endif
 @endsection
