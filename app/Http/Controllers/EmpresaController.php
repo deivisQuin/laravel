@@ -21,7 +21,7 @@ class EmpresaController extends Controller
         //Se consulta si el usuario es empresa o no
         if($usersRolId == 1){
             //Se obtiene los datos de las empresas
-            $aEmpresa = Empresa::paginate(1);
+            $aEmpresa = Empresa::paginate(10);
             if($request->ajax()){
                 return response()->json(view("empresa.listarEmpresaPartial", compact("aEmpresa"))->render());
             }
