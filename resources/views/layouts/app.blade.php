@@ -40,7 +40,7 @@
                         <a class="navbar-brand" href="{{ $urlEmpresaListado }}">
                             Empresa
                         </a>
-                        <a class="navbar-brand" href="{{ url('register') }}">
+                        <a class="navbar-brand" href="{{ url('usuario/listar') }}">
                             Usuario
                         </a>
                         

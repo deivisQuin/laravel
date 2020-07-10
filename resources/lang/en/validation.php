@@ -145,10 +145,37 @@ return [
             "between" => "* La cantidad de caracteres no pueden ser menor a 5 ni mayor a 250"
         ],
         //Se agregan validaciones al formuario de la Empresa
-        "nameEmpresaRuc" => [
-            "required" => "* Por favor registrar el NUmero de RUC",
-            "min" => "* La cantidad de dígitos debe ser 11",
-            "mix" => "* La cantidad de dígitos debe ser 11",
+        "empresaRuc" => [
+            "required" => "* Por favor registrar el Número de RUC",
+            "numeric" => "* EL Número de RUC debe de ser númerico",
+            "between" => '* EL Número de RUC debe contener 11 dígitos',
+        ],
+        "empresaRazonSocial" => [
+            "required" => "* Por favor registrar el Nombre de la Empresa",
+            "between" => "* La cantidad de caracteres no pueden ser menor a 5 ni mayor a 50",
+        ],
+        "empresaNombreComecial" => [
+            "required" => "* Por favor registrar el Nombre Comercial de la Empresa",
+            "between" => "* La cantidad de caracteres no pueden ser menor a 1 ni mayor a 50",
+        ],
+        "empresaEmail" => [
+            "required" => "* Por favor registrar el Nombre Comercial de la Empresa",
+            "between" => "* La cantidad de caracteres no pueden ser menor a 1 ni mayor a 50",
+            "email" => "* El campo email no es válido.",
+        ],
+        "empresaNumeroCuenta" => [
+            "required" => "* Por favor registrar el Nombre Comercial de la Empresa",
+            "between" => "* La cantidad de caracteres no pueden ser menor a 10 ni mayor a 50",
+        ],
+        "empresaRepresentante" => [
+            "required" => "* Por favor registrar el Representante de la Empresa",
+            "between" => "* La cantidad de caracteres no pueden ser menor a 1 ni mayor a 50",
+        ],
+        "empresaUsersId" => [
+            "required" => "* Por favor registrar el identificador del usuario para la Empresa",
+            "numeric" => "* El valor del monto ingresado no es numérico",
+            "between" => "* La cantidad de caracteres no pueden ser menor a 1 ni mayor a 50",
+
         ]
     ],
 

@@ -54,11 +54,25 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
         $validaciones = $request->validate([
-            'nameEmpresaRuc' => 'required|numeric||min:11|max:11',
-            
+            "empresaRuc" => "required|numeric",
+            "empresaRazonSocial" => "required|between:5,50",
+            "empresaNombreComecial" => "required|between:1,50",
+            "empresaNumeroCuenta" => "required|between:10,50",
+            "empresaRepresentante" => "required|between:1,50",
+            "empresaEmail" => "required|between:1,50|email",
+            "empresaUsersId" => "required|numeric|between:1,10"
         ]);
+
+        $aEmpresa = $request->except("_token");
+
+        $aEmpresa["empresaNombre"] = $request->input("empresaNombreComecial");
+        $aEmpresa["empresaUsuarioCrea"] = 1;
+        $aEmpresa["empresaFechaCrea"] = date("Y-m-d H:m:s");
+
+        Empresa::insert($aEmpresa);
+
+        return redirect()->back()->with("success", "La Empresa " . $aEmpresa['empresaRazonSocial']. " ha sido registrada");
     }
 
     /**
@@ -80,7 +94,8 @@ class EmpresaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $aEmpresa = Empresa::where("empresaId", "=", $id)->first();
+        return view('empresa.crearEmpresa', compact("aEmpresa"));
     }
 
     /**
@@ -90,9 +105,15 @@ class EmpresaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $idEmpresa)
     {
-        //
+        $aEmpresa = $request->except(["_token", "_method"]);
+        Empresa::where("empresaId", "=", $idEmpresa)->update($aEmpresa);
+
+        $success = "Se actualizó la empresa";
+        $aEmpresa = Empresa::where("empresaId", "=", $idEmpresa)->first();
+        //return view('empresa.crearEmpresa', compact(["aEmpresa", "success"]));
+        return redirect()->back()->with("success", "Se modificó los datos de la empresa: " . $aEmpresa['empresaRazonSocial']);
     }
 
     /**

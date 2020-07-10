@@ -31,13 +31,22 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware("auth");
 //Transaccion (Se obtienen las ventas del comercio)
 Route::post("transaccion/ventasEmpresa", "TransaccionController@ventasEmpresa");
 
-//Listado de las empresas
+
+//CRUD de las empresas
 Route::get("empresa/listar", "EmpresaController@index")->middleware("auth");
-//Route::post("empresa/listar", "EmpresaController@listar")->middleware("auth"); //Para la ejecución del listado por ajax
 
 Route::get("empresa/crear", "EmpresaController@crear")->middleware("auth");
 
-Route::post("empresa/crear", "EmpresaController@store")->middleware("auth");
+Route::post("empresa", "EmpresaController@store")->middleware("auth");
+
+Route::get("empresa/{empresaId}/editar", "EmpresaController@edit")->middleware("auth");
+
+Route::put("empresa/{empresaId}", "EmpresaController@update")->middleware("auth");
+
+
+//Listado de Usuarios
+Route::get("usuario/listar", "UserController@index");
+
 
 //Pago libre:
 //Los clientes inician con el RUC del comercio (Empresa)
@@ -52,7 +61,7 @@ Route::get("tarjetaNoProcede/{mensajeUsuario}", "TransaccionController@tarjetaNo
 //Registra la transacción y envía los correos
 Route::post("empresa/transaccion", "CorreoController@sendMail");
 
-//Se concluye transacción
+//Se concluye la transacción
 Route::get("gracias", "TransaccionController@gracias");
 
 
@@ -62,12 +71,6 @@ Route::post("nuevoEstado", "TransaccionController@modificarEstado");
 
 //Al concluir la transaccion el sistema le muestra la respuesta de agradecimiento
 Route::get("gracias/graciasCambioEstado/{transaccionId}/{transaccionTipo}", "TransaccionController@graciasCambioEstado");
-
-
- //Usuarios pueden entrar a visualizar sus ventas
- //Route::get("comercio/{empresaRuc}","EmpresaController@visualizarVentas")->middleware("auth");
-
-
 
 
 //Paginas de errores (Se redireccionan)

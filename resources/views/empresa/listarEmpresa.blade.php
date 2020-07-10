@@ -12,9 +12,11 @@
                 @if ($_SERVER['SERVER_NAME'] == "localhost")
                     <!--<form method="POST" action="{{ route('password.update') }}">-->
                     <?php $urlCrearEmpresa = "crear";?>
+                    <?php $urlEditarEmpresa = "editar";?>
                 @else
                     <!--<form action="https://comparadordeventas.com/pagolibre/public/password/reset" method="POST">-->
                         <?php $urlCrearEmpresa = "https://comparadordeventas.com/pagolibre/public/empresa/crear";?>
+                        <?php $urlEditarEmpresa = "https://comparadordeventas.com/pagolibre/public/empresa/edit";?>
                 @endif
                         <a href="{{$urlCrearEmpresa}}" class="btn btn-success mb-3">Crear Empresa</a>
                         <div id = "idDivListadoEmpresa" class = "col-sm-12 col-md-12 col-xl-12">
@@ -38,9 +40,11 @@
                                         <td>{{$num++}}</td>
                                         <td>{{$empresa->empresaRuc}}</td>
                                         <td>{{$empresa->empresaRazonSocial}}</td>
-                                        
                                         <td><span style="color:<?php echo $colorEstado;?>"><strong>{{$empresa->estado->estadoNombre}}</strong></span></td>
                                         
+                                        <td>
+                                        <a href="{{$empresa->empresaId}}/{{$urlEditarEmpresa}}" class="btn btn-primary"> Editar</a>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
