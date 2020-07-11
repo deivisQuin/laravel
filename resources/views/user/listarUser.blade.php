@@ -60,8 +60,8 @@
 
 @section('js')
     @if ($_SERVER['SERVER_NAME'] == "localhost")
-        <!--<script src="{{url('js/user/listarUser.js')}}"></script>-->
+        <script src="{{url('js/user/listarUser.js')}}"></script>
     @else
-        <!--<script src="https://comparadordeventas.com/pagolibre/public/js/user/listarUser.js"></script>-->
+        <script src="https://comparadordeventas.com/pagolibre/public/js/user/listarUser.js"></script>
     @endif
 @endsection
