@@ -31,6 +31,8 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware("auth");
 //Transaccion (Se obtienen las ventas del comercio)
 Route::post("transaccion/ventasEmpresa", "TransaccionController@ventasEmpresa");
 
+Route::post("transaccion/{transaccionId}/ver", "TransaccionController@obtener");
+
 
 //CRUD de las empresas
 Route::get("empresa/listar", "EmpresaController@index")->middleware("auth");

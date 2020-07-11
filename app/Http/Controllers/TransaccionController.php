@@ -110,8 +110,12 @@ class TransaccionController extends Controller
         $aTransaccion = Transaccion::where("empresaId", "=", $empresaId)
                         ->where("transaccionFechaCrea", "like", "$transaccionFechaCrea%")
                         ->paginate(10);
-        //return view("empresaTransaccion.empresaTransaccion", compact("aTransaccion"));
         return response()->json(view("empresaTransaccion.empresaTransaccion", compact("aTransaccion"))->render());
+    }
+
+    public function obtener($transaccionId) {
+        $aTransaccion = Transaccion::where("transaccionId" , "=", $transaccionId)->firstOrFail();
         
+        return response()->json(view("empresaTransaccion.empresaTransaccionDetalle",compact("aTransaccion"))->render());
     }
 }

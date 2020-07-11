@@ -14,4 +14,8 @@ class Empresa extends Model
     public function estado(){
         return $this->belongsTo("App\Estado", "empresaEstadoId");
     }
+
+    public function lineas(){
+    	return $this->belongsToMany(Linea::class);
+    }
 }

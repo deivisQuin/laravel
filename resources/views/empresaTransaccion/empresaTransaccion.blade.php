@@ -3,6 +3,27 @@
     $comisionAcumulado = 0;
     $montoAcumulado = 0;
 ?>
+
+<!-- Large modal -->
+<!-- Modal -->
+<div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><strong>Detalle de la Compra</strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="idContenidoModal">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
     
 <div class="col-sm-12 col-md-12 col-xl-12">
     <table class="table table-hover">
@@ -27,7 +48,7 @@
                 $comisionAcumulado += $venta->transaccionPasarelaComision;
                 $montoAcumulado += $venta->transaccionMonto;
             ?>
-            <tr>
+            <tr class="claseTr" id="{{$venta->transaccionId}}">
                 <td>{{$venta->transaccionFechaCrea}}</td>
                 <td>{{$venta->transaccionPasarelaMontoDepositar}}</td>
                 <td>{{$venta->transaccionPasarelaComision}}</td>

@@ -12,11 +12,18 @@ class Estado extends Model
     public $timestamps = false;
 
     public function empresas(){
-    	//return $this->belongsTo("App\Unidad_medida");
     	return $this->hasMany('App\Empresa' , 'empresaEstadoId');
     }
 
     public function transacciones(){
     	return $this->hasMany('App\Transaccion' , 'transaccionEstadoId');
+    }
+
+    public function lineas(){
+    	return $this->hasMany('App\Linea' , 'lineaEstadoId');
+    }
+
+    public function sublineas(){
+    	return $this->hasMany('App\Sublinea' , 'sublineaEstadoId');
     }
 }
