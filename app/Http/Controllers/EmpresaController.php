@@ -135,7 +135,6 @@ class EmpresaController extends Controller
         } else {
             return view("empresaNoRegistrada", compact("aEmpresa"));
         }
-
     }
 
     public function validarFormulario(Request $request){
@@ -156,4 +155,5 @@ class EmpresaController extends Controller
 
         return response()->json(["success" => false, "mensajeError"=>false]);
     }
+
 }

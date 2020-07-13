@@ -49,10 +49,18 @@ Route::put("empresa/{empresaId}", "EmpresaController@update")->middleware("auth"
 //Listado de Usuarios
 Route::get("usuario/listar", "UserController@index");
 
+//Producto
+Route::get("producto/obtener/{productoId}", "ProductoController@obtenerProducto");
+Route::post("producto/validarFormularioCarrito", "ProductoController@validarFormularioCarrito");
+Route::post("producto/transaccion", "CorreoController@sendMail");
+
 
 //Pago libre:
 //Los clientes inician con el RUC del comercio (Empresa)
 Route::get("empresa/{empresaRuc}", "EmpresaController@obtenerRuc")->middleware("throttle:3");//throttle:3 max número de intentos
+
+//LOs clientes inician escogiendo los productos de la empresa
+Route::get("producto/{empresaRuc}", "ProductoController@obtenerRuc")->middleware("throttle:3");
 
 //Se valida datos del formulario
 Route::post("empresa/validarFormulario", "EmpresaController@validarFormulario");

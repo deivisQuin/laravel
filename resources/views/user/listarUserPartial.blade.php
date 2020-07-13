@@ -17,7 +17,7 @@
                 <td>{{$num++}}</td>
                 <td>{{$user->id}}</td>
                 <td>{{$user->email}}</td>
-                <td>{{$user->usersRolId}}</td>
+                <td>{{$user->rol->rolNombre}}</td>
             </tr>
             @endforeach
         </tbody>

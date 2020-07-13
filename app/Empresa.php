@@ -18,4 +18,8 @@ class Empresa extends Model
     public function lineas(){
     	return $this->belongsToMany(Linea::class);
     }
+
+    public function productos(){
+    	return $this->belongsToMany(Producto::class);
+    }
 }

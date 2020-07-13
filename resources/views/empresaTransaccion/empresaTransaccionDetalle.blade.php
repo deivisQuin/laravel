@@ -5,24 +5,24 @@
         <thead>
             <tr>
                 <th></th>
-                <th>Datos</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><strong>Detalle</strong></td>
+                <td><strong style='color:#28a745'>Detalle</strong></td>
                 <td>{{$aTransaccion->transaccionDescripcion}}</td>
             </tr>
             <tr>
-                <td><strong>Monto a Recibir</strong></td>
+                <td><strong style='color:#28a745'>Monto a Recibir</strong></td>
                 <td>{{$aTransaccion->transaccionPasarelaMontoDepositar}}</td>
             </tr>
             <tr>
-                <td><strong>Descuento</strong></td>
+                <td><strong style='color:#28a745'>Descuento</strong></td>
                 <td>{{$aTransaccion->transaccionPasarelaComision}}</td>
             </tr>
             <tr>
-                <td><strong>Monto Realizado</strong></td>
+                <td><strong style='color:#28a745'>Monto Realizado</strong></td>
                 <td>{{$aTransaccion->transaccionMonto}}</td>
             </tr>
             

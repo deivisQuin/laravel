@@ -22,7 +22,20 @@
 <div class="container panel panel-default">
 	<div class="card">
 		<div class="card-header">
-			<h2 class="panel-heading">Pago Libre</h2>		
+	  		<div class="row">
+			  <div class="col-md-8">
+			  	<h2 class="panel-heading">Pago Libre</h2>
+			  </div>
+			  <div class="col-md-4">
+	  			<div><h4><strong><span class="badge badge-danger">Total S/.  </span><span id="idSpanMontoTotal" class="badge badge-danger"></span></strong></h4>
+				  <input type="hidden" id="idHiddenMontoTotal" value="">
+				  <input type="hidden" id="idHiddenDescripcion" value="">
+				  </div>
+			  </div>
+
+			</div>
+			
+
 		</div>
 		<div class="class-body">
 
@@ -50,28 +63,57 @@
 				@csrf
 				<br>
 				<div class="form-group">
-		            <h4 style='color:green'><strong>RUC: {{$aEmpresa->empresaRuc}}</strong></h4>
+		            <h4 style='color:#28a745'><strong>RUC: {{$aEmpresa->empresaRuc}}</strong></h4>
 		        </div>
 				<div class="form-group">
-		            <h4 style='color:green'><strong>Empresa: {{$aEmpresa->empresaNombre}}</strong></h4>
+		            <h4 style='color:#28a745'><strong>Empresa: {{$aEmpresa->empresaNombre}}</strong></h4>
 		        </div>
+				<div class="form-group">
+	  				<span style="color:#dc3545"><strong>* El Stock es referencial, cualquier consulta llamar al: {{$aEmpresa->empresaTelefono}}</strong></span>
+				</div>
 
 		        <div class="form-group">
 		            <input type="hidden" name="empresaRuc" class="form-control required"  id="empresaRucId" value="{{$aEmpresa->empresaRuc}}">
 		            <input type="hidden" name="empresaEmail" class="form-control required"  id="empresaEmailId" value="{{$aEmpresa->empresaEmail}}">
 		        </div>
-		     
-		        <div class="form-group">
-		            <strong>Monto en soles</strong>
-		            <input type="number" step=".01" name="monto" class="form-control" placeholder="Registrar el Monto" id="montoId" min="5" max="5000" required>
-					<div class="alert-message" id="montoError"></div>
-		        </div>
-		        
-		        <div class="form-group">
-		            <strong>Servicio</strong>
-		            <textarea class="form-control" name="descripcion" placeholder="Ingresar el servicio" id="descripcionId" maxlength="250" minlength="5" required></textarea>
-		            <div class="alert-message" id="descripcionError"></div>
-		        </div>
+
+				<table class="table table-hover">
+	  				<thead>
+	  					<tr>
+	  						<th>Producto</th>
+							<th>Precio</th>
+							<th>Cantidad</th>
+							<th>Monto</th>
+						</tr>
+					</thead>
+					<tbody>
+					@foreach($aProducto as $producto)
+	  					<tr>
+	  						<td>
+							  <span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
+							  <input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
+							</td>
+							<td>
+								<span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->producto->productoPrecio}}</span>
+	  							<input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
+							</td>
+	  						<td>
+								<select id="idSelectCantidad_{{$producto->producto->productoId}}" 
+									idProducto="{{$producto->producto->productoId}}" class="claseSelectCantidad">
+									<option value="0">0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+								</select>
+							</td>
+							<td align="right"><strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
+	  							<input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
+							</td>
+						</tr>
+					@endforeach
+					</tbody>
+				</table>
 
 		        <div class="form-group">
 		            <button class="btn btn-success form-control" id="enviarId"><i class="fas fa-credit-card"></i> REALIZAR PAGO</button>
@@ -101,31 +143,110 @@
 	var empresaEmail = "";
 	var empresaRuc = "";
 
-	//Se valida entrada del monto debe ser mayor a 5 soles, permitir 2 decimales y no negativos
-	$("#montoId").on("keypress", function(e){
-		if((e.keyCode>=48 && e.keyCode<=57) || e.keyCode == 46){
-			return true;
-		}else{
-			return false;
-		}
-	});
+	$(".claseSelectCantidad").on("change", function(){
+		let idProducto = $(this).attr("idProducto");
+		let idSelectCantidad = $(this).attr("id");
+		let cantidad =$("#"+idSelectCantidad).val();
 
-	$( "#montoId" ).blur(function() {
-		this.value = parseFloat(this.value).toFixed(2);
-	});
+		if(cantidad > 0) {
+			$(this).addClass("badge badge-primary");
+			$("#idSpanProductoNombre_"+idProducto).addClass("badge badge-primary");
+
+			$.ajax({
+				data:{},
+				url:"obtener/"+idProducto,
+				type:"GET",
+				dataType: "json",
+				success:function(respuesta){
+					let productoNombre = respuesta.productoNombre;
+					let productoPrecio = respuesta.productoPrecio;
+					let monto = productoPrecio * cantidad;
+
+					$("#idSpanMonto_"+idProducto).text(monto.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+					$("#idHiddenMonto_"+idProducto).val(monto);
+					$("#idHiddenProductoNombre_"+idProducto).val(productoNombre);
+					$("#idHiddenProductoPrecio_"+idProducto).val(productoPrecio);
+
+					//Cálculamos el Monto Total
+					let montoTotal = 0;
+					let texto = "";
+					$(".claseHiddenMonto").each(function(index, element){
+						let idMontoHidden = $(this).attr("id");
+						
+						if ($("#"+idMontoHidden).val()) {
+							
+							let cantidadDeCaracteres = idMontoHidden.length;
+							let producto_id = idMontoHidden.substr(14);
+							
+							let producto_cantidad = $("#idSelectCantidad_"+producto_id).val();
+							let producto_nombre = $("#idHiddenProductoNombre_"+producto_id).val();
+							let producto_precio = $("#idHiddenProductoPrecio_"+producto_id).val();
+							texto +="Cant: " + producto_cantidad + " Nombre: " + producto_nombre + " Precio: " + producto_precio + "---";
+
+							let montoHidden = parseFloat($("#"+idMontoHidden).val());
+							montoTotal = montoTotal + montoHidden;
+						}
+
+						$("#idSpanMontoTotal").text(montoTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+						$("#idHiddenMontoTotal").val(montoTotal.toFixed(2));
+					})
+
+					$("#idHiddenDescripcion").val(texto);
+				}
+			});
+			
+		}else {
+			$(this).removeClass("badge badge-primary");
+			$("#idSpanProductoNombre_"+idProducto).removeClass("badge badge-primary");
+			$("#idSpanMonto_"+idProducto).text("");
+			$("#idHiddenMonto_"+idProducto).val("");
+			
+			//Cálculamos el Monto Total
+			let montoTotal = 0;
+			let texto = "";
+			$(".claseHiddenMonto").each(function(index, element){
+				let idMontoHidden = $(this).attr("id");
+				
+				if ($("#"+idMontoHidden).val()) {
+					
+					let cantidadDeCaracteres = idMontoHidden.length;
+					let producto_id = idMontoHidden.substr(14);
+					
+					let producto_cantidad = $("#idSelectCantidad_"+producto_id).val();
+					let producto_nombre = $("#idHiddenProductoNombre_"+producto_id).val();
+					let producto_precio = $("#idHiddenProductoPrecio_"+producto_id).val();
+					texto +="cant: " + producto_cantidad + "Nombre: " + producto_nombre + "precio: " + producto_precio +"---";
+
+					let montoHidden = parseFloat($("#"+idMontoHidden).val());
+					montoTotal = montoTotal + montoHidden;
+				}
+
+				$("#idSpanMontoTotal").text(montoTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+				$("#idHiddenMontoTotal").val(montoTotal.toFixed(2));
+			})
+
+			$("#idHiddenDescripcion").val(texto);
+		}
+	})
+
 
   	$("#enviarId").on("click", function(event){
 		$("#divMensajeError").hide();
 		$("#montoError").hide();
 		$("#descripcionError").hide();
 
-  		monto = $('#montoId').val();
+
+		monto = $("#idHiddenMontoTotal").val();
+//  		monto = $('#montoId').val();
         precio = monto * 100;
 		precio = precio.toFixed(0);
-        producto = $('#descripcionId').val();
+		producto = $("#idHiddenDescripcion").val();
+        //producto = $('#descripcionId').val();
         empresaEmail = $('#empresaEmailId').val();
         empresaRuc = $("#empresaRucId").val();
 		event.preventDefault();
+		
+		//Se valida entrada del monto debe ser mayor a 5 soles, permitir 2 decimales y no negativos
         if ((monto >= 5) && (monto <= 5000) && (producto.length >= 5) && (producto.length <= 250)) {
         	//Validamos datos desde el servidor
         	validarDatos(monto, producto, empresaEmail, empresaRuc);
@@ -174,6 +295,7 @@
     });
 
   	//Se validan datos de parte del servidor
+
     function validarDatos(monto, producto, empresaEmail, empresaRuc){
     	var datos = {
 				producto:producto, 
@@ -187,7 +309,8 @@
 		    data: datos,
 		    type: "POST",
 		    dataType: "json",
-		    url: "validarFormulario",
+		    //url: "validarFormulario",
+			url: "validarFormularioCarrito",
 			success:function(response){
 				//No llegó a la validación
 				if (response.mensajeError) {
@@ -234,9 +357,11 @@
 		});
 			
 		Culqi.settings({
-			title: producto,
+			//title: producto,
+			title: "Monto: " + monto.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"),
 			currency: 'PEN',
-			description: producto,
+			//description: producto,
+			description: "PAGO LIBRE",
 			amount: precio
 		});
 
@@ -279,7 +404,6 @@
 			type: "POST",
 			data: data,
 			success:function(response){
-				console.log("se hizo el registro");
 				$('#modal').modal('hide');
 				if (document.domain == "localhost") {
 					$(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
@@ -295,7 +419,7 @@
 
     function enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteEmail){
     	var data = {
-				producto:producto, 
+				producto:"Varios", 
 				precio:precio, 
 				token:token, 
 				email:clienteEmail
@@ -345,23 +469,23 @@
 		 	transaccionPasarelaMontoDepositar = data.transfer_amount;*/
 
 			if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
-			if(typeof data.id !== "undefined"){transaccionPasarelaPedidoId = data.id;}else{transaccionPasarelaPedidoId = null};
-			if(typeof data.source !== "undefined"){transaccionPasarelaToken = data.source.id;}else{transaccionPasarelaToken = null};
-			if(typeof data.currency_code !== "undefined"){transaccionPasarelaMonedaCodigo = data.currency_code;}else{transaccionPasarelaMonedaCodigo = null};
-			if(typeof data.source !== "undefined"){transaccionPasarelaBancoNombre = data.source.iin.issuer.name;}else{transaccionPasarelaBancoNombre = null};
-			if(typeof data.source !== "undefined"){transaccionPasarelaBancoPaisNombre = data.source.iin.issuer.country;}else{transaccionPasarelaBancoPaisNombre = null};
-			if(typeof data.source !== "undefined"){transaccionPasarelaBancoPaisCodigo = data.source.iin.issuer.country_code;}else{transaccionPasarelaBancoPaisCodigo = null};
-			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaMarca = data.source.iin.card_brand;}else{transaccionPasarelaTarjetaMarca = null};
-			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaTipo = data.source.iin.card_type;}else{transaccionPasarelaTarjetaTipo = null};
-			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaCategoria = data.source.iin.card_category;}else{transaccionPasarelaTarjetaCategoria = null};
-			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaNumero = data.source.card_number;}else{transaccionPasarelaTarjetaNumero = null};
-			if(typeof data.source !== "undefined"){transaccionPasarelaDispositivoIp = data.source.client.ip;}else{transaccionPasarelaDispositivoIp = null};
-			if(typeof data.authorization_code !== "undefined"){transaccionPasarelaCodigoAutorizacion = data.authorization_code;}else{transaccionPasarelaCodigoAutorizacion = null};
-			if(typeof data.reference_code !== "undefined"){transaccionPasarelaCodigoReferencia = data.reference_code;}else{transaccionPasarelaCodigoReferencia = null};
-			if(typeof tipoVenta !== "undefined"){transaccionPasarelaCodigoRespuesta = tipoVenta;}else{transaccionPasarelaCodigoRespuesta = null};
-			if(typeof data.fee_details !== "undefined"){transaccionPasarelaComision = data.fee_details.variable_fee.total;}else{transaccionPasarelaComision = null};
-			if(typeof data.total_fee_taxes !== "undefined"){transaccionPasarelaIgv = data.total_fee_taxes;}else{transaccionPasarelaIgv = null};
-			if(typeof data.transfer_amount !== "undefined"){transaccionPasarelaMontoDepositar = data.transfer_amount;}else{transaccionPasarelaMontoDepositar = null};
+			if(typeof data.id !== "undefined"){transaccionPasarelaPedidoId = data.id;}else{transaccionPasarelaPedidoId = "NO TIENE"};
+			if(typeof data.source !== "undefined"){transaccionPasarelaToken = data.source.id;}else{transaccionPasarelaToken = "NO TIENE"};
+			if(typeof data.currency_code !== "undefined"){transaccionPasarelaMonedaCodigo = data.currency_code;}else{transaccionPasarelaMonedaCodigo = "NO TIENE"};
+			if(typeof data.source !== "undefined"){transaccionPasarelaBancoNombre = data.source.iin.issuer.name;}else{transaccionPasarelaBancoNombre = "NO TIENE"};
+			if(typeof data.source !== "undefined"){transaccionPasarelaBancoPaisNombre = data.source.iin.issuer.country;}else{transaccionPasarelaBancoPaisNombre = "NO TIENE"};
+			if(typeof data.source !== "undefined"){transaccionPasarelaBancoPaisCodigo = data.source.iin.issuer.country_code;}else{transaccionPasarelaBancoPaisCodigo = "NO TIENE"};
+			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaMarca = data.source.iin.card_brand;}else{transaccionPasarelaTarjetaMarca = "NO TIENE"};
+			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaTipo = data.source.iin.card_type;}else{transaccionPasarelaTarjetaTipo = "NO TIENE"};
+			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaCategoria = ("-" + data.source.iin.card_category);}else{transaccionPasarelaTarjetaCategoria = "NO TIENE"};
+			if(typeof data.source !== "undefined"){transaccionPasarelaTarjetaNumero = data.source.card_number;}else{transaccionPasarelaTarjetaNumero = "NO TIENE"};
+			if(typeof data.source !== "undefined"){transaccionPasarelaDispositivoIp = data.source.client.ip;}else{transaccionPasarelaDispositivoIp = "NO TIENE"};
+			if(typeof data.authorization_code !== "undefined"){transaccionPasarelaCodigoAutorizacion = data.authorization_code;}else{transaccionPasarelaCodigoAutorizacion = "NO TIENE"};
+			if(typeof data.reference_code !== "undefined"){transaccionPasarelaCodigoReferencia = data.reference_code;}else{transaccionPasarelaCodigoReferencia = "NO TIENE"};
+			if(typeof tipoVenta !== "undefined"){transaccionPasarelaCodigoRespuesta = tipoVenta;}else{transaccionPasarelaCodigoRespuesta = "NO TIENE"};
+			if(typeof data.fee_details !== "undefined"){transaccionPasarelaComision = data.fee_details.variable_fee.total;}else{transaccionPasarelaComision = "NO TIENE"};
+			if(typeof data.total_fee_taxes !== "undefined"){transaccionPasarelaIgv = data.total_fee_taxes;}else{transaccionPasarelaIgv = "NO TIENE"};
+			if(typeof data.transfer_amount !== "undefined"){transaccionPasarelaMontoDepositar = data.transfer_amount;}else{transaccionPasarelaMontoDepositar = "NO TIENE"};
 			 
 		 	//$tipoVenta = "venta_exitosa";
 		 	if ( (typeof tipoVenta !== 'undefined') && (tipoVenta == "venta_exitosa")) {
@@ -382,7 +506,7 @@
 		 	}
 		})
 		.fail(function( jqXHR, textStatus, errorThrown ) {
-		    console.log( "La solicitud a fallado: " +  textStatus);
+		    //console.log( "La solicitud a fallado: " +  textStatus);
          	$('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
          	$('#modal').modal('hide');
 			mensajeUsuario = null;

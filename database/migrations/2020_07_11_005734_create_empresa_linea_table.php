@@ -12,14 +12,14 @@ class CreateEmpresaLineaTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {/*
         Schema::create('empresa_linea', function (Blueprint $table) {
             $table->bigIncrements("empresaLineaId");
             $table->bigInteger("empresaLineaEmpresaId")->unsigned();
             $table->bigInteger("empresaLineaLineaId")->unsigned();
             $table->foreign('empresaLineaEmpresaId')->references('empresaId')->on('empresa')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('empresaLineaLineaId')->references('lineaId')->on('linea')->onDelete('cascade')->onUpdate('cascade');
-        });
+        });*/
     }
 
     /**

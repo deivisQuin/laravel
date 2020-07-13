@@ -37,7 +37,7 @@
                                         <td>{{$num++}}</td>
                                         <td>{{$user->id}}</td>
                                         <td>{{$user->email}}</td>
-                                        <td>{{$user->usersRolId}}</td>
+                                        <td>{{$user->rol->rolNombre}}</td>
                                         <!--
                                         <td>
                                         <a href="{{$user->id}}/{{$urlEditarUser}}" class="btn btn-primary"> Editar</a>
@@ -49,8 +49,6 @@
                             {{$aUser->links()}}
                         @endif
                         </div>
-
-                    <!--</form>-->
                 </div>
             </div>
         </div>
