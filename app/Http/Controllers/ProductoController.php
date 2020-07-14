@@ -14,11 +14,13 @@ class ProductoController extends Controller
         $aProducto = Producto::where("productoId", "=", $productoId)->firstOrFail();
         return response()->json($aProducto);
     }
+    
     public function obtenerRuc($empresaRuc){
         $aEmpresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
 
         if ( isset($aEmpresa->empresaId) ) {   
-            $aProducto = EmpresaLineaSublineaProducto::where("ELSPEmpresaId", "=", 1)->paginate(10);
+            //$aProducto = EmpresaLineaSublineaProducto::where("ELSPEmpresaId", "=", 1)->paginate(10);
+            $aProducto = EmpresaLineaSublineaProducto::where("ELSPEmpresaId", "=", $aEmpresa->empresaId)->get();
             return view("iniciar", compact(["aEmpresa", "aProducto"]));
         } else {
             return view("empresaNoRegistrada", compact("aEmpresa"));

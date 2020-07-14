@@ -234,9 +234,11 @@
 		});
 			
 		Culqi.settings({
-			title: producto,
+			//title: producto,
+			title: "Monto: " + monto.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"),
 			currency: 'PEN',
-			description: producto,
+			//description: producto,
+			description: "PAGO LIBRE",
 			amount: precio
 		});
 

@@ -23,14 +23,28 @@
 	<div class="card">
 		<div class="card-header">
 	  		<div class="row">
+			  	<div class="col-md-12  fixed-top">
+				  <strong class="h2"><span class="badge badge-danger">Total S/.  </span><span id="idSpanMontoTotal" class="badge badge-danger"></span>
+				  <button class="claseBotonEnviar btn btn-success"><i class="fas fa-credit-card"></i> PAGAR</button></strong>
+				  
+				  <input type="hidden" id="idHiddenMontoTotal" value="">
+				  <input type="hidden" id="idHiddenDescripcion" value="">
+				  
+				</div>
+
+
 			  <div class="col-md-8">
 			  	<h2 class="panel-heading">Pago Libre</h2>
 			  </div>
 			  <div class="col-md-4">
-	  			<div><h4><strong><span class="badge badge-danger">Total S/.  </span><span id="idSpanMontoTotal" class="badge badge-danger"></span></strong></h4>
+	  			<!--<div class="mt-2">
+				  <strong class="h2 mt-2"><span class="badge badge-danger">Total S/.  </span><span id="idSpanMontoTotal" class="badge badge-danger"></span></strong>
+				  <button class="claseBotonEnviar btn btn-success"><i class="fas fa-credit-card"></i> PAGAR</button>
+				  
 				  <input type="hidden" id="idHiddenMontoTotal" value="">
 				  <input type="hidden" id="idHiddenDescripcion" value="">
-				  </div>
+				  
+				</div>-->
 			  </div>
 
 			</div>
@@ -77,6 +91,9 @@
 		            <input type="hidden" name="empresaEmail" class="form-control required"  id="empresaEmailId" value="{{$aEmpresa->empresaEmail}}">
 		        </div>
 
+				<div class="row">
+				<div class="col">
+				
 				<table class="table table-hover">
 	  				<thead>
 	  					<tr>
@@ -114,9 +131,11 @@
 					@endforeach
 					</tbody>
 				</table>
+				</div>
+				</div>
 
 		        <div class="form-group">
-		            <button class="btn btn-success form-control" id="enviarId"><i class="fas fa-credit-card"></i> REALIZAR PAGO</button>
+		            <button class="btn btn-success form-control claseBotonEnviar" id="enviarId"><i class="fas fa-credit-card"></i> REALIZAR PAGO</button>
 		        </div>
 		    </form>
 		</div>
@@ -150,7 +169,7 @@
 
 		if(cantidad > 0) {
 			$(this).addClass("badge badge-primary");
-			$("#idSpanProductoNombre_"+idProducto).addClass("badge badge-primary");
+			//$("#idSpanProductoNombre_"+idProducto).addClass("badge badge-primary");
 
 			$.ajax({
 				data:{},
@@ -229,8 +248,8 @@
 		}
 	})
 
-
-  	$("#enviarId").on("click", function(event){
+  	//$("#enviarId").on("click", function(event){
+	$(".claseBotonEnviar").on("click", function(event){
 		$("#divMensajeError").hide();
 		$("#montoError").hide();
 		$("#descripcionError").hide();
@@ -277,25 +296,25 @@
 */
         } else {
 	  		//Validar campos por parte del front
-			//console.log("Datos ingresados incorrecto desde el front");
 			mensajeMontoError = "";
 			mensajeDescripcionError = "";
+
 			mensajeDescripcionError += $("#descripcionId").val().length < 5 ? " El Producto o Servicio debe tener mas de 5 caracteres." : "";
 			mensajeDescripcionError += $("#descripcionId").val().length > 250 ? " El producto o Servicio debe tener menos de 250 caracteres." : "";
 			mensajeMontoError += $("#montoId").val().length < 1 ? " Debe registrar un monto." : "";
 			mensajeMontoError += (parseFloat(monto) < 5) ? " El monto debe superar la cifra de 5 soles." : "";
 			mensajeMontoError += parseFloat(monto) > 5000 ? " El monto no debe superar la cifra de 5000 soles." : "";
+
 			$("#montoError").show();
 			$("#descripcionError").show();
 			$("#montoError").text(mensajeMontoError);
 			$("#descripcionError").text(mensajeDescripcionError);
+
 			event.preventDefault();
         }
-        
     });
 
   	//Se validan datos de parte del servidor
-
     function validarDatos(monto, producto, empresaEmail, empresaRuc){
     	var datos = {
 				producto:producto, 
@@ -309,7 +328,6 @@
 		    data: datos,
 		    type: "POST",
 		    dataType: "json",
-		    //url: "validarFormulario",
 			url: "validarFormularioCarrito",
 			success:function(response){
 				//No llegó a la validación
@@ -318,6 +336,7 @@
 					$("#divMensajeError").text(response.mensajeError);
 				} else {
 					iniciaCulqi();
+					//console.log("inicia pago");
 				}
 			},
 			error: function(response) {//Si hubo algún problema en el servidor o no pasó la validación
@@ -357,10 +376,8 @@
 		});
 			
 		Culqi.settings({
-			//title: producto,
 			title: "Monto: " + monto.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"),
 			currency: 'PEN',
-			//description: producto,
 			description: "PAGO LIBRE",
 			amount: precio
 		});
@@ -445,30 +462,10 @@
 		    dataType: "json",
 		    url: url,
 		})
-
-
 		.done(function( data, textStatus, jqXHR ) {
-		 	//console.log(data.outcome.type);
-		 	/*tipoVenta = data.outcome.type;
-		 	transaccionPasarelaPedidoId = data.id;
-		 	transaccionPasarelaToken = data.source.id;
-		 	transaccionPasarelaMonedaCodigo = data.currency_code;
-		 	transaccionPasarelaBancoNombre = data.source.iin.issuer.name;
-		 	transaccionPasarelaBancoPaisNombre = data.source.iin.issuer.country;
-		 	transaccionPasarelaBancoPaisCodigo = data.source.iin.issuer.country_code;
-		 	transaccionPasarelaTarjetaMarca = data.source.iin.card_brand;
-		 	transaccionPasarelaTarjetaTipo = data.source.iin.card_type;
-		 	transaccionPasarelaTarjetaCategoria = data.source.iin.card_category;
-		 	transaccionPasarelaTarjetaNumero = data.source.card_number;
-		 	transaccionPasarelaDispositivoIp = data.source.client.ip;
-		 	transaccionPasarelaCodigoAutorizacion = data.authorization_code;
-		 	transaccionPasarelaCodigoReferencia = data.reference_code;
-		 	transaccionPasarelaCodigoRespuesta = tipoVenta;
-		 	transaccionPasarelaComision = data.fee_details.variable_fee.total;
-		 	transaccionPasarelaIgv = data.total_fee_taxes;
-		 	transaccionPasarelaMontoDepositar = data.transfer_amount;*/
 
 			if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
+/*
 			if(typeof data.id !== "undefined"){transaccionPasarelaPedidoId = data.id;}else{transaccionPasarelaPedidoId = "NO TIENE"};
 			if(typeof data.source !== "undefined"){transaccionPasarelaToken = data.source.id;}else{transaccionPasarelaToken = "NO TIENE"};
 			if(typeof data.currency_code !== "undefined"){transaccionPasarelaMonedaCodigo = data.currency_code;}else{transaccionPasarelaMonedaCodigo = "NO TIENE"};
@@ -485,10 +482,29 @@
 			if(typeof tipoVenta !== "undefined"){transaccionPasarelaCodigoRespuesta = tipoVenta;}else{transaccionPasarelaCodigoRespuesta = "NO TIENE"};
 			if(typeof data.fee_details !== "undefined"){transaccionPasarelaComision = data.fee_details.variable_fee.total;}else{transaccionPasarelaComision = "NO TIENE"};
 			if(typeof data.total_fee_taxes !== "undefined"){transaccionPasarelaIgv = data.total_fee_taxes;}else{transaccionPasarelaIgv = "NO TIENE"};
-			if(typeof data.transfer_amount !== "undefined"){transaccionPasarelaMontoDepositar = data.transfer_amount;}else{transaccionPasarelaMontoDepositar = "NO TIENE"};
+			if(typeof data.transfer_amount !== "undefined"){transaccionPasarelaMontoDepositar = data.transfer_amount;}else{transaccionPasarelaMontoDepositar = "NO TIENE"};*/
 			 
 		 	//$tipoVenta = "venta_exitosa";
 		 	if ( (typeof tipoVenta !== 'undefined') && (tipoVenta == "venta_exitosa")) {
+
+				transaccionPasarelaPedidoId = (typeof data.id !== "undefined") ? data.id : "NO TIENE";
+				transaccionPasarelaToken = (typeof data.source !== "undefined") ? data.source.id : "NO TIENE" ;
+				transaccionPasarelaMonedaCodigo = (typeof data.currency_code !== "undefined") ? "-" + data.currency_code : "NO TIENE";
+				transaccionPasarelaBancoNombre = (typeof data.source !== "undefined") ? "-" + data.source.iin.issuer.name : "NO TIENE";
+				transaccionPasarelaBancoPaisNombre = (typeof data.source !== "undefined") ? "-" + data.source.iin.issuer.country : "NO TIENE";
+				transaccionPasarelaBancoPaisCodigo = (typeof data.source !== "undefined") ? "-" + data.source.iin.issuer.country_code : "NO TIENE";
+				transaccionPasarelaTarjetaMarca = (typeof data.source !== "undefined") ? "-" + data.source.iin.card_brand : "NO TIENE";
+				transaccionPasarelaTarjetaTipo = (typeof data.source !== "undefined") ? "-" + data.source.iin.card_type : "NO TIENE";
+				transaccionPasarelaTarjetaCategoria = (typeof data.source !== "undefined") ? "-" + data.source.iin.card_category : "NO TIENE";
+				transaccionPasarelaTarjetaNumero = (typeof data.source !== "undefined") ? "-" + data.source.card_number : "NO TIENE";
+				transaccionPasarelaDispositivoIp = (typeof data.source !== "undefined") ? data.source.client.ip : "NO TIENE";
+				transaccionPasarelaCodigoAutorizacion = (typeof data.authorization_code !== "undefined") ? data.authorization_code : "NO TIENE";
+				transaccionPasarelaCodigoReferencia = (typeof data.reference_code !== "undefined") ? "-" + data.reference_code : "NO TIENE";
+				transaccionPasarelaCodigoRespuesta = (tipoVenta) ? tipoVenta : "NO TIENE";
+				transaccionPasarelaComision = (typeof data.fee_details !== "undefined") ? data.fee_details.variable_fee.total : "NO TIENE";
+				transaccionPasarelaIgv = (typeof data.total_fee_taxes !== "undefined") ? data.total_fee_taxes : "NO TIENE";
+				transaccionPasarelaMontoDepositar = (typeof data.transfer_amount !== "undefined") ? data.transfer_amount : "NO TIENE";
+				
 			    registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);
 
 		        $('#contenedor_de_cargador').fadeIn(1000).html("Se realizó con éxito la transferencia");
@@ -506,7 +522,6 @@
 		 	}
 		})
 		.fail(function( jqXHR, textStatus, errorThrown ) {
-		    //console.log( "La solicitud a fallado: " +  textStatus);
          	$('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
          	$('#modal').modal('hide');
 			mensajeUsuario = null;

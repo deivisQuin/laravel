@@ -60,7 +60,8 @@ Route::post("producto/transaccion", "CorreoController@sendMail");
 Route::get("empresa/{empresaRuc}", "EmpresaController@obtenerRuc")->middleware("throttle:3");//throttle:3 max número de intentos
 
 //LOs clientes inician escogiendo los productos de la empresa
-Route::get("producto/{empresaRuc}", "ProductoController@obtenerRuc")->middleware("throttle:3");
+//Route::get("producto/{empresaRuc}", "ProductoController@obtenerRuc")->middleware("throttle:3");
+Route::get("producto/{empresaRuc}", "ProductoController@obtenerRuc");
 
 //Se valida datos del formulario
 Route::post("empresa/validarFormulario", "EmpresaController@validarFormulario");
