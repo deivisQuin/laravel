@@ -107,4 +107,36 @@ class CorreoController extends Controller
 
         return redirect()->back()->with("success", "Email enviado");
     }
+
+    public function enviarCorreo($transaccionId){
+        $aTransaccion = Transaccion::where("transaccionId", "=", $transaccionId)->first();
+
+        //Enviamos los correos al cliente y al comercio
+        $correo = new MessageReceived(
+            $aTransaccion->transaccionMonto,
+            $aTransaccion->transaccionDescripcion,
+            "1",
+            "",
+            "",
+            "");
+
+        Mail::to($aTransaccion->transaccionComercioCorreo)
+                ->cc($aTransaccion->transaccionClienteCorreo)
+                ->send($correo);
+
+        //Se envia Correo al cliente
+        $correo = new MessageReceived(
+            $aTransaccion->transaccionMonto,
+            $aTransaccion->transaccionDescripcion,
+            "4",
+            $aTransaccion->transaccionClientePassword,
+            $aTransaccion->transaccionClientePasswordLink,
+            $aTransaccion->transaccionId
+        );
+
+        Mail::to($aTransaccion->transaccionClienteCorreo)
+                ->send($correo);
+
+        return $aTransaccion->transaccionMonto;
+    }
 }

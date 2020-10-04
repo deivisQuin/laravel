@@ -26,4 +26,8 @@ class Estado extends Model
     public function sublineas(){
     	return $this->hasMany('App\Sublinea' , 'sublineaEstadoId');
     }
+
+    public function ordens(){
+    	return $this->hasMany('App\Orden' , 'ordenEstadoId');
+    }
 }

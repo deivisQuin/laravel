@@ -52,7 +52,9 @@ Route::get("usuario/listar", "UserController@index");
 //Producto
 Route::get("producto/obtener/{productoId}", "ProductoController@obtenerProducto");
 Route::post("producto/validarFormularioCarrito", "ProductoController@validarFormularioCarrito");
-Route::post("producto/transaccion", "CorreoController@sendMail");
+//Route::post("producto/transaccion", "CorreoController@sendMail");
+Route::post("producto/transaccion", "TransaccionController@registrar");
+//Route::get("producto/correo", "CorreoController@enviarCorreo");
 
 
 //Pago libre:
@@ -82,6 +84,12 @@ Route::post("nuevoEstado", "TransaccionController@modificarEstado");
 
 //Al concluir la transaccion el sistema le muestra la respuesta de agradecimiento
 Route::get("gracias/graciasCambioEstado/{transaccionId}/{transaccionTipo}", "TransaccionController@graciasCambioEstado");
+
+
+//PRUEBA QR ELIMINAR
+Route::get("gracias/graciasQR", "TransaccionController@graciasQR");
+// https://github.com/SimpleSoftwareIO/simple-qrcode/issues/21  revisar la siguiente página.
+
 
 
 //Paginas de errores (Se redireccionan)

@@ -43,16 +43,20 @@ class MessageReceived extends Mailable
     public function build()
     {
         if ($this->enviarCorreoTipo === "1") {
-            //$this->view('emails.message-received')->subject("Pago Libre - Anuncio de Compra");
             $this->view('emails.mensajeAnuncio')->subject("Pago Libre - Informe del Pedido");
         }
         if ($this->enviarCorreoTipo === "2") {
-            //$this->view('emails.message-comercio')->subject("Pago Libre - Link del Cambio de estado de Comercio");
             $this->view('emails.mensajeConfirmacion')->subject("Pago Libre - Confirmar Entrega del Pedido");
         }
         if ($this->enviarCorreoTipo === "3") {
-            //$this->view('emails.message-comercio')->subject("Pago Libre - Link del Cambio de estado de Cliente");
             $this->view('emails.mensajeConfirmacion')->subject("Pago Libre - Confirmar Recibimiento del Pedido");
+        }
+        //para imprimir el código QR
+        if ($this->enviarCorreoTipo === "4") {
+            //$variable = \QrCode::size(100)->generate("www.nigmacode.com");
+            //$variable = \QrCode::format("svg")->size(300)->generate("www.nigmacode.com");
+            $variable = "hola";
+            $this->view('emails.mensajeConfirmacionQR', compact("variable"))->subject("Pago Libre - Confirmar Recibimiento del Pedido");
         }
     }
 }
