@@ -35,7 +35,8 @@
                 <th>Monto Realizado</th>
                 <th>Estado</th>
                 <th>Entregado</th>
-                <th>Recibido</th>
+                <!--<th>Recibido</th>-->
+                <th>Contraseña</th>
             </tr>
         </thead>
         <tbody>
@@ -55,7 +56,8 @@
                 <td>{{$venta->transaccionMonto}}</td>
                 <td><span style="color:<?php echo $colorEstado;?>"><strong>{{$venta->estado->estadoNombre}}</strong></span></td>
                 <td><span style="color:<?php echo $colorComercioEstado;?>"><strong>{{($venta->transaccionComercioEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>
-                <td><span style="color:<?php echo $colorClienteEstado;?>"><strong>{{($venta->transaccionClienteEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>
+                <!--<td><span style="color:<?php echo $colorClienteEstado;?>"><strong>{{($venta->transaccionClienteEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>-->
+                <td>{{$venta->transaccionComercioPassword}}</td>
             </tr>
             @endforeach
         </tbody>

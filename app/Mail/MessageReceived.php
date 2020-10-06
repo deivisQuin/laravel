@@ -57,10 +57,8 @@ class MessageReceived extends Mailable
         }
         //para imprimir el código QR
         if ($this->enviarCorreoTipo === "4") {
-            $qrCode = new Generator;
-            //$imagen = $qrCode->size(200)->generate("hola");
+            //$qrCode = new Generator;
             //$imagen = $qrCode->format('png')->merge('https://image.flaticon.com/icons/png/512/838/838608.png', .3, true)->size(200)->generate("hola");
-            //$imagen = \QrCode::format("png")->size(200)->generate('https://comparadordeventas.com/pagolibre/public/nuevoEstado/13/$2y$10$TvsMCB0tPCqq8OUmVfMAc.EBc7gK0S88AQiCSiiEcYamlz93VXLFe/1', '../public/qrcodes/15.png');
             $imagenQR = \QrCode::format("png")->size(200)->generate('https://comparadordeventas.com/pagolibre/public/nuevoEstado/'.$this->transaccionId.'/'.$this->transaccionComercioPasswordLink.'/1', '../public/qrcodes/'.$this->transaccionId.'.png');
             $imagen = $this->transaccionId;
             $this->view('emails.mensajeConfirmacionQR', compact("imagen"))->subject("Pago Libre - Confirmar Recibimiento del Pedido");
