@@ -110,6 +110,7 @@ class TransaccionController extends Controller
         //Se obtiene las ventas de la empresa
         $aTransaccion = Transaccion::where("empresaId", "=", $empresaId)
                         ->where("transaccionFechaCrea", "like", "$transaccionFechaCrea%")
+                        ->orderBy("transaccionId", "desc")
                         ->paginate(10);
         return response()->json(view("empresaTransaccion.empresaTransaccion", compact("aTransaccion"))->render());
     }
