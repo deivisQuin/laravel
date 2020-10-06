@@ -99,8 +99,6 @@
 							<div class="alert-message" id="telefonoError"></div>
 						</div>
 					</div>
-	  				
-					
 				</div>
 
 		        <div class="form-group">
@@ -109,46 +107,45 @@
 		        </div>
 
 				<div class="row">
-				<div class="col">
-				
-				<table class="table table-hover">
-	  				<thead>
-	  					<tr>
-	  						<th>Producto</th>
-							<th>Precio</th>
-							<th>Cantidad</th>
-							<th>Monto</th>
-						</tr>
-					</thead>
-					<tbody>
-					@foreach($aProducto as $producto)
-	  					<tr>
-	  						<td>
-							  <span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
-							  <input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
-							</td>
-							<td>
-								<span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->producto->productoPrecio}}</span>
-	  							<input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
-							</td>
-	  						<td>
-								<select id="idSelectCantidad_{{$producto->producto->productoId}}" 
-									idProducto="{{$producto->producto->productoId}}" class="claseSelectCantidad">
-									<option value="0">0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-								</select>
-							</td>
-							<td align="right"><strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
-	  							<input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
-							</td>
-						</tr>
-					@endforeach
-					</tbody>
-				</table>
-				</div>
+					<div class="col">
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Producto</th>
+									<th>Precio</th>
+									<th>Cantidad</th>
+									<th>Monto</th>
+								</tr>
+							</thead>
+							<tbody>
+							@foreach($aProducto as $producto)
+								<tr>
+									<td>
+									<span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
+									<input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
+									</td>
+									<td>
+										<span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->producto->productoPrecio}}</span>
+										<input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
+									</td>
+									<td>
+										<select id="idSelectCantidad_{{$producto->producto->productoId}}" 
+											idProducto="{{$producto->producto->productoId}}" class="claseSelectCantidad">
+											<option value="0">0</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+										</select>
+									</td>
+									<td align="right"><strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
+										<input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
+									</td>
+								</tr>
+							@endforeach
+							</tbody>
+						</table>
+					</div>
 				</div>
 
 		        <div class="form-group">
@@ -170,7 +167,6 @@
 <script src="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.js"></script>
 <script src="https://comparadordeventas.com/pagolibre/public/js/producto/iniciar.js"></script>
 @endif
-
 
 <script type="text/javascript">
 

@@ -210,7 +210,7 @@ function validarDatos(monto, producto, empresaEmail, empresaRuc){
                 
             } else {
                 iniciaCulqi();
-                //console.log("inicia pago");
+                console.log("inicia pago");
             }
         },
         error: function(response) {//Si hubo algún problema en el servidor o no pasó la validación
@@ -235,7 +235,7 @@ function validarDatos(monto, producto, empresaEmail, empresaRuc){
     })
 }
 
-function iniciaCulqi(){
+function iniciaCulqi(){console.log("metodo inicia culqi");
     Culqi.options({
         lang: 'auto',
         modal: true,
