@@ -1,5 +1,5 @@
 //Culqi.publicKey = 'pk_test_4838227e3d8eadce'; panel de integración
-Culqi.publicKey = 'pk_test_reBdFmDKUoZYO4kT'; // Panel administrativo
+Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
 
 var producto = "";
 var precio = "";
