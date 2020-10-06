@@ -19,13 +19,15 @@ class MessageReceived extends Mailable
     public $transaccionComercioClientePassword;
     public $transaccionComercioClientePasswordLink;
     public $transaccionId;
+    public $transaccionComercioPasswordLink;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($subject, $content, $enviarCorreoTipo, $transaccionComercioClientePassword, $transaccionComercioClientePasswordLink, $transaccionId)
+    public function __construct($subject, $content, $enviarCorreoTipo, $transaccionComercioClientePassword, $transaccionComercioClientePasswordLink, 
+                                $transaccionId, $transaccionComercioPasswordLink)
     {
         $this->subject = $subject;
         $this->content = $content;
@@ -34,6 +36,7 @@ class MessageReceived extends Mailable
         $this->transaccionComercioClientePasswordLink = $transaccionComercioClientePasswordLink;
         $this->enviarCorreoTipo = $enviarCorreoTipo;
         $this->transaccionId = $transaccionId;
+        $this->transaccionComercioPasswordLink = $transaccionComercioPasswordLink;
     }
 
     /**
@@ -58,7 +61,7 @@ class MessageReceived extends Mailable
             //$imagen = $qrCode->size(200)->generate("hola");
             //$imagen = $qrCode->format('png')->merge('https://image.flaticon.com/icons/png/512/838/838608.png', .3, true)->size(200)->generate("hola");
             //$imagen = \QrCode::format("png")->size(200)->generate('https://comparadordeventas.com/pagolibre/public/nuevoEstado/13/$2y$10$TvsMCB0tPCqq8OUmVfMAc.EBc7gK0S88AQiCSiiEcYamlz93VXLFe/1', '../public/qrcodes/15.png');
-            $imagenQR = \QrCode::format("png")->size(200)->generate('https://comparadordeventas.com/pagolibre/public/nuevoEstado/'.$this->transaccionId.'/'.$this->transaccionComercioClientePasswordLink.'/1', '../public/qrcodes/'.$this->transaccionId.'.png');
+            $imagenQR = \QrCode::format("png")->size(200)->generate('https://comparadordeventas.com/pagolibre/public/nuevoEstado/'.$this->transaccionId.'/'.$this->transaccionComercioPasswordLink.'/1', '../public/qrcodes/'.$this->transaccionId.'.png');
             $imagen = $this->transaccionId;
             $this->view('emails.mensajeConfirmacionQR', compact("imagen"))->subject("Pago Libre - Confirmar Recibimiento del Pedido");
         }

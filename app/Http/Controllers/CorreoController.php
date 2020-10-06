@@ -118,6 +118,7 @@ class CorreoController extends Controller
             "1",
             "",
             "",
+            "",
             "");
 
         Mail::to($aTransaccion->transaccionComercioCorreo)
@@ -131,7 +132,8 @@ class CorreoController extends Controller
             "4",
             $aTransaccion->transaccionClientePassword,
             $aTransaccion->transaccionClientePasswordLink,
-            $aTransaccion->transaccionId
+            $aTransaccion->transaccionId,
+            $aTransaccion->transaccionComercioPasswordLink
         );
 
         Mail::to($aTransaccion->transaccionClienteCorreo)
