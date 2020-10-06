@@ -1,4 +1,4 @@
-//Culqi.publicKey = 'pk_test_4838227e3d8eadce';
+Culqi.publicKey = 'pk_test_4838227e3d8eadce';
 
 var producto = "";
 var precio = "";
@@ -142,9 +142,9 @@ $(".claseBotonEnviar").on("click", function(event){
         }
 
         //Validamos datos desde el servidor
-        //validarDatos(monto, producto, empresaEmail, empresaRuc);
+        validarDatos(monto, producto, empresaEmail, empresaRuc);
 
-        
+        /*
         $token = "ggtbfrjjbhgrffr"; //Este valor lo obtenemos desde el modal de culqi desde: culqi.token
         clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
         transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
@@ -163,7 +163,7 @@ $(".claseBotonEnviar").on("click", function(event){
         transaccionPasarelaCodigoRespuesta = "venta_exitosa";
         transaccionPasarelaComision = "0.042";
         transaccionPasarelaIgv = "4536";
-        transaccionPasarelaMontoDepositar = "570264";
+        transaccionPasarelaMontoDepositar = "570264";*/
 
         registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
                 transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, 
@@ -209,8 +209,8 @@ function validarDatos(monto, producto, empresaEmail, empresaRuc){
                 $("#idDivMensajeCabeceraError").show();
                 
             } else {
-                //iniciaCulqi();
-                console.log("inicia pago");
+                iniciaCulqi();
+                //console.log("inicia pago");
             }
         },
         error: function(response) {//Si hubo algún problema en el servidor o no pasó la validación
@@ -301,7 +301,7 @@ function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEma
         type: "POST",
         data: data,
         success:function(response){
-            $('#modal').modal('hide');console.log("se registró la transferencia y se envió el correo");
+            $('#modal').modal('hide');//console.log("se registró la transferencia y se envió el correo");
             /*if (document.domain == "localhost") {
                 $(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
             } else {

@@ -159,7 +159,7 @@
 	</div>
 </div>
 
-<!--<script src="https://checkout.culqi.com/js/v3"></script>-->
+<script src="https://checkout.culqi.com/js/v3"></script>
 
 @if ($_SERVER['SERVER_NAME'] == "localhost")
     <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
