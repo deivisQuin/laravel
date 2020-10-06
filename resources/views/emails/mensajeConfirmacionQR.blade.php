@@ -19,7 +19,8 @@ hola el siguiente es el códigoQR:
     
     <!--<img src="{{asset('qrcodes/qrcode.svg')}}" alt = "Si no se visualiza el codigo QR descargalo desde:">-->
     
-    <img src="{{asset('imagen/cargador_nuevo_sol.gif')}}">
+    <!--<img src="{{asset('imagen/cargador_nuevo_sol.gif')}}">-->
+    <img src="{{asset('qrcodes/qrcode.png')}}">
     
 
     <!--{!! QrCode::size(250)->generate('www.google.com'); !!} -->
