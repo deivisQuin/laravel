@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use SimpleSoftwareIO\QrCode\Generator;
 
 class MessageReceived extends Mailable
 {
@@ -53,10 +54,11 @@ class MessageReceived extends Mailable
         }
         //para imprimir el código QR
         if ($this->enviarCorreoTipo === "4") {
-            //$variable = \QrCode::size(100)->generate("www.nigmacode.com");
-            //$variable = \QrCode::format("svg")->size(300)->generate("www.nigmacode.com");
-            $variable = "hola";
-            $this->view('emails.mensajeConfirmacionQR', compact("variable"))->subject("Pago Libre - Confirmar Recibimiento del Pedido");
+            $qrCode = new Generator;
+            //$imagen = $qrCode->size(200)->generate("hola");
+            $imagen = $qrCode->format('png')->merge('https://image.flaticon.com/icons/png/512/838/838608.png', .3, true)->size(200)->generate("hola");
+            
+            $this->view('emails.mensajeConfirmacionQR', compact("imagen"))->subject("Pago Libre - Confirmar Recibimiento del Pedido");
         }
     }
 }

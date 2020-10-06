@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Transaccion;
 use App\Empresa;
 use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Generator;
 
 class TransaccionController extends Controller
 {
@@ -182,11 +183,14 @@ class TransaccionController extends Controller
 
     //Eliminar prueba de codigo QR
     public function graciasQR(Request $request){
-        $imagen = \QrCode::format("svg")->size(300)->generate("www.nigmacode.com", "../public/qrcodes/qrcode.svg");
-        
-        //return view("emails.mensajeConfirmacionQR"); 
-        //return $imagen;
-        //return response()->json(view("emails.mensajeConfirmacionQR",compact("imagen"))->render());
+        //$imagen = \QrCode::format("svg")->size(300)->generate("www.nigmacode.com", "../public/qrcodes/qrcode.svg");
+        $qrCode = new Generator;
+        //$imagen = $qrCode->size(200)->generate("hola");
+
+        //$imagen = $qrCode->format('png')->merge('https://image.flaticon.com/icons/png/512/838/838608.png', .3, true)->size(200)->generate("hola");
+        //return view("emails.mensajeConfirmacionQR",compact("imagen"));
+        $imagen = \QrCode::format("png")->size(300)->generate("www.nigmacode.com", "../public/qrcodes/qrcode.png");
+
         return view("emails.mensajeConfirmacionQR",compact("imagen"));
         
     }

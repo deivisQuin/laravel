@@ -90,7 +90,13 @@ Route::get("gracias/graciasCambioEstado/{transaccionId}/{transaccionTipo}", "Tra
 Route::get("gracias/graciasQR", "TransaccionController@graciasQR");
 // https://github.com/SimpleSoftwareIO/simple-qrcode/issues/21  revisar la siguiente página.
 
-
+Route::get('qrcode', function () {
+    return QrCode::size(250)
+        ->backgroundColor(255, 255, 204)
+        ->format('png')
+        ->generate('MyNotePaper');
+    //return view("emails.mensajeConfirmacionQR");
+});
 
 //Paginas de errores (Se redireccionan)
 Route::any('{catchall}', function() {

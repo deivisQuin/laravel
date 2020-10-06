@@ -7,7 +7,8 @@
 </head>
 <body>
 hola el siguiente es el códigoQR:
-<?php //echo $imagen;?>
+<!--<span>{!! $imagen !!}</span>-->
+<!--<span><img src="data:image/png;base64, {!! base64_encode($imagen) !!} "></span>-->
 
     <div class="visible-print text-center">
         <!--{!! QrCode::size(100)->generate(Request::url()); !!}-->
@@ -16,7 +17,8 @@ hola el siguiente es el códigoQR:
     </div>
     
     
-    <img src="{{asset('qrcodes/qrcode.svg')}}">
+    <!--<img src="{{asset('qrcodes/qrcode.svg')}}" alt = "Si no se visualiza el codigo QR descargalo desde:">-->
+    
     <img src="{{asset('imagen/cargador_nuevo_sol.gif')}}">
     
 
