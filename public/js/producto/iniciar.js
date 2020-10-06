@@ -270,8 +270,8 @@ function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEma
     data = {
             "_token":_token,
             empresaEmail:empresaEmail,
-            //clienteEmail:clienteEmail,
-            clienteEmail:"jgalarza123456789@gmail.com",
+            clienteEmail:clienteEmail,
+            //clienteEmail:"jgalarza123456789@gmail.com",
             monto:monto,
             descripcion:descripcion,
             delivery:delivery,
