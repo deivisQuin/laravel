@@ -1,4 +1,5 @@
-Culqi.publicKey = 'pk_test_4838227e3d8eadce';
+//Culqi.publicKey = 'pk_test_4838227e3d8eadce'; panel de integración
+Culqi.publicKey = 'pk_test_reBdFmDKUoZYO4kT'; // Panel administrativo
 
 var producto = "";
 var precio = "";
@@ -29,7 +30,6 @@ $(".claseSelectCantidad").on("change", function(){
 
     if(cantidad > 0) {
         $(this).addClass("badge badge-primary");
-        //$("#idSpanProductoNombre_"+idProducto).addClass("badge badge-primary");
 
         $.ajax({
             data:{},
@@ -53,16 +53,14 @@ $(".claseSelectCantidad").on("change", function(){
                     let idMontoHidden = $(this).attr("id");
                     
                     if ($("#"+idMontoHidden).val()) {
-                        
-                        let cantidadDeCaracteres = idMontoHidden.length;
+                        //let cantidadDeCaracteres = idMontoHidden.length;
                         let producto_id = idMontoHidden.substr(14);
-                        
                         let producto_cantidad = $("#idSelectCantidad_"+producto_id).val();
                         let producto_nombre = $("#idHiddenProductoNombre_"+producto_id).val();
                         let producto_precio = $("#idHiddenProductoPrecio_"+producto_id).val();
-                        texto +="Cant: " + producto_cantidad + " Nombre: " + producto_nombre + " Precio: " + producto_precio + "---";
-
                         let montoHidden = parseFloat($("#"+idMontoHidden).val());
+
+                        texto +="Cant: " + producto_cantidad + " Nombre: " + producto_nombre + " Precio: " + producto_precio + "---";
                         montoTotal = montoTotal + montoHidden;
                     }
 
@@ -87,16 +85,14 @@ $(".claseSelectCantidad").on("change", function(){
             let idMontoHidden = $(this).attr("id");
             
             if ($("#"+idMontoHidden).val()) {
-                
-                let cantidadDeCaracteres = idMontoHidden.length;
+                //let cantidadDeCaracteres = idMontoHidden.length;
                 let producto_id = idMontoHidden.substr(14);
-                
                 let producto_cantidad = $("#idSelectCantidad_"+producto_id).val();
                 let producto_nombre = $("#idHiddenProductoNombre_"+producto_id).val();
                 let producto_precio = $("#idHiddenProductoPrecio_"+producto_id).val();
-                texto +="cant: " + producto_cantidad + "Nombre: " + producto_nombre + "precio: " + producto_precio +"---";
-
                 let montoHidden = parseFloat($("#"+idMontoHidden).val());
+
+                texto +="cant: " + producto_cantidad + "Nombre: " + producto_nombre + "precio: " + producto_precio +"---";
                 montoTotal = montoTotal + montoHidden;
             }
 
@@ -108,19 +104,15 @@ $(".claseSelectCantidad").on("change", function(){
     }
 })
 
-//$("#enviarId").on("click", function(event){
 $(".claseBotonEnviar").on("click", function(event){
     $("#divMensajeError").hide();
     $("#telefonoError").hide();
     $("#idDivMensajeCabeceraError").hide();
 
-
     monto = $("#idHiddenMontoTotal").val();
-//  		monto = $('#montoId').val();
     precio = monto * 100;
     precio = precio.toFixed(0);
     producto = $("#idHiddenDescripcion").val();
-    //producto = $('#descripcionId').val();
     empresaEmail = $('#empresaEmailId').val();
     empresaRuc = $("#empresaRucId").val();
     delivery = $("#idSelectDelivery").val();
@@ -175,8 +167,8 @@ $(".claseBotonEnviar").on("click", function(event){
 
     } else {
         //Validar campos por parte del front
-        
         mensajeError = "* Debe Seleccionar un producto";
+
         $("#idSpanMensajeCabeceraError").text(mensajeError);
         $("#idDivMensajeCabeceraError").show();
         
@@ -190,7 +182,6 @@ function validarDatos(monto, producto, empresaEmail, empresaRuc){
             producto:producto, 
             monto:monto, 
             empresaEmail:empresaEmail,
-            //"_token": "{{ csrf_token() }}",
             "_token":_token,
             empresaRuc: empresaRuc,
         };
@@ -210,7 +201,6 @@ function validarDatos(monto, producto, empresaEmail, empresaRuc){
                 
             } else {
                 iniciaCulqi();
-                console.log("inicia pago");
             }
         },
         error: function(response) {//Si hubo algún problema en el servidor o no pasó la validación
@@ -258,7 +248,6 @@ function iniciaCulqi(){console.log("metodo inicia culqi");
 
     // Abre el formulario con la configuración en Culqi.settings
     Culqi.open();
-    //event.preventDefault();
 }
 
 //Se registran los datos al servidor 
@@ -302,11 +291,11 @@ function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEma
         data: data,
         success:function(response){
             $('#modal').modal('hide');//console.log("se registró la transferencia y se envió el correo");
-            /*if (document.domain == "localhost") {
+            if (document.domain == "localhost") {
                 $(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
             } else {
                 $(window).attr('location','https://comparadordeventas.com/pagolibre/public/gracias');
-            }*/
+            }
         },
         error: function(response) {
             console.log("error");
@@ -343,9 +332,8 @@ function enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteE
     })
     .done(function( data, textStatus, jqXHR ) {
         if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};      
-        //$tipoVenta = "venta_exitosa";
+        
         if ( (typeof tipoVenta !== 'undefined') && (tipoVenta == "venta_exitosa")) {
-
             transaccionPasarelaPedidoId = (typeof data.id !== "undefined") ? data.id : "NO TIENE";
             transaccionPasarelaToken = (typeof data.source !== "undefined") ? data.source.id : "NO TIENE" ;
             transaccionPasarelaMonedaCodigo = (typeof data.currency_code !== "undefined") ? "-" + data.currency_code : "NO TIENE";
@@ -387,7 +375,9 @@ function enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteE
     .fail(function( jqXHR, textStatus, errorThrown ) {
         $('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
         $('#modal').modal('hide');
+
         mensajeUsuario = null;
+
         if (document.domain == "localhost") {
             $(window).attr('location','http://localhost/pagolibre/laravel/public/tarjetaNoProcede/' + mensajeUsuario);
         } else {
