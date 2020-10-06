@@ -190,7 +190,7 @@ class TransaccionController extends Controller
         //$imagen = $qrCode->format('png')->merge('https://image.flaticon.com/icons/png/512/838/838608.png', .3, true)->size(200)->generate("hola");
         //return view("emails.mensajeConfirmacionQR",compact("imagen"));
         //$imagen = \QrCode::format("png")->size(300)->generate("www.nigmacode.com", "../public/qrcodes/qrcode.png");
-        $imagen = \QrCode::format("png")->size(200)->generate('https://comparadordeventas.com/pagolibre/public/nuevoEstado/13/$2y$10$TvsMCB0tPCqq8OUmVfMAc.EBc7gK0S88AQiCSiiEcYamlz93VXLFe/1', '../public/qrcodes/13.png');
+        $imagen = \QrCode::format("png")->size(200)->generate('https://comparadordeventas.com/pagolibre/public/nuevoEstado/13/$2y$10$TvsMCB0tPCqq8OUmVfMAc.EBc7gK0S88AQiCSiiEcYamlz93VXLFe/1', '../public/qrcodes/14.png');
 
         return view("emails.mensajeConfirmacionQR",compact("imagen"));
         
