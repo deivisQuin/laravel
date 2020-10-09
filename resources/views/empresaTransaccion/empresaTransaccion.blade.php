@@ -4,8 +4,6 @@
     $montoAcumulado = 0;
 ?>
 
-<!-- Large modal -->
-<!-- Modal -->
 <div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -31,11 +29,9 @@
             <tr>
                 <th>Fecha</th>
                 <th>Monto A Recibir</th>
-                <th>Descuento</th>
                 <th>Monto Realizado</th>
                 <th>Estado</th>
                 <th>Entregado</th>
-                <!--<th>Recibido</th>-->
                 <th>Contraseña</th>
             </tr>
         </thead>
@@ -51,12 +47,10 @@
             ?>
             <tr class="claseTr" id="{{$venta->transaccionId}}">
                 <td>{{$venta->transaccionFechaCrea}}</td>
-                <td>{{$venta->transaccionPasarelaMontoDepositar}}</td>
-                <td>{{$venta->transaccionPasarelaComision}}</td>
+                <td>{{$venta->transaccionComercioMontoDepositar}}</td>                
                 <td>{{$venta->transaccionMonto}}</td>
                 <td><span style="color:<?php echo $colorEstado;?>"><strong>{{$venta->estado->estadoNombre}}</strong></span></td>
                 <td><span style="color:<?php echo $colorComercioEstado;?>"><strong>{{($venta->transaccionComercioEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>
-                <!--<td><span style="color:<?php echo $colorClienteEstado;?>"><strong>{{($venta->transaccionClienteEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>-->
                 <td>{{$venta->transaccionComercioPassword}}</td>
             </tr>
             @endforeach
@@ -65,11 +59,9 @@
             <tr>
                 <th>Total</th>
                 <th>{{number_format($montoDepositarAcumulado,2,".","")}}</th>
-                <th>{{number_format($comisionAcumulado,2,".","")}}</th>
                 <th>{{number_format($montoAcumulado,2,".","")}}</th>
             </tr>
         </tfoot>
-        
     </table>
     {{$aTransaccion->links()}}
 </div>

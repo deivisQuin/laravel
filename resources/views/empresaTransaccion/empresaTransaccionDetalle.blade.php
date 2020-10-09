@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <td><strong style='color:#28a745'>Descuento</strong></td>
-                <td>{{$aTransaccion->transaccionPasarelaComision}}</td>
+                <td>{{$aTransaccion->transaccionMonto - $aTransaccion->transaccionPasarelaMontoDepositar}}</td>
             </tr>
             <tr>
                 <td><strong style='color:#28a745'>Monto Realizado</strong></td>

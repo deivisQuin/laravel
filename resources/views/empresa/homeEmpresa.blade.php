@@ -36,8 +36,6 @@ $fechaActual = getdate();
                                 </select>
                             </div>
                         
-
-                        
                             <div class="col-sx-12 col-md-12 col-lg-2">
                                 <label class="input-group-text" for="idMes">Mes:</label>
                             </div>
@@ -57,8 +55,6 @@ $fechaActual = getdate();
                                     <option value = "12" <?php echo ($fechaActual["mon"] == "12") ? "selected" : "" ;?>>Diciembre</option>
                                 </select>
                             </div>
-                        
-
                         
                             <div class="col-sx-12  col-md-12 col-lg-2">
                                 <label class="input-group-text" for="idDia">Día:</label>
