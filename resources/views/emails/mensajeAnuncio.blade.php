@@ -4,13 +4,11 @@
 	<title></title>
 </head>
 <body>
-	<h2>Gracias por utilizar el servicio de Pago Libre.</h2>
-	Acabas de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
+	<h2>Pago Libre te anuncia:</h2>
+	Acaban de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
 	Por el producto y/o servicio de: <h3>{{$content}}.</h3><br>
 
-	Que disfrutes de tu nueva adquisición.<br>
-
-	Esperamos pronto volver a atenderte por nuestro canal de Pago Libre.<br><br>
+	Al momento de realizar la entrega del pedido escanea el código QR enviado al correo de tu cliente.<br><br>
 
 </body>
 </html>

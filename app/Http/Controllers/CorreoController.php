@@ -122,7 +122,6 @@ class CorreoController extends Controller
             "");
 
         Mail::to($aTransaccion->transaccionComercioCorreo)
-                ->cc($aTransaccion->transaccionClienteCorreo)
                 ->send($correo);
 
         //Se envia Correo al cliente

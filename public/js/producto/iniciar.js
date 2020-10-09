@@ -1,5 +1,5 @@
-//Culqi.publicKey = 'pk_test_4838227e3d8eadce'; panel de integración
-Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
+Culqi.publicKey = 'pk_test_4838227e3d8eadce'; //panel de integración
+//Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
 
 var producto = "";
 var precio = "";
@@ -256,6 +256,13 @@ function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEma
                 transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
                 transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
                 transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar){
+                
+                let transaccionPasarelaComisionFija = 110;
+                let transaccionPasarelaComisionFijaIgv = 20;
+                let transaccionComisionComercio = 20;
+                let transaccionComercioMontoDepositar = transaccionPasarelaMontoDepositar - transaccionPasarelaComisionFija - 
+                                                            transaccionPasarelaComisionFijaIgv - transaccionComisionComercio;
+
     data = {
             "_token":_token,
             empresaEmail:empresaEmail,
@@ -282,7 +289,11 @@ function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEma
             transaccionPasarelaCodigoRespuesta:transaccionPasarelaCodigoRespuesta,
             transaccionPasarelaComision:transaccionPasarelaComision,
             transaccionPasarelaIgv:transaccionPasarelaIgv,
+            transaccionPasarelaComisionFija:transaccionPasarelaComisionFija,
+            transaccionPasarelaComisionFijaIgv: transaccionPasarelaComisionFijaIgv,
             transaccionPasarelaMontoDepositar:transaccionPasarelaMontoDepositar,
+            transaccionComisionComercio:transaccionComisionComercio,
+            transaccionComercioMontoDepositar:transaccionComercioMontoDepositar
         }
 
     $.ajax({

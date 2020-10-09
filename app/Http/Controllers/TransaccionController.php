@@ -170,6 +170,10 @@ class TransaccionController extends Controller
         $transaccion->transaccionPasarelaComision = $request->input("transaccionPasarelaComision")/100;
         $transaccion->transaccionPasarelaIgv = $request->input("transaccionPasarelaIgv")/100;
         $transaccion->transaccionPasarelaMontoDepositar = $request->input("transaccionPasarelaMontoDepositar")/100;
+        $transaccion->transaccionPasarelaComisionFija = $request->input("transaccionPasarelaComisionFija")/100;
+        $transaccion->transaccionPasarelaComisionFijaIgv = $request->input("transaccionPasarelaComisionFijaIgv")/100;
+        $transaccion->transaccionComisionComercio = $request->input("transaccionComisionComercio")/100;
+        $transaccion->transaccionComercioMontoDepositar = $request->input("transaccionComercioMontoDepositar")/100;
         $transaccion->empresaId = $aEmpresa->empresaId;
 
         $transaccion->save();

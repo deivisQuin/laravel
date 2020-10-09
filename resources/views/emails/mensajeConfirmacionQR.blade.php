@@ -1,28 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-<!--    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-    <title>Document</title>
-</head>
-<body>
-hola el siguiente es el códigoQR:
-<!--<span>{!! $imagen !!}</span>-->
-<!--<span><img src="data:image/png;base64, {!! base64_encode($imagen) !!} "></span>-->
+    <head>
+        <title>Document</title>
+    </head>
+    <body>
+        <h2>Gracias por utilizar el servicio de Pago Libre.</h2>
+        Acabas de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
+        Por el producto y/o servicio de: <h3>{{$content}}.</h3><br>
 
-    <div class="visible-print text-center">
-        <!--{!! QrCode::size(100)->generate(Request::url()); !!}-->
-        <p>Escanéame para volver a la página principal.</p>
-        
-    </div>
-    
-    
-    <!--<img src="{{asset('qrcodes/qrcode.svg')}}" alt = "Si no se visualiza el codigo QR descargalo desde:">-->
-    
-    <!--<img src="{{asset('imagen/cargador_nuevo_sol.gif')}}">-->
-    <img src="{{asset('qrcodes/'.$imagen.'.png')}}">
-    
+        Presentar el siguiente códigoQR al momento de Recibir su producto:<br><br>
+        <!--<span>{!! $imagen !!}</span>-->
+        <!--<span><img src="data:image/png;base64, {!! base64_encode($imagen) !!} "></span>-->
+            
+        <img src="{{asset('qrcodes/'.$imagen.'.png')}}">    
 
-    <!--{!! QrCode::size(250)->generate('www.google.com'); !!} -->
-</body>
+        <!--{!! QrCode::size(250)->generate('https://comparadordeventas.com/pagolibre/public/producto/20602566251'); !!}-->
+    </body>
 </html>

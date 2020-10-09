@@ -46,7 +46,11 @@ class CreateTransaccionTable extends Migration
             $table->string("transaccionPasarelaCodigoRespuesta", 100);
             $table->decimal("transaccionPasarelaComision", 8, 2);
             $table->decimal("transaccionPasarelaIgv", 8, 2);
+            $table->decimal("transaccionPasarelaComisionFija", 8, 2);
+            $table->decimal("transaccionPasarelaComisionFijaIgv", 8, 2);
             $table->decimal("transaccionPasarelaMontoDepositar", 8, 2);
+            $table->decimal("transaccionComisionComercio", 8, 2);
+            $table->decimal("transaccionComercioMontoDepositar", 8, 2);
             $table->bigInteger("empresaId")->unsigned();
             $table->foreign('empresaId')->references('empresaId')->on('empresa')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('transaccionEstadoId')->references('estadoId')->on('estado')->onDelete('cascade')->onUpdate('cascade');
