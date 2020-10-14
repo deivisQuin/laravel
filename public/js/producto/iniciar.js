@@ -1,5 +1,5 @@
-Culqi.publicKey = 'pk_test_4838227e3d8eadce'; //panel de integración
-//Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
+//Culqi.publicKey = 'pk_test_4838227e3d8eadce'; //panel de integración
+Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
 
 var producto = "";
 var precio = "";
@@ -355,7 +355,7 @@ function registrarOrden(aProducto, data){
             if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
 
             clienteEmail = data.email;
-            
+
             if ( (typeof tipoVenta !== 'undefined') && (tipoVenta == "venta_exitosa")) {
                 transaccionPasarelaPedidoId = (typeof data.id !== "undefined") ? data.id : "NO TIENE";
                 transaccionPasarelaToken = (typeof data.source !== "undefined") ? data.source.id : "NO TIENE" ;
