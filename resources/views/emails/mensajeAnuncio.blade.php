@@ -23,7 +23,7 @@
 		@endforeach
 		</tbody>
 	</table>
-
+	<br>
 	Al momento de realizar la entrega del pedido escanea el código QR enviado al correo de tu cliente.<br><br>
 
 </body>

@@ -352,7 +352,9 @@ function registrarOrden(aProducto, data){
                 transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
                 transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
             */ 
-            if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};      
+            if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
+
+            clienteEmail = data.email;
             
             if ( (typeof tipoVenta !== 'undefined') && (tipoVenta == "venta_exitosa")) {
                 transaccionPasarelaPedidoId = (typeof data.id !== "undefined") ? data.id : "NO TIENE";
@@ -515,7 +517,7 @@ function enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteE
         dataType: "json",
         url: url,
     })
-    .done(function( data, textStatus, jqXHR ) {
+    .done(function( data, textStatus, jqXHR ) {console.log(data);
         generarOrden(data);
         /*if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};      
         

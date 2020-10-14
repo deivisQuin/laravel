@@ -23,7 +23,7 @@
             @endforeach
             </tbody>
         </table>
-
+        <br>
         Presentar el siguiente códigoQR al momento de Recibir su producto:<br><br>
         <!--<span>{!! $imagen !!}</span>-->
         <!--<span><img src="data:image/png;base64, {!! base64_encode($imagen) !!} "></span>-->
