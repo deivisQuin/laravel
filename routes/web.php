@@ -55,6 +55,8 @@ Route::post("producto/validarFormularioCarrito", "ProductoController@validarForm
 //Route::post("producto/transaccion", "CorreoController@sendMail");
 Route::post("producto/transaccion", "TransaccionController@registrar");
 //Route::get("producto/correo", "CorreoController@enviarCorreo");
+Route::get("producto/obtenerEmpresaUbigeo/{empresaUbigeoId}", "EmpresaUbigeoController@obtenerJson");
+Route::post("producto/registrarOrden", "OrdenController@crear");
 
 
 //Pago libre:

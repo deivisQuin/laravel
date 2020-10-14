@@ -6,7 +6,23 @@
     <body>
         <h2>Gracias por utilizar el servicio de Pago Libre.</h2>
         Acabas de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
-        Por el producto y/o servicio de: <h3>{{$content}}.</h3><br>
+        Por el producto y/o servicio de: <br><b>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach($content as $pedidoDetalle)
+                <tr>
+                    <td>{{$pedidoDetalle->productoNombre}}</td>
+                    <td>{{$pedidoDetalle->ODCantidad}}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
 
         Presentar el siguiente códigoQR al momento de Recibir su producto:<br><br>
         <!--<span>{!! $imagen !!}</span>-->

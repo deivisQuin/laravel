@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Empresa;
 use App\EmpresaLineaSublineaProducto;
 use App\Producto;
+use App\EmpresaUbigeo;
 
 class ProductoController extends Controller
 {
@@ -21,7 +22,10 @@ class ProductoController extends Controller
         if ( isset($aEmpresa->empresaId) ) {   
             //$aProducto = EmpresaLineaSublineaProducto::where("ELSPEmpresaId", "=", 1)->paginate(10);
             $aProducto = EmpresaLineaSublineaProducto::where("ELSPEmpresaId", "=", $aEmpresa->empresaId)->get();
-            return view("iniciar", compact(["aEmpresa", "aProducto"]));
+            //Se obtiene los lugares de delivery de la empresa
+            $aEmpresaUbigeo = EmpresaUbigeo::where("EUEmpresaId", "=", $aEmpresa->empresaId)->get();
+
+            return view("iniciar", compact(["aEmpresa", "aProducto", "aEmpresaUbigeo"]));
         } else {
             return view("empresaNoRegistrada", compact("aEmpresa"));
         }

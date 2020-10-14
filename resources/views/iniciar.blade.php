@@ -24,19 +24,21 @@
 		<div class="card-header">
 	  		<div class="row">
 			  	<div class="col-md-12  fixed-top">
-				  <strong class="h2"><span class="badge badge-danger">Total S/.  </span><span id="idSpanMontoTotal" class="badge badge-danger"></span>
-				  <button id="idBotonPagarCabecera" class="claseBotonEnviar btn btn-success"><i class="fas fa-credit-card"></i> PAGAR</button></strong>
-				  
-				  <input type="hidden" id="idHiddenMontoTotal" value="">
-				  <input type="hidden" id="idHiddenDescripcion" value="">
-				  <br>
+				  <div class="row">
+					<strong class="h2"><span class="badge badge-danger">Total S/.  </span><span id="idSpanMontoTotal" class="badge badge-danger"></span>
+					<button id="idBotonPagarCabecera" class="claseBotonEnviar btn btn-success"><i class="fas fa-credit-card"></i> PAGAR</button></strong>
+					
+					<input type="hidden" id="idHiddenPrecioTotal" value="">
+					<input type="hidden" id="idHiddenDescripcion" value="">
+					<input type="hidden" id="idHiddenMontoTotal" value="">
+					
+				  </div>
+				  <div class="row">
+					<div id="idDivMensajeCabeceraError" class="col-md-12">
+						<strong class="h6"><span class="badge badge-danger h2" id="idSpanMensajeCabeceraError"></span></strong>
+					</div>
+				  </div>
 				</div>
-				<br><br>
-				<div id="idDivMensajeCabeceraError" class="col-md-12  fixed-top"><br><br>
-					<strong class="h6"><span class="badge badge-danger h2" id="idSpanMensajeCabeceraError"></span></strong>
-				</div>
-
-
 			  <div class="col-md-8">
 			  	<h2 class="panel-heading"><strong>Pago Libre</strong></h2>
 			  </div>
@@ -88,15 +90,27 @@
 				</div>
 				<div class="form-group">
 	  				<div class="row">
-	  					<div class="col-sx-12 col-md-12 col-lg-6">
+	  					<div class="col-sx-12 col-md-12 col-lg-4">
 							<select name="nameSelectDelivery" id="idSelectDelivery">
 								<option value="1">No Delivery</option>
 								<option value="2">Delivery</option>
 							</select>  
 						</div>
-						<div class="col-sx-12 col-md-12 col-lg-6">
+						<div class="col-sx-12 col-md-12 col-lg-4">
 							<input type="text" id="idTelefonoDelivery" placeholder="Teléfono">
 							<div class="alert-message" id="telefonoError"></div>
+						</div>
+						<div class="col-sx-12 col-md-12 col-lg-4">
+							<input type="hidden" id="idHiddenPrecioDelivery" value="">
+							<div id="idDivEmpresaUbigeo">
+								<select name="nameEmpresaUbigeo" id="idSelectEmpresaUbigeo" >
+									<option value="0">Elegir Distrito</option>
+									@foreach($aEmpresaUbigeo as $empresaUbigeo)
+										<option value="{{$empresaUbigeo->EUId}}">{{$empresaUbigeo->ubigeo->ubigeoNombre}} : {{$empresaUbigeo->EUPrecioDelivery}}</option>
+									@endforeach
+								</select>
+								<div class="alert-message" id="distritoError"></div>
+							</div>
 						</div>
 					</div>
 				</div>

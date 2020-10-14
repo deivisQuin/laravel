@@ -26,11 +26,11 @@ class MessageReceived extends Mailable
      *
      * @return void
      */
-    public function __construct($subject, $content, $enviarCorreoTipo, $transaccionComercioClientePassword, $transaccionComercioClientePasswordLink, 
+    public function __construct($subject, $aOrdenDetalle, $enviarCorreoTipo, $transaccionComercioClientePassword, $transaccionComercioClientePasswordLink, 
                                 $transaccionId, $transaccionComercioPasswordLink)
     {
         $this->subject = $subject;
-        $this->content = $content;
+        $this->content = $aOrdenDetalle;
         $this->monto = $subject;
         $this->transaccionComercioClientePassword = $transaccionComercioClientePassword;
         $this->transaccionComercioClientePasswordLink = $transaccionComercioClientePasswordLink;

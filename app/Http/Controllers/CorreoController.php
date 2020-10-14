@@ -8,6 +8,9 @@ use App\Mail\MessageReceived;
 
 use App\Transaccion;
 use App\Empresa;
+use App\OrdenDetalle;
+
+use Illuminate\Support\Facades\DB;
 
 class CorreoController extends Controller
 {
@@ -110,11 +113,17 @@ class CorreoController extends Controller
 
     public function enviarCorreo($transaccionId){
         $aTransaccion = Transaccion::where("transaccionId", "=", $transaccionId)->first();
-
+        //Se obtiene el detalle del pedido
+        $aOrdenDetalle = DB::select(" SELECT P.productoNombre, OD.ODCantidad 
+                                        FROM orden_detalle OD
+                                        LEFT JOIN producto P ON (P.productoId = OD.ODProductoId)
+                                        WHERE OD.ODOrdenId = $aTransaccion->transaccionOrdenId AND P.productoEstadoId = 1 ");
+        
         //Enviamos los correos al cliente y al comercio
         $correo = new MessageReceived(
             $aTransaccion->transaccionMonto,
-            $aTransaccion->transaccionDescripcion,
+            //$aTransaccion->transaccionDescripcion,
+            $aOrdenDetalle,
             "1",
             "",
             "",
@@ -127,7 +136,8 @@ class CorreoController extends Controller
         //Se envia Correo al cliente
         $correo = new MessageReceived(
             $aTransaccion->transaccionMonto,
-            $aTransaccion->transaccionDescripcion,
+            //$aTransaccion->transaccionDescripcion,
+            $aOrdenDetalle,
             "4",
             $aTransaccion->transaccionClientePassword,
             $aTransaccion->transaccionClientePasswordLink,

@@ -122,12 +122,12 @@ class TransaccionController extends Controller
     }
 
     public function registrar(Request $request) {
-        $empresaRuc = $request->input("empresaRuc");
+        $empresaRuc     = $request->input("empresaRuc");
         $comercioCorreo = $request->input("empresaEmail");
-        $clienteCorreo = $request->input("clienteEmail");
-        $monto = $request->input("monto");
-        $descripcion = $request->input("descripcion");
-
+        $clienteCorreo  = $request->input("clienteEmail");
+        $monto          = $request->input("monto");
+        $descripcion    = $request->input("descripcion");
+        
         //Se obtienen los datos de la empresa
         $aEmpresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
 
@@ -174,7 +174,8 @@ class TransaccionController extends Controller
         $transaccion->transaccionPasarelaComisionFijaIgv = $request->input("transaccionPasarelaComisionFijaIgv")/100;
         $transaccion->transaccionComisionComercio = $request->input("transaccionComisionComercio")/100;
         $transaccion->transaccionComercioMontoDepositar = $request->input("transaccionComercioMontoDepositar")/100;
-        $transaccion->empresaId = $aEmpresa->empresaId;
+        $transaccion->transaccionEmpresaId = $aEmpresa->empresaId;
+        $transaccion->transaccionOrdenId = $request->input("ordenId");
 
         $transaccion->save();
 
@@ -189,7 +190,6 @@ class TransaccionController extends Controller
     //Eliminar prueba de codigo QR
     public function graciasQR(Request $request){
         $qrCode = new Generator;
-
         //$imagen = $qrCode->format('png')->merge('https://image.flaticon.com/icons/png/512/838/838608.png', .3, true)->size(200)->generate("hola");
         //return view("emails.mensajeConfirmacionQR",compact("imagen"));
         $imagen = \QrCode::format("png")->size(200)->generate('https://comparadordeventas.com/pagolibre/public/nuevoEstado/13/$2y$10$TvsMCB0tPCqq8OUmVfMAc.EBc7gK0S88AQiCSiiEcYamlz93VXLFe/1', '../public/qrcodes/15.png');

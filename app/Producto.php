@@ -27,4 +27,5 @@ class Producto extends Model
     public function empresas() {
         return $this->belongsToMany(Empresa::class);
     }
+
 }

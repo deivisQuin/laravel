@@ -22,4 +22,8 @@ class Empresa extends Model
     public function productos(){
     	return $this->belongsToMany(Producto::class);
     }
+
+    public function empresa_ubigeos(){
+        return $this->hasMany(EmpresaUbigeo::class, "empresaId", "EUEmpresaId");
+    }
 }

@@ -15,13 +15,13 @@ class CreateOrdenTable extends Migration
     {
         Schema::create('orden', function (Blueprint $table) {
             $table->bigIncrements("ordenId");
-            $table->char("ordenDelivery",1)->nullable();
-            $table->string("ordenTelefono",15);
+            $table->char("ordenDelivery",1)->default("N");
+            $table->string("ordenTelefono",15)->nullable();
+            $table->bigInteger("ordenEUId")->nullable();
+            $table->longText("ordenComentario")->nullable();
             $table->bigInteger("ordenEstadoId")->unsigned();
-            $table->bigInteger("ordenTransaccionId")->unsigned();
+            $table->datetime("ordenFechaCrea");
             $table->foreign('ordenEstadoId')->references('estadoId')->on('estado')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('ordenTransaccionId')->references('transaccionId')->on('transaccion')->onDelete('cascade')->onUpdate('cascade');
-            //$table->timestamps();
         });
     }
 

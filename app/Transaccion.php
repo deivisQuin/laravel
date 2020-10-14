@@ -27,7 +27,7 @@ class Transaccion extends Model
         //return $this->belongsTo("App\Unidad_medida");
     }
 
-    public function orden(){
-    	return $this->hasOne('App\Orden' , 'ordenId');
-    }
+    /*public function orden(){
+    	return $this->hasOne('App\Orden' , '', 'ordenId');
+    }*/
 }

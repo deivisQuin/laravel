@@ -16,7 +16,13 @@
                         <?php $urlCrearUser = "https://comparadordeventas.com/pagolibre/public/register";?>
                         <?php $urlEditarUser = "https://comparadordeventas.com/pagolibre/public/user/edit";?>
                 @endif
+
+                @auth
+                    @if(isset(Auth::user()->usersRolId) && Auth::user()->usersRolId==1)
                         <a href="{{$urlCrearUser}}" class="btn btn-success mb-3">Crear Usuario</a>
+                    @endif
+                @endauth
+                        
                         <div id = "idDivListadoUser" class = "col-sm-12 col-md-12 col-xl-12">
                         @if(!isset($aUser))
                             No hay Usuarios registrados

@@ -10,6 +10,7 @@ var telefonoDelivery = "";
 var _token = "";
 
 $("#idTelefonoDelivery").hide();
+$("#idDivEmpresaUbigeo").hide();
 $("#montoError").hide();
 $("#idDivMensajeCabeceraError").hide();
 
@@ -17,10 +18,11 @@ $("#idSelectDelivery").on("change", function(){
     valorDelivery = $(this).val();
     if (valorDelivery == 2) {
         $("#idTelefonoDelivery").show();
+        $("#idDivEmpresaUbigeo").show();
     } else {
         $("#idTelefonoDelivery").hide();
+        $("#idDivEmpresaUbigeo").hide();
     }
-
 });
 
 $(".claseSelectCantidad").on("change", function(){
@@ -28,6 +30,14 @@ $(".claseSelectCantidad").on("change", function(){
     let idSelectCantidad = $(this).attr("id");
     let cantidad =$("#"+idSelectCantidad).val();
 
+    let precioDelivery = $("#idHiddenPrecioDelivery").val();
+
+    if (!precioDelivery) {
+        precioDelivery = 0.00;
+    }
+
+    precioDelivery = parseFloat(precioDelivery);
+    
     if(cantidad > 0) {
         $(this).addClass("badge badge-primary");
 
@@ -53,7 +63,6 @@ $(".claseSelectCantidad").on("change", function(){
                     let idMontoHidden = $(this).attr("id");
                     
                     if ($("#"+idMontoHidden).val()) {
-                        //let cantidadDeCaracteres = idMontoHidden.length;
                         let producto_id = idMontoHidden.substr(14);
                         let producto_cantidad = $("#idSelectCantidad_"+producto_id).val();
                         let producto_nombre = $("#idHiddenProductoNombre_"+producto_id).val();
@@ -64,8 +73,12 @@ $(".claseSelectCantidad").on("change", function(){
                         montoTotal = montoTotal + montoHidden;
                     }
 
-                    $("#idSpanMontoTotal").text(montoTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
-                    $("#idHiddenMontoTotal").val(montoTotal.toFixed(2));
+                    $("#idHiddenPrecioTotal").val(montoTotal.toFixed(2));
+                    
+                    let montoFinal = montoTotal + precioDelivery;
+
+                    $("#idSpanMontoTotal").text(montoFinal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+                    $("#idHiddenMontoTotal").val(montoFinal.toFixed(2));
                 })
 
                 $("#idHiddenDescripcion").val(texto);
@@ -85,7 +98,6 @@ $(".claseSelectCantidad").on("change", function(){
             let idMontoHidden = $(this).attr("id");
             
             if ($("#"+idMontoHidden).val()) {
-                //let cantidadDeCaracteres = idMontoHidden.length;
                 let producto_id = idMontoHidden.substr(14);
                 let producto_cantidad = $("#idSelectCantidad_"+producto_id).val();
                 let producto_nombre = $("#idHiddenProductoNombre_"+producto_id).val();
@@ -96,17 +108,49 @@ $(".claseSelectCantidad").on("change", function(){
                 montoTotal = montoTotal + montoHidden;
             }
 
-            $("#idSpanMontoTotal").text(montoTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
-            $("#idHiddenMontoTotal").val(montoTotal.toFixed(2));
+            $("#idHiddenPrecioTotal").val(montoTotal.toFixed(2));
+
+            let montoFinal = montoTotal + precioDelivery;
+
+            $("#idSpanMontoTotal").text(montoFinal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+            $("#idHiddenMontoTotal").val(montoFinal.toFixed(2));
         })
 
         $("#idHiddenDescripcion").val(texto);
     }
-})
+});
+
+$("#idSelectEmpresaUbigeo").on("change", function(){
+    let empresaUbigeoId = $(this).val();
+    
+    let montoTotal = $("#idHiddenPrecioTotal").val();
+    
+    if (montoTotal < 1) {
+        montoTotal = 0.00;
+    }
+
+    montoTotal = parseFloat(montoTotal);
+
+    $.ajax({
+        data:{},
+        url:"obtenerEmpresaUbigeo/"+empresaUbigeoId,
+        type:"GET",
+        dataType: "json",
+        success:function(respuesta){
+            let precioDelivery = respuesta.aEmpresaUbigeoId.EUPrecioDelivery;
+            $("#idHiddenPrecioDelivery").val(precioDelivery);
+
+            let montoFinal = montoTotal + parseFloat(precioDelivery);
+            $("#idSpanMontoTotal").text(montoFinal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+            $("#idHiddenMontoTotal").val(montoFinal.toFixed(2));
+        }
+    });
+});
 
 $(".claseBotonEnviar").on("click", function(event){
     $("#divMensajeError").hide();
     $("#telefonoError").hide();
+    $("#distritoError").hide();
     $("#idDivMensajeCabeceraError").hide();
 
     monto = $("#idHiddenMontoTotal").val();
@@ -117,28 +161,41 @@ $(".claseBotonEnviar").on("click", function(event){
     empresaRuc = $("#empresaRucId").val();
     delivery = $("#idSelectDelivery").val();
     telefonoDelivery = $("#idTelefonoDelivery").val();
+    empresaUbigeoId = $("#idSelectEmpresaUbigeo").val();
     _token = $("#idHiddenToken").val();
     
-    event.preventDefault();
-
     //Se valida entrada del monto debe ser mayor a 5 soles, permitir 2 decimales y no negativos
     if ((monto >= 5) && (monto <= 5000) && (producto.length >= 5) && (producto.length <= 250)) {
         if(delivery == 2) {
-            mensajeTelefonoError = "* Debe Registrar un número de telefono de contacto";
-            $("#idSpanMensajeCabeceraError").text(mensajeTelefonoError);
-            $("#telefonoError").text(mensajeTelefonoError);
-            $("#idDivMensajeCabeceraError").show();
-            $("#telefonoError").show();
-            
-            return false;
+            if (telefonoDelivery.length < 6) {
+                mensajeTelefonoError = "* Debe Registrar un número de telefono de contacto";
+                
+                $("#idSpanMensajeCabeceraError").text(mensajeTelefonoError);
+                $("#telefonoError").text(mensajeTelefonoError);
+                $("#idDivMensajeCabeceraError").show();
+                $("#telefonoError").show();
+                
+                return false;
+            }
+            if (empresaUbigeoId == undefined || empresaUbigeoId < 1) {
+                mensajeDistritoError = "* Debe Registrar el Distrito de Entrega del pedido";
+                
+                $("#idSpanMensajeCabeceraError").text(mensajeDistritoError);
+                $("#distritoError").text(mensajeDistritoError);
+                $("#idDivMensajeCabeceraError").show();
+                $("#distritoError").show();
+                
+                return false;
+            }
         }
 
+        //event.preventDefault();
         //Validamos datos desde el servidor
         validarDatos(monto, producto, empresaEmail, empresaRuc);
-
-        /*
-        $token = "ggtbfrjjbhgrffr"; //Este valor lo obtenemos desde el modal de culqi desde: culqi.token
-        clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
+        //generarOrden();
+        
+        //$token = "ggtbfrjjbhgrffr"; //Este valor lo obtenemos desde el modal de culqi desde: culqi.token
+        /*clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
         transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
         transaccionPasarelaToken = "tkn_test_yla14jhxmnJnDBGE";
         transaccionPasarelaMonedaCodigo = "PEN";
@@ -155,16 +212,16 @@ $(".claseBotonEnviar").on("click", function(event){
         transaccionPasarelaCodigoRespuesta = "venta_exitosa";
         transaccionPasarelaComision = "0.042";
         transaccionPasarelaIgv = "4536";
-        transaccionPasarelaMontoDepositar = "570264";*/
+        transaccionPasarelaMontoDepositar = "570264";
 
         registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
                 transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, 
                 transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, 
                 transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, 
                 transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
-                transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);
-        event.preventDefault();
-
+                transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);*/
+        //event.preventDefault();
+        
     } else {
         //Validar campos por parte del front
         mensajeError = "* Debe Seleccionar un producto";
@@ -225,7 +282,122 @@ function validarDatos(monto, producto, empresaEmail, empresaRuc){
     })
 }
 
-function iniciaCulqi(){console.log("metodo inicia culqi");
+function generarOrden(data){
+    let i = 0;
+    var aProducto = {};
+    $(".claseSelectCantidad").each(function(){
+        let idSelectCantidad = $(this).attr("id");
+        let productoId = $(this).attr("idProducto");
+        let cantidad = $("#"+idSelectCantidad+"").val();
+        
+        if (cantidad > 0) {
+            aProducto[i] = {};
+            aProducto[i]["id"] = productoId;
+            aProducto[i]["cantidad"] = cantidad;
+            i++;
+        }
+    })
+
+    registrarOrden(aProducto, data);
+}
+
+function registrarOrden(aProducto, data){
+    let deliveryId = $("#idSelectDelivery").val();
+    let telefonoDelivery = $("#idTelefonoDelivery").val();
+    let empresaUbigeoId = $("#idSelectEmpresaUbigeo").val();
+    let delivery = (deliveryId == 1) ? "N" : "S";
+    let comentario = $("#idComentario").val();
+
+    productos = JSON.stringify(aProducto);
+    var datos = {
+        aProducto: productos, 
+        delivery: delivery, 
+        telefonoDelivery: telefonoDelivery,
+        "_token": _token,
+        empresaUbigeoId: empresaUbigeoId,
+        comentario: comentario,
+    };
+
+    $.ajax({
+        data: datos,
+        type: "POST",
+        dataType: "json",
+        url: "registrarOrden",
+        success:function(respuesta){//console.log(respuesta.mensaje);
+            ordenId = respuesta.mensaje;
+
+            /*clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
+            transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
+            transaccionPasarelaToken = "tkn_test_yla14jhxmnJnDBGE";
+            transaccionPasarelaMonedaCodigo = "PEN";
+            transaccionPasarelaBancoNombre = "BBVA";
+            transaccionPasarelaBancoPaisNombre = "PERU";
+            transaccionPasarelaBancoPaisCodigo = "PE";
+            transaccionPasarelaTarjetaMarca = "Visa";
+            transaccionPasarelaTarjetaTipo = "crédito";
+            transaccionPasarelaTarjetaCategoria = "clásica";
+            transaccionPasarelaTarjetaNumero = "411111******1111";
+            transaccionPasarelaDispositivoIp = "181.176.97.94";
+            transaccionPasarelaCodigoAutorizacion = "u9TJeX";
+            transaccionPasarelaCodigoReferencia = "M2oW0m5O8p";
+            transaccionPasarelaCodigoRespuesta = "venta_exitosa";
+            transaccionPasarelaComision = "0.042";
+            transaccionPasarelaIgv = "4536";
+            transaccionPasarelaMontoDepositar = "570264";
+
+            registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
+                transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, 
+                transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, 
+                transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, 
+                transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
+                transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
+            */ 
+            if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};      
+            
+            if ( (typeof tipoVenta !== 'undefined') && (tipoVenta == "venta_exitosa")) {
+                transaccionPasarelaPedidoId = (typeof data.id !== "undefined") ? data.id : "NO TIENE";
+                transaccionPasarelaToken = (typeof data.source !== "undefined") ? data.source.id : "NO TIENE" ;
+                transaccionPasarelaMonedaCodigo = (typeof data.currency_code !== "undefined") ? "-" + data.currency_code : "NO TIENE";
+                transaccionPasarelaBancoNombre = (typeof data.source !== "undefined") ? "-" + data.source.iin.issuer.name : "NO TIENE";
+                transaccionPasarelaBancoPaisNombre = (typeof data.source !== "undefined") ? "-" + data.source.iin.issuer.country : "NO TIENE";
+                transaccionPasarelaBancoPaisCodigo = (typeof data.source !== "undefined") ? "-" + data.source.iin.issuer.country_code : "NO TIENE";
+                transaccionPasarelaTarjetaMarca = (typeof data.source !== "undefined") ? "-" + data.source.iin.card_brand : "NO TIENE";
+                transaccionPasarelaTarjetaTipo = (typeof data.source !== "undefined") ? "-" + data.source.iin.card_type : "NO TIENE";
+                transaccionPasarelaTarjetaCategoria = (typeof data.source !== "undefined") ? "-" + data.source.iin.card_category : "NO TIENE";
+                transaccionPasarelaTarjetaNumero = (typeof data.source !== "undefined") ? "-" + data.source.card_number : "NO TIENE";
+                transaccionPasarelaDispositivoIp = (typeof data.source !== "undefined") ? data.source.client.ip : "NO TIENE";
+                transaccionPasarelaCodigoAutorizacion = (typeof data.authorization_code !== "undefined") ? data.authorization_code : "NO TIENE";
+                transaccionPasarelaCodigoReferencia = (typeof data.reference_code !== "undefined") ? "-" + data.reference_code : "NO TIENE";
+                transaccionPasarelaCodigoRespuesta = (tipoVenta) ? tipoVenta : "NO TIENE";
+                transaccionPasarelaComision = (typeof data.fee_details !== "undefined") ? data.fee_details.variable_fee.total : "NO TIENE";
+                transaccionPasarelaIgv = (typeof data.total_fee_taxes !== "undefined") ? data.total_fee_taxes : "NO TIENE";
+                transaccionPasarelaMontoDepositar = (typeof data.transfer_amount !== "undefined") ? data.transfer_amount : "NO TIENE";
+
+                registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
+                        transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
+                        transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
+                        transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
+                        transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
+
+                $('#contenedor_de_cargador').fadeIn(1000).html("Se realizó con éxito la transferencia");
+            } else {
+                    $('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
+                    $('#modal').modal('hide');
+
+                mensajeRespuestaUsuario = data.user_message.replace(/[^a-zA-Z ]/g, "");
+
+                if (document.domain == "localhost") {
+                    $(window).attr('location','http://localhost/pagolibre/laravel/public/tarjetaNoProcede/' + mensajeRespuestaUsuario);
+                } else {
+                    $(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede/' + mensajeRespuestaUsuario);
+                }
+            }
+            
+        }
+    });
+}
+
+function iniciaCulqi(){
     Culqi.options({
         lang: 'auto',
         modal: true,
@@ -255,7 +427,7 @@ function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEma
                 transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
                 transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
                 transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
-                transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar){
+                transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId){
                 
                 let transaccionPasarelaComisionFija = 110;
                 let transaccionPasarelaComisionFijaIgv = 20;
@@ -293,7 +465,8 @@ function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEma
             transaccionPasarelaComisionFijaIgv: transaccionPasarelaComisionFijaIgv,
             transaccionPasarelaMontoDepositar:transaccionPasarelaMontoDepositar,
             transaccionComisionComercio:transaccionComisionComercio,
-            transaccionComercioMontoDepositar:transaccionComercioMontoDepositar
+            transaccionComercioMontoDepositar:transaccionComercioMontoDepositar,
+            ordenId:ordenId
         }
 
     $.ajax({
@@ -301,7 +474,8 @@ function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEma
         type: "POST",
         data: data,
         success:function(response){
-            $('#modal').modal('hide');//console.log("se registró la transferencia y se envió el correo");
+            $('#modal').modal('hide');
+
             if (document.domain == "localhost") {
                 $(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
             } else {
@@ -342,7 +516,8 @@ function enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteE
         url: url,
     })
     .done(function( data, textStatus, jqXHR ) {
-        if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};      
+        generarOrden(data);
+        /*if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};      
         
         if ( (typeof tipoVenta !== 'undefined') && (tipoVenta == "venta_exitosa")) {
             transaccionPasarelaPedidoId = (typeof data.id !== "undefined") ? data.id : "NO TIENE";
@@ -362,7 +537,7 @@ function enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteE
             transaccionPasarelaComision = (typeof data.fee_details !== "undefined") ? data.fee_details.variable_fee.total : "NO TIENE";
             transaccionPasarelaIgv = (typeof data.total_fee_taxes !== "undefined") ? data.total_fee_taxes : "NO TIENE";
             transaccionPasarelaMontoDepositar = (typeof data.transfer_amount !== "undefined") ? data.transfer_amount : "NO TIENE";
-            
+
             registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
                     transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
                     transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
@@ -381,7 +556,7 @@ function enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteE
             } else {
                 $(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede/' + mensajeRespuestaUsuario);
             }
-        }
+        }*/
     })
     .fail(function( jqXHR, textStatus, errorThrown ) {
         $('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");

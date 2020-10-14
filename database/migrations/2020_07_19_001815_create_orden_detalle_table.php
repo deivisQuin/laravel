@@ -17,11 +17,9 @@ class CreateOrdenDetalleTable extends Migration
             $table->bigIncrements("ODId");
             $table->bigInteger("ODOrdenId")->unsigned();
             $table->bigInteger("ODProductoId")->unsigned();
-            $table->bigInteger("ordenEstadoId")->unsigned();
+            $table->decimal("ODCantidad", 8, 2);
             $table->foreign('ODOrdenId')->references('ordenId')->on('orden')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('ODProductoId')->references('productoId')->on('producto')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('ordenEstadoId')->references('estadoId')->on('estado')->onDelete('cascade')->onUpdate('cascade');
-            //$table->timestamps();
         });
     }
 
