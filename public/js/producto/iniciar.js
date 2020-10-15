@@ -1,5 +1,5 @@
-Culqi.publicKey = 'pk_test_4838227e3d8eadce'; //panel de integración
-//Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
+//Culqi.publicKey = 'pk_test_4838227e3d8eadce'; //panel de integración
+Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
 
 var producto = "";
 var precio = "";
@@ -24,7 +24,7 @@ $("#idSelectDelivery").on("change", function(){
         $("#idDivEmpresaUbigeo").hide();
     }
 });
-
+/*
 $(document).on("click", ".claseTdProducto",function(){
     let productoNombre = $(this).attr("trProductoNombre");
     let empresaRuc = $("#empresaRucId").val();
@@ -45,7 +45,7 @@ $(document).on("click", ".claseTdProducto",function(){
     $('#idContenidoModal').html(image);
 
     $("#miModal").modal("show");
-})
+})*/
 
 $(".claseSelectCantidad").on("change", function(){
     let idProducto = $(this).attr("idProducto");

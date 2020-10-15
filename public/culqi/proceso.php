@@ -3,8 +3,8 @@ require "request/library/Requests.php";
 Requests::register_autoloader();
 require "culqi/lib/culqi.php";
 
-$SECRET_KEY = "sk_test_086297f9e4572b08"; //Panel de Integración
-//$SECRET_KEY = "sk_live_Gg4P8eHTQPFzyvHH"; // Panel administrativo
+//$SECRET_KEY = "sk_test_086297f9e4572b08"; //Panel de Integración
+$SECRET_KEY = "sk_live_Gg4P8eHTQPFzyvHH"; // Panel administrativo
 
 $culqi = new Culqi\Culqi(array('api_key' => $SECRET_KEY));
 
