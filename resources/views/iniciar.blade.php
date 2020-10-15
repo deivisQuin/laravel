@@ -153,12 +153,12 @@
 							</thead>
 							<tbody>
 							@foreach($aProducto as $producto)
-								<tr class="claseTrProducto" trProductoId="{{$producto->producto->productoId}}" trProductoNombre="{{$producto->producto->productoNombre}}">
-									<td>
+								<tr>
+									<td class="claseTdProducto" trProductoId="{{$producto->producto->productoId}}" trProductoNombre="{{$producto->producto->productoNombre}}">
 									<span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
 									<input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
 									</td>
-									<td>
+									<td class="claseTdProducto" trProductoId="{{$producto->producto->productoId}}" trProductoNombre="{{$producto->producto->productoNombre}}">
 										<span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->producto->productoPrecio}}</span>
 										<input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
 									</td>
@@ -172,7 +172,8 @@
 											<option value="4">4</option>
 										</select>
 									</td>
-									<td align="right"><strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
+									<td class="claseTdProducto" trProductoId="{{$producto->producto->productoId}}" trProductoNombre="{{$producto->producto->productoNombre}}"
+									 align="right"><strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
 										<input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
 									</td>
 								</tr>

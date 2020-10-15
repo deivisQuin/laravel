@@ -25,7 +25,7 @@ $("#idSelectDelivery").on("change", function(){
     }
 });
 
-$(document).on("click", ".claseTrProducto",function(){
+$(document).on("click", ".claseTdProducto",function(){
     let productoNombre = $(this).attr("trProductoNombre");
     let empresaRuc = $("#empresaRucId").val();
 
@@ -44,20 +44,7 @@ $(document).on("click", ".claseTrProducto",function(){
 
     $('#idContenidoModal').html(image);
 
-    //$("#idContenidoModal").
     $("#miModal").modal("show");
-    /*let transaccionId = $(this).attr("id");
-
-    $.ajax({
-        data: { "_token": $("meta[name='csrf-token']").attr("content")},
-        type:"POST",
-        dataType: "json",
-        url: "transaccion/" + transaccionId + "/ver",
-        success: function(respuesta) {
-            $("#idContenidoModal").html(respuesta);
-            $("#miModal").modal("show");
-        }
-    })*/
 })
 
 $(".claseSelectCantidad").on("change", function(){
