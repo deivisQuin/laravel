@@ -19,6 +19,26 @@
 </head>
 <body>
 <br>
+
+<div class="modal fade" id="miModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><strong style='color:#28a745'><div id="idModalTitulo"></div></strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="idContenidoModal">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container panel panel-default">
 	<div class="card">
 		<div class="card-header">
@@ -133,7 +153,7 @@
 							</thead>
 							<tbody>
 							@foreach($aProducto as $producto)
-								<tr>
+								<tr class="claseTrProducto" trProductoId="{{$producto->producto->productoId}}" trProductoNombre="{{$producto->producto->productoNombre}}">
 									<td>
 									<span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
 									<input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">

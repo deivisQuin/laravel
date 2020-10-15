@@ -1,5 +1,5 @@
-//Culqi.publicKey = 'pk_test_4838227e3d8eadce'; //panel de integración
-Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
+Culqi.publicKey = 'pk_test_4838227e3d8eadce'; //panel de integración
+//Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
 
 var producto = "";
 var precio = "";
@@ -24,6 +24,41 @@ $("#idSelectDelivery").on("change", function(){
         $("#idDivEmpresaUbigeo").hide();
     }
 });
+
+$(document).on("click", ".claseTrProducto",function(){
+    let productoNombre = $(this).attr("trProductoNombre");
+    let empresaRuc = $("#empresaRucId").val();
+
+    $("#idModalTitulo").text(productoNombre);
+
+    var image = new Image();
+    var src = "";
+    
+    if (document.domain == "localhost") {
+        src = 'http://localhost/pagolibre/laravel/public/imagen/cargador_nuevo_sol.gif';
+    } else {
+        src = 'https://comparadordeventas.com/pagolibre/public/imagen/cargador_nuevo_sol.gif';
+    }
+
+    image.src = src;
+
+    $('#idContenidoModal').html(image);
+
+    //$("#idContenidoModal").
+    $("#miModal").modal("show");
+    /*let transaccionId = $(this).attr("id");
+
+    $.ajax({
+        data: { "_token": $("meta[name='csrf-token']").attr("content")},
+        type:"POST",
+        dataType: "json",
+        url: "transaccion/" + transaccionId + "/ver",
+        success: function(respuesta) {
+            $("#idContenidoModal").html(respuesta);
+            $("#miModal").modal("show");
+        }
+    })*/
+})
 
 $(".claseSelectCantidad").on("change", function(){
     let idProducto = $(this).attr("idProducto");
