@@ -24,9 +24,10 @@ $("#idSelectDelivery").on("change", function(){
         $("#idDivEmpresaUbigeo").hide();
     }
 });
-/*
+
 $(document).on("click", ".claseTdProducto",function(){
     let productoNombre = $(this).attr("trProductoNombre");
+    let productoId = $(this).attr('trProductoId');
     let empresaRuc = $("#empresaRucId").val();
 
     $("#idModalTitulo").text(productoNombre);
@@ -35,17 +36,23 @@ $(document).on("click", ".claseTdProducto",function(){
     var src = "";
     
     if (document.domain == "localhost") {
-        src = 'http://localhost/pagolibre/laravel/public/imagen/cargador_nuevo_sol.gif';
+        //src = 'http://localhost/pagolibre/laravel/public/imagen/cargador_nuevo_sol.gif';
+        src = 'http://localhost/pagolibre/laravel/public/imagen/' + empresaRuc + '/' + productoId + '.webp';
     } else {
-        src = 'https://comparadordeventas.com/pagolibre/public/imagen/cargador_nuevo_sol.gif';
+        //src = 'https://comparadordeventas.com/pagolibre/public/imagen/cargador_nuevo_sol.gif';
+        src = 'https://comparadordeventas.com/pagolibre/public/imagen/' + empresaRuc + '/' + productoId + '.webp';
     }
 
     image.src = src;
 
+    image.onload = function() {
+        image.width = 300 ;
+    }
+
     $('#idContenidoModal').html(image);
 
     $("#miModal").modal("show");
-})*/
+})
 
 $(".claseSelectCantidad").on("change", function(){
     let idProducto = $(this).attr("idProducto");

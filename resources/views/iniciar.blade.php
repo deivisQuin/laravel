@@ -29,11 +29,18 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="idContenidoModal">
-        ...
+      <div class="modal-body" >
+	  	<div class="row">
+		  <div class="col-md-12" id="idContenidoModal"></div>
+		</div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+		<div class="container">
+			<div class="row">
+			<div class="col-xs-4"><button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button></div>
+			<div class="col-xs-8 ml-auto"></div>
+			</div>
+		</div>
       </div>
     </div>
   </div>
