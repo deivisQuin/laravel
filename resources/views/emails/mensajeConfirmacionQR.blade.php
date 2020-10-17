@@ -6,6 +6,7 @@
     <body>
         <h2>Gracias por utilizar el servicio de Pago Libre.</h2>
         Acabas de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
+        El número de Pedido realizado es: <h3>{{str_pad($transaccionId, 4, "0", STR_PAD_LEFT)}}</h3><br>
         Por el producto y/o servicio de: <br><b>
         <table class="table table-hover">
             <thead>

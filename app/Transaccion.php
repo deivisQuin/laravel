@@ -18,7 +18,7 @@ class Transaccion extends Model
                             "transaccionPasarelaTarjetaMarca", "transaccionPasarelaTarjetaTipo", "transaccionPasarelaTarjetaCategoria", 
                             "transaccionPasarelaTarjetaNumero", "transaccionPasarelaDispositivoIp", "transaccionPasarelaCodigoAutorizacion", 
                             "transaccionPasarelaCodigoReferencia", "transaccionPasarelaCodigoRespuesta", "transaccionPasarelaComision", 
-                            "transaccionPasarelaIgv", "transaccionPasarelaMontoDepositar", "empresaId"];
+                            "transaccionPasarelaIgv", "transaccionPasarelaMontoDepositar", "transaccionEmpresaId", "transaccionOrdenId"];
     
     public $timestamps = false;
 
@@ -27,7 +27,7 @@ class Transaccion extends Model
         //return $this->belongsTo("App\Unidad_medida");
     }
 
-    /*public function orden(){
-    	return $this->hasOne('App\Orden' , '', 'ordenId');
-    }*/
+    public function orden(){
+    	return $this->belongsTo('App\Orden' , 'transaccionOrdenId', 'ordenId');
+    }
 }

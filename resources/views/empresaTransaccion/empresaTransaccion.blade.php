@@ -8,13 +8,12 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><strong style='color:#28a745'>Detalle de la Compra</strong></h5>
+        <h5 class="modal-title" id="exampleModalLabel"><strong style='color:#28a745'>Detalle del Pedido</strong></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" id="idContenidoModal">
-        ...
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
@@ -28,7 +27,7 @@
         <thead>
             <tr>
                 <th>Fecha</th>
-                <th>Monto A Recibir</th>
+                <th>Num Pedido</th>
                 <th>Monto Realizado</th>
                 <th>Estado</th>
                 <th>Entregado</th>
@@ -38,7 +37,7 @@
         <tbody>
             @foreach($aTransaccion as $venta) 
             <?php 
-                $colorEstado = ($venta->transaccionEstadoId == 1) ? "red": "green";
+                $colorEstado = ($venta->transaccionEstadoId == 2) ? "red": "green";
                 $colorComercioEstado = ($venta->transaccionComercioEstado == 1) ? "red": "blue";
                 $colorClienteEstado = ($venta->transaccionClienteEstado == 1) ? "red": "blue";
                 $montoDepositarAcumulado += $venta->transaccionPasarelaMontoDepositar;
@@ -47,7 +46,7 @@
             ?>
             <tr class="claseTr" id="{{$venta->transaccionId}}">
                 <td>{{$venta->transaccionFechaCrea}}</td>
-                <td>{{$venta->transaccionComercioMontoDepositar}}</td>                
+                <td>{{str_pad($venta->transaccionId, 4, "0", STR_PAD_LEFT)}}</td>
                 <td>{{$venta->transaccionMonto}}</td>
                 <td><span style="color:<?php echo $colorEstado;?>"><strong>{{$venta->estado->estadoNombre}}</strong></span></td>
                 <td><span style="color:<?php echo $colorComercioEstado;?>"><strong>{{($venta->transaccionComercioEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>

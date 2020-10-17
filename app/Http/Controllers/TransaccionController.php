@@ -108,7 +108,7 @@ class TransaccionController extends Controller
         $aEmpresa = Empresa::where("empresaId", "=", $empresaId)->get();
 
         //Se obtiene las ventas de la empresa
-        $aTransaccion = Transaccion::where("empresaId", "=", $empresaId)
+        $aTransaccion = Transaccion::where("transaccionEmpresaId", "=", $empresaId)
                         ->where("transaccionFechaCrea", "like", "$transaccionFechaCrea%")
                         ->orderBy("transaccionId", "desc")
                         ->paginate(10);
@@ -117,7 +117,7 @@ class TransaccionController extends Controller
 
     public function obtener($transaccionId) {
         $aTransaccion = Transaccion::where("transaccionId" , "=", $transaccionId)->firstOrFail();
-        
+
         return response()->json(view("empresaTransaccion.empresaTransaccionDetalle",compact("aTransaccion"))->render());
     }
 
@@ -132,9 +132,9 @@ class TransaccionController extends Controller
         $aEmpresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
 
         //Se obtienen datos aleatorios
-        $transaccionComercioPassword = rand();
+        $transaccionComercioPassword = rand(1001, 9999);
         $transaccionComercioPasswordLink = str_replace("/", "(", password_hash("rasmuslerdorf", PASSWORD_DEFAULT));
-        $transaccionClientePassword = rand();
+        $transaccionClientePassword = rand(1001, 9999);
         $transaccionClientePasswordLink = str_replace("/", ")", password_hash("rasmuslerdorf", PASSWORD_DEFAULT));
 
         //creamos el registro de la transaccion
@@ -184,7 +184,6 @@ class TransaccionController extends Controller
         $respuesta = (new CorreoController)->enviarCorreo($transaccionId);
 
         return redirect()->back()->with("success", "Email enviado");
-
     }
 
     //Eliminar prueba de codigo QR

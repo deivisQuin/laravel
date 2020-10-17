@@ -6,8 +6,9 @@
 <body>
 	<h2>Pago Libre te anuncia:</h2>
 	Acaban de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
+	El número de Pedido realizado es: <h3>{{str_pad($transaccionId, 4, "0", STR_PAD_LEFT)}}</h3><br>
 	Por el producto y/o servicio de: <br><br>
-	<table class="table table-hover">
+	<table class="table table-dark">
 		<thead>
 			<tr>
 				<th>Producto</th>
@@ -18,7 +19,8 @@
 		@foreach($content as $pedidoDetalle)
 			<tr>
 				<td>{{$pedidoDetalle->productoNombre}}</td>
-				<td>{{$pedidoDetalle->ODCantidad}}</td>
+				<td align="rigth">{{$pedidoDetalle->ODCantidad}}</td>
+				
 			</tr>
 		@endforeach
 		</tbody>

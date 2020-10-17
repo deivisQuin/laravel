@@ -15,4 +15,8 @@ class OrdenDetalle extends Model
     	return $this->belongsTo("App\Orden", "ordenId");
     }
 
+    public function producto() {
+        return $this->hasOne('App\Producto', 'productoId', 'ODProductoId');
+    }
+
 }

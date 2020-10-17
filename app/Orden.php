@@ -20,6 +20,7 @@ class Orden extends Model
     }
     
     public function orden_detalles(){
-    	return $this->hasMany('App\Orden' , 'ODOrdenId');
+        return $this->hasMany('App\OrdenDetalle' , 'ODOrdenId', 'ordenId');
+        //return $this->belongsToMany('App\OrdenDetalle' , 'orden', 'ordenId');
     }
 }

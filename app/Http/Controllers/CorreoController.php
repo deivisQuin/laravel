@@ -127,7 +127,7 @@ class CorreoController extends Controller
             "1",
             "",
             "",
-            "",
+            $aTransaccion->transaccionId,
             "");
 
         Mail::to($aTransaccion->transaccionComercioCorreo)
