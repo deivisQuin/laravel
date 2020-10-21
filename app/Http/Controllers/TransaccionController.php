@@ -122,14 +122,16 @@ class TransaccionController extends Controller
     }
 
     public function registrar(Request $request) {
-        $empresaRuc     = $request->input("empresaRuc");
+        //$empresaRuc     = $request->input("empresaRuc");
+        $localId = $request->input("localId");
         $comercioCorreo = $request->input("empresaEmail");
         $clienteCorreo  = $request->input("clienteEmail");
         $monto          = $request->input("monto");
         $descripcion    = $request->input("descripcion");
         
         //Se obtienen los datos de la empresa
-        $aEmpresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
+        //$aEmpresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
+        
 
         //Se obtienen datos aleatorios
         $transaccionComercioPassword = rand(1001, 9999);
@@ -174,7 +176,8 @@ class TransaccionController extends Controller
         $transaccion->transaccionPasarelaComisionFijaIgv = $request->input("transaccionPasarelaComisionFijaIgv")/100;
         $transaccion->transaccionComisionComercio = $request->input("transaccionComisionComercio")/100;
         $transaccion->transaccionComercioMontoDepositar = $request->input("transaccionComercioMontoDepositar")/100;
-        $transaccion->transaccionEmpresaId = $aEmpresa->empresaId;
+        //$transaccion->transaccionEmpresaId = $aEmpresa->empresaId;
+        $transaccion->transaccionLocalId = $localId;
         $transaccion->transaccionOrdenId = $request->input("ordenId");
 
         $transaccion->save();

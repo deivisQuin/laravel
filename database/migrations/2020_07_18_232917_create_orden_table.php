@@ -17,7 +17,7 @@ class CreateOrdenTable extends Migration
             $table->bigIncrements("ordenId");
             $table->char("ordenDelivery",1)->default("N");
             $table->string("ordenTelefono",15)->nullable();
-            $table->bigInteger("ordenEUId")->nullable();
+            $table->bigInteger("ordenLUId")->nullable();
             $table->longText("ordenComentario")->nullable();
             $table->bigInteger("ordenEstadoId")->unsigned();
             $table->datetime("ordenFechaCrea");

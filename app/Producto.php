@@ -20,8 +20,8 @@ class Producto extends Model
     	return $this->belongsTo("App\Estado", "productoEstadoId");
     }
 
-    public function empresa_linea_sublinea_productos() {
-        return $this->hasToMany(EmpresaLineaSublineaProducto::class);
+    public function local_linea_sublinea_productos() {
+        return $this->hasToMany(LocalLineaSublineaProducto::class);
     }
 
     public function empresas() {

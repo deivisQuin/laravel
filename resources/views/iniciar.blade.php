@@ -103,37 +103,47 @@
 				<input type="hidden" id="idHiddenToken" name="_token" value="{{ csrf_token() }}">
 				<br>
 				<div class="form-group">
-		            <h4 style='color:#28a745'><strong>RUC: {{$aEmpresa->empresaRuc}}</strong></h4>
+		            <h4 style='color:#28a745'><strong>RUC: {{$oEmpresa->empresaRuc}}</strong></h4>
 		        </div>
 				<div class="form-group">
-		            <h4 style='color:#28a745'><strong>Empresa: {{$aEmpresa->empresaRazonSocial}}</strong></h4>
+		            <h4 style='color:#28a745'><strong>Empresa: {{$oEmpresa->empresaRazonSocial}}</strong></h4>
 		        </div>
 				<div class="form-group">
-	  				<label for=""><strong>Dile a {{$aEmpresa->empresaNombre}}</strong></label>
-	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="Dime Algo..."></textarea>
+	  				<label for=""><strong>Dile a {{$oEmpresa->empresaNombre}}</strong></label>
+	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Que deseas indicarnos?..." class="form-control"></textarea>
 				</div>
 				<div class="form-group">
-	  				<span style="color:#dc3545"><strong>* El Stock es referencial, cualquier consulta llamar al: {{$aEmpresa->empresaTelefono}}</strong></span>
+	  				<span style="color:#dc3545"><strong>* El Stock es referencial, cualquier consulta llamar al: {{$oEmpresa->empresaTelefono}}</strong></span>
 				</div>
 				<div class="form-group">
 	  				<div class="row">
-	  					<div class="col-sx-12 col-md-12 col-lg-4">
-							<select name="nameSelectDelivery" id="idSelectDelivery">
-								<option value="1">No Delivery</option>
-								<option value="2">Delivery</option>
+						
+						<div class="col-sx-12 col-md-12 col-lg-3" {{$mostrarLocales}} >
+							<select name="nameSelectLocal" id="idSelectLocal" class="form-control">
+								<option value="0">Elegir Tu Local</option>
+								@foreach($aLocal as $local)
+									<option value="{{$local->localId}}" <?php if(count($aLocal)==1){?>selected="selected"<?php } ?>>{{$local->localNombre}}</option>
+								@endforeach
 							</select>  
 						</div>
-						<div class="col-sx-12 col-md-12 col-lg-4">
-							<input type="text" id="idTelefonoDelivery" placeholder="Teléfono">
+
+	  					<div class="col-sx-12 col-md-12 col-lg-3">
+							<select name="nameSelectDelivery" id="idSelectDelivery" class="form-control">
+								<option value="1">Delivery</option>
+								<option value="2">Sin Delivery</option>
+							</select>  
+						</div>
+						<div class="col-sx-12 col-md-12 col-lg-3">
+							<input type="text" id="idTelefonoDelivery" placeholder="Teléfono de Contacto" class="form-control">
 							<div class="alert-message" id="telefonoError"></div>
 						</div>
-						<div class="col-sx-12 col-md-12 col-lg-4">
+						<div class="col-sx-12 col-md-12 col-lg-3">
 							<input type="hidden" id="idHiddenPrecioDelivery" value="">
-							<div id="idDivEmpresaUbigeo">
-								<select name="nameEmpresaUbigeo" id="idSelectEmpresaUbigeo" >
-									<option value="0">Elegir Distrito</option>
-									@foreach($aEmpresaUbigeo as $empresaUbigeo)
-										<option value="{{$empresaUbigeo->EUId}}">{{$empresaUbigeo->ubigeo->ubigeoNombre}} : {{$empresaUbigeo->EUPrecioDelivery}}</option>
+							<div id="idDivLocalUbigeo">
+								<select name="nameLocalUbigeo" id="idSelectLocalUbigeo" class="form-control">
+									<option value="0">Elegir Tu Distrito</option>
+									@foreach($aLocalUbigeoDelivery as $localUbigeo)
+										<option value="{{$localUbigeo->LUId}}">{{$localUbigeo->ubigeo->ubigeoNombre}} : {{$localUbigeo->LUPrecioDelivery}}</option>
 									@endforeach
 								</select>
 								<div class="alert-message" id="distritoError"></div>
@@ -143,50 +153,52 @@
 				</div>
 
 		        <div class="form-group">
-		            <input type="hidden" name="empresaRuc" class="form-control required"  id="empresaRucId" value="{{$aEmpresa->empresaRuc}}">
-		            <input type="hidden" name="empresaEmail" class="form-control required"  id="empresaEmailId" value="{{$aEmpresa->empresaEmail}}">
+		            <input type="hidden" name="empresaRuc" class="form-control required"  id="empresaRucId" value="{{$oEmpresa->empresaRuc}}">
+		            <input type="hidden" name="empresaEmail" class="form-control required"  id="empresaEmailId" value="{{$oEmpresa->empresaEmail}}">
 		        </div>
 
 				<div class="row">
 					<div class="col">
-						<table class="table table-hover">
-							<thead>
-								<tr>
-									<th>Producto</th>
-									<th>Precio</th>
-									<th>Cantidad</th>
-									<th>Monto</th>
-								</tr>
-							</thead>
-							<tbody>
-							@foreach($aProducto as $producto)
-								<tr>
-									<td class="claseTdProducto" trProductoId="{{$producto->producto->productoId}}" trProductoNombre="{{$producto->producto->productoNombre}}">
-									<span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
-									<input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
-									</td>
-									<td class="claseTdProducto" trProductoId="{{$producto->producto->productoId}}" trProductoNombre="{{$producto->producto->productoNombre}}">
-										<span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->producto->productoPrecio}}</span>
-										<input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
-									</td>
-									<td>
-										<select id="idSelectCantidad_{{$producto->producto->productoId}}" 
-											idProducto="{{$producto->producto->productoId}}" class="claseSelectCantidad">
-											<option value="0">0</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-										</select>
-									</td>
-									<td class="claseTdProducto" trProductoId="{{$producto->producto->productoId}}" trProductoNombre="{{$producto->producto->productoNombre}}"
-									 align="right"><strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
-										<input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
-									</td>
-								</tr>
-							@endforeach
-							</tbody>
-						</table>
+	  					<div id="idDivListadoProducto" class="form-group">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>Producto</th>
+										<th>Precio</th>
+										<th>Cantidad</th>
+										<th>Monto</th>
+									</tr>
+								</thead>
+								<tbody>
+								@foreach($aProducto as $producto)
+									<tr>
+										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}">
+										<span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
+										<input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
+										</td>
+										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}">
+											<span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->LLSPPrecio}}</span>
+											<input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
+										</td>
+										<td>
+											<select id="idSelectCantidad_{{$producto->producto->productoId}}" 
+												idProducto="{{$producto->producto->productoId}}" class="claseSelectCantidad">
+												<option value="0">0</option>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+											</select>
+										</td>
+										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}"
+										align="right"><strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
+											<input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
+										</td>
+									</tr>
+								@endforeach
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 

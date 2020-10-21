@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\EmpresaUbigeo;
 use App\Orden;
 use App\OrdenDetalle;
+use App\LocalUbigeoDelivery;
 
 class OrdenController extends Controller
 {
@@ -14,16 +15,16 @@ class OrdenController extends Controller
         $aProducto = json_decode($request->input("aProducto"));
         $delivery = $request->input("delivery");
         $telefonoDelivery = $request->input("telefonoDelivery");
-        $empresaUbigeoId = $request->input("empresaUbigeoId");
+        $localUbigeoId = $request->input("localUbigeoId");
         $comentario = $request->input("comentario");
         
         //Se obtienen los datos de la empresaUbigeo
-        if ((isset($empresaUbigeoId)) && ($empresaUbigeoId > 0)) {
-            $aEmpresaUbigeo = EmpresaUbigeo::findOrFail($empresaUbigeoId);
-            $empresaUbigeoId = $aEmpresaUbigeo->EUId;
+        if ((isset($localUbigeoId)) && ($localUbigeoId > 0)) {
+            $oLocalUbigeo = LocalUbigeoDelivery::findOrFail($localUbigeoId);
+            $localUbigeoId = $oLocalUbigeo->LUId;
             
-            if (!$empresaUbigeoId) {
-                return response()->json(["success" => false, "mensaje"=>"NO existe el distrito elegido"]);
+            if (!$localUbigeoId) {
+                return response()->json(["success" => false, "mensaje"=>"NO existe el distrito elegido para el delivery"]);
             }
         }
         
@@ -32,7 +33,7 @@ class OrdenController extends Controller
 
         $orden->ordenDelivery = $delivery;
         $orden->ordenTelefono = $telefonoDelivery;
-        $orden->ordenEUId = $empresaUbigeoId;
+        $orden->ordenLUId = $localUbigeoId;
         $orden->ordenComentario = $comentario;
         $orden->ordenEstadoId = 1;
         $orden->ordenFechaCrea = date("Y-m-d H:m:s");

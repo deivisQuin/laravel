@@ -8,13 +8,19 @@ class Empresa extends Model
 {
 	protected $table = "empresa";
     protected $primaryKey = "empresaId";
-	protected $fillable = ["empresaNombre", "empresaRuc", "empresaRazonSocial", "empresaNombreComecial", "empresaNumeroCuenta", "empresaTelefono", "empresaDireccion", "empresaRepresentante", "empresaEstadoId", "empresaUsuarioCrea", "empresaFechaCrea", "empresaUsuarioModifica", "empresaFechaModifica"];
-    public $timestamps = false;
-
+    protected $fillable = ["empresaNombre", "empresaRuc", "empresaRazonSocial", "empresaNombreComecial", "empresaNumeroCuenta", 
+                            "empresaTelefono", "empresaDireccion", "empresaRepresentante", "empresaEstadoId", "empresaUsuarioCrea", 
+                            "empresaFechaCrea", "empresaUsuarioModifica", "empresaFechaModifica"];
+    
     public function estado(){
-        return $this->belongsTo("App\Estado", "empresaEstadoId");
+        return $this->hasOne(Estado::class, "estadoId", "empresaEstadoId");
     }
 
+/*
+    public function estado(){
+        return $this->belongsTo("App\Estado", "empresaEstadoId");
+    }*/
+/*
     public function lineas(){
     	return $this->belongsToMany(Linea::class);
     }
@@ -25,5 +31,5 @@ class Empresa extends Model
 
     public function empresa_ubigeos(){
         return $this->hasMany(EmpresaUbigeo::class, "empresaId", "EUEmpresaId");
-    }
+    }*/
 }

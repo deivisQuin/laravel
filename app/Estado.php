@@ -10,11 +10,11 @@ class Estado extends Model
     protected $primaryKey = "estadoId";
 	protected $fillable = ["estadoNombreCorto", "estadoNombre", "estadoObservacion"];
     public $timestamps = false;
-
+/*
     public function empresas(){
     	return $this->hasMany('App\Empresa' , 'empresaEstadoId');
-    }
-
+    }*/
+/*
     public function transacciones(){
     	return $this->hasMany('App\Transaccion' , 'transaccionEstadoId');
     }
@@ -29,5 +29,5 @@ class Estado extends Model
 
     public function ordens(){
     	return $this->hasMany('App\Orden' , 'ordenEstadoId');
-    }
+    }*/
 }

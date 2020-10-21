@@ -29,9 +29,9 @@ class CreateEmpresaTable extends Migration
             $table->datetime("empresaFechaCrea");
             $table->bigInteger("empresaUsuarioModifica")->nullable();
             $table->datetime("empresaFechaModifica")->nullable();
-            $table->bigInteger("empresaUsersId")->unsigned();
+            //$table->bigInteger("empresaUsersId")->unsigned();
             $table->foreign('empresaEstadoId')->references('estadoId')->on('estado')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('empresaUsersId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            //$table->foreign('empresaUsersId')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

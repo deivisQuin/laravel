@@ -20,7 +20,6 @@ class CreateProductoTable extends Migration
             $table->string("productoObservacion",50)->nullable();
             $table->bigInteger("productoUnidadMedidaId")->unsigned();
             $table->bigInteger("productoSublineaId")->unsigned();
-            $table->decimal("productoPrecio", 8, 2);
             $table->bigInteger("productoEstadoId")->unsigned();
             $table->bigInteger("productoUsuarioCrea");
             $table->datetime("productoFechaCrea");

@@ -20,6 +20,7 @@ class MessageReceived extends Mailable
     public $transaccionComercioClientePasswordLink;
     public $transaccionId;
     public $transaccionComercioPasswordLink;
+    public $oOrden;
 
     /**
      * Create a new message instance.
@@ -27,7 +28,7 @@ class MessageReceived extends Mailable
      * @return void
      */
     public function __construct($subject, $aOrdenDetalle, $enviarCorreoTipo, $transaccionComercioClientePassword, $transaccionComercioClientePasswordLink, 
-                                $transaccionId, $transaccionComercioPasswordLink)
+                                $transaccionId, $transaccionComercioPasswordLink, $oOrden)
     {
         $this->subject = $subject;
         $this->content = $aOrdenDetalle;
@@ -37,6 +38,7 @@ class MessageReceived extends Mailable
         $this->enviarCorreoTipo = $enviarCorreoTipo;
         $this->transaccionId = $transaccionId;
         $this->transaccionComercioPasswordLink = $transaccionComercioPasswordLink;
+        $this->oOrden = $oOrden;
     }
 
     /**

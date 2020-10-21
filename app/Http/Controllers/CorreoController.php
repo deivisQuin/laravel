@@ -9,6 +9,7 @@ use App\Mail\MessageReceived;
 use App\Transaccion;
 use App\Empresa;
 use App\OrdenDetalle;
+use App\Orden;
 
 use Illuminate\Support\Facades\DB;
 
@@ -119,6 +120,8 @@ class CorreoController extends Controller
                                         LEFT JOIN producto P ON (P.productoId = OD.ODProductoId)
                                         WHERE OD.ODOrdenId = $aTransaccion->transaccionOrdenId AND P.productoEstadoId = 1 ");
         
+        $oOrden = Orden::findOrFail($aTransaccion->transaccionOrdenId);
+
         //Enviamos los correos al cliente y al comercio
         $correo = new MessageReceived(
             $aTransaccion->transaccionMonto,
@@ -128,7 +131,9 @@ class CorreoController extends Controller
             "",
             "",
             $aTransaccion->transaccionId,
-            "");
+            "",
+            $oOrden
+        );
 
         Mail::to($aTransaccion->transaccionComercioCorreo)
                 ->send($correo);
@@ -142,7 +147,8 @@ class CorreoController extends Controller
             $aTransaccion->transaccionClientePassword,
             $aTransaccion->transaccionClientePasswordLink,
             $aTransaccion->transaccionId,
-            $aTransaccion->transaccionComercioPasswordLink
+            $aTransaccion->transaccionComercioPasswordLink,
+            $oOrden
         );
 
         Mail::to($aTransaccion->transaccionClienteCorreo)

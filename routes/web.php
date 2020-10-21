@@ -50,12 +50,13 @@ Route::put("empresa/{empresaId}", "EmpresaController@update")->middleware("auth"
 Route::get("usuario/listar", "UserController@index");
 
 //Producto
-Route::get("producto/obtener/{productoId}", "ProductoController@obtenerProducto");
+Route::get("producto/obtener/{productoId}/{localId}", "ProductoController@obtenerProducto");
+
 Route::post("producto/validarFormularioCarrito", "ProductoController@validarFormularioCarrito");
 //Route::post("producto/transaccion", "CorreoController@sendMail");
 Route::post("producto/transaccion", "TransaccionController@registrar");
 //Route::get("producto/correo", "CorreoController@enviarCorreo");
-Route::get("producto/obtenerEmpresaUbigeo/{empresaUbigeoId}", "EmpresaUbigeoController@obtenerJson");
+Route::get("producto/obtenerLocalUbigeoDelivery/{localUbigeoId}", "LocalUbigeoDeliveryController@obtenerJson");
 Route::post("producto/registrarOrden", "OrdenController@crear");
 
 

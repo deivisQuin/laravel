@@ -9,25 +9,44 @@ var delivery = 1;
 var telefonoDelivery = "";
 var _token = "";
 
-$("#idTelefonoDelivery").hide();
-$("#idDivEmpresaUbigeo").hide();
+$("#idTelefonoDelivery").show();
+$("#idDivLocalUbigeo").show();
 $("#montoError").hide();
 $("#idDivMensajeCabeceraError").hide();
 
 $("#idSelectDelivery").on("change", function(){
     valorDelivery = $(this).val();
-    if (valorDelivery == 2) {
+    if (valorDelivery == 1) {
         $("#idTelefonoDelivery").show();
-        $("#idDivEmpresaUbigeo").show();
+        $("#idDivLocalUbigeo").show();
     } else {
+        $("#idTelefonoDelivery").val("");
+        $("#idSelectLocalUbigeo").val(0);
+
+        $("#idHiddenPrecioDelivery").val(0);
+
+        let montoTotal = $("#idHiddenPrecioTotal").val();
+    
+        if (montoTotal < 1) {
+            montoTotal = 0.00;
+        }
+    
+        montoTotal = parseFloat(montoTotal);
+
+        $("#idSpanMontoTotal").text(montoTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+        $("#idHiddenMontoTotal").val(montoTotal.toFixed(2));
+
         $("#idTelefonoDelivery").hide();
-        $("#idDivEmpresaUbigeo").hide();
+        $("#telefonoError").text("");
+        $("#idDivLocalUbigeo").hide();
+        $("#distritoError").text("");
     }
 });
 
 $(document).on("click", ".claseTdProducto",function(){
     let productoNombre = $(this).attr("trProductoNombre");
-    let productoId = $(this).attr('trProductoId');
+    //let productoId = $(this).attr('trProductoId');
+    let productoImagen = $(this).attr("trProductoImagen");
     let empresaRuc = $("#empresaRucId").val();
 
     $("#idModalTitulo").text(productoNombre);
@@ -36,11 +55,9 @@ $(document).on("click", ".claseTdProducto",function(){
     var src = "";
     
     if (document.domain == "localhost") {
-        //src = 'http://localhost/pagolibre/laravel/public/imagen/cargador_nuevo_sol.gif';
-        src = 'http://localhost/pagolibre/laravel/public/imagen/' + empresaRuc + '/' + productoId + '.webp';
+        src = 'http://localhost/pagolibre/laravel/public/imagen/' + empresaRuc + '/' + productoImagen;
     } else {
-        //src = 'https://comparadordeventas.com/pagolibre/public/imagen/cargador_nuevo_sol.gif';
-        src = 'https://comparadordeventas.com/pagolibre/public/imagen/' + empresaRuc + '/' + productoId + '.webp';
+        src = 'https://comparadordeventas.com/pagolibre/public/imagen/' + empresaRuc + '/' + productoImagen;
     }
 
     image.src = src;
@@ -58,7 +75,7 @@ $(".claseSelectCantidad").on("change", function(){
     let idProducto = $(this).attr("idProducto");
     let idSelectCantidad = $(this).attr("id");
     let cantidad =$("#"+idSelectCantidad).val();
-
+    let localId = $("#idSelectLocal").val();
     let precioDelivery = $("#idHiddenPrecioDelivery").val();
 
     if (!precioDelivery) {
@@ -72,12 +89,12 @@ $(".claseSelectCantidad").on("change", function(){
 
         $.ajax({
             data:{},
-            url:"obtener/"+idProducto,
+            url:"obtener/" + idProducto + "/" + localId,
             type:"GET",
             dataType: "json",
             success:function(respuesta){
                 let productoNombre = respuesta.productoNombre;
-                let productoPrecio = respuesta.productoPrecio;
+                let productoPrecio = respuesta.LLSPPrecio;
                 let monto = productoPrecio * cantidad;
 
                 $("#idSpanMonto_"+idProducto).text(monto.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
@@ -149,8 +166,8 @@ $(".claseSelectCantidad").on("change", function(){
     }
 });
 
-$("#idSelectEmpresaUbigeo").on("change", function(){
-    let empresaUbigeoId = $(this).val();
+$("#idSelectLocalUbigeo").on("change", function(){
+    let localUbigeoId = $(this).val();
     
     let montoTotal = $("#idHiddenPrecioTotal").val();
     
@@ -160,20 +177,28 @@ $("#idSelectEmpresaUbigeo").on("change", function(){
 
     montoTotal = parseFloat(montoTotal);
 
-    $.ajax({
-        data:{},
-        url:"obtenerEmpresaUbigeo/"+empresaUbigeoId,
-        type:"GET",
-        dataType: "json",
-        success:function(respuesta){
-            let precioDelivery = respuesta.aEmpresaUbigeoId.EUPrecioDelivery;
-            $("#idHiddenPrecioDelivery").val(precioDelivery);
+    if (localUbigeoId > 0) {
+        $.ajax({
+            data:{},
+            url:"obtenerLocalUbigeoDelivery/"+localUbigeoId,
+            type:"GET",
+            dataType: "json",
+            success:function(respuesta){
+                let precioDelivery = respuesta.oLocalUbigeo.LUPrecioDelivery;
+                $("#idHiddenPrecioDelivery").val(precioDelivery);
+    
+                let montoFinal = montoTotal + parseFloat(precioDelivery);
+                $("#idSpanMontoTotal").text(montoFinal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+                $("#idHiddenMontoTotal").val(montoFinal.toFixed(2));
+            }
+        });
+    } else {
+        $("#idSpanMontoTotal").text(montoTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+        $("#idHiddenMontoTotal").val(montoTotal.toFixed(2));
+    }
+    
 
-            let montoFinal = montoTotal + parseFloat(precioDelivery);
-            $("#idSpanMontoTotal").text(montoFinal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
-            $("#idHiddenMontoTotal").val(montoFinal.toFixed(2));
-        }
-    });
+
 });
 
 $(".claseBotonEnviar").on("click", function(event){
@@ -190,12 +215,12 @@ $(".claseBotonEnviar").on("click", function(event){
     empresaRuc = $("#empresaRucId").val();
     delivery = $("#idSelectDelivery").val();
     telefonoDelivery = $("#idTelefonoDelivery").val();
-    empresaUbigeoId = $("#idSelectEmpresaUbigeo").val();
+    empresaUbigeoId = $("#idSelectLocalUbigeo").val();
     _token = $("#idHiddenToken").val();
     
     //Se valida entrada del monto debe ser mayor a 5 soles, permitir 2 decimales y no negativos
     if ((monto >= 5) && (monto <= 5000) && (producto.length >= 5) && (producto.length <= 250)) {
-        if(delivery == 2) {
+        if(delivery == 1) {
             if (telefonoDelivery.length < 6) {
                 mensajeTelefonoError = "* Debe Registrar un número de telefono de contacto";
                 
@@ -216,40 +241,15 @@ $(".claseBotonEnviar").on("click", function(event){
                 
                 return false;
             }
+        } else {
+            $("#idTelefonoDelivery").val("");
+            $("#idSelectLocalUbigeo").val(0);
         }
 
         //event.preventDefault();
         //Validamos datos desde el servidor
         validarDatos(monto, producto, empresaEmail, empresaRuc);
-        //generarOrden();
-        
-        //$token = "ggtbfrjjbhgrffr"; //Este valor lo obtenemos desde el modal de culqi desde: culqi.token
-        /*clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
-        transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
-        transaccionPasarelaToken = "tkn_test_yla14jhxmnJnDBGE";
-        transaccionPasarelaMonedaCodigo = "PEN";
-        transaccionPasarelaBancoNombre = "BBVA";
-        transaccionPasarelaBancoPaisNombre = "PERU";
-        transaccionPasarelaBancoPaisCodigo = "PE";
-        transaccionPasarelaTarjetaMarca = "Visa";
-        transaccionPasarelaTarjetaTipo = "crédito";
-        transaccionPasarelaTarjetaCategoria = "clásica";
-        transaccionPasarelaTarjetaNumero = "411111******1111";
-        transaccionPasarelaDispositivoIp = "181.176.97.94";
-        transaccionPasarelaCodigoAutorizacion = "u9TJeX";
-        transaccionPasarelaCodigoReferencia = "M2oW0m5O8p";
-        transaccionPasarelaCodigoRespuesta = "venta_exitosa";
-        transaccionPasarelaComision = "0.042";
-        transaccionPasarelaIgv = "4536";
-        transaccionPasarelaMontoDepositar = "570264";
-
-        registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
-                transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, 
-                transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, 
-                transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, 
-                transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
-                transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);*/
-        //event.preventDefault();
+        //generarOrden("variableDePrueba");
         
     } else {
         //Validar campos por parte del front
@@ -333,9 +333,10 @@ function generarOrden(data){
 function registrarOrden(aProducto, data){
     let deliveryId = $("#idSelectDelivery").val();
     let telefonoDelivery = $("#idTelefonoDelivery").val();
-    let empresaUbigeoId = $("#idSelectEmpresaUbigeo").val();
-    let delivery = (deliveryId == 1) ? "N" : "S";
+    let localUbigeoId = $("#idSelectLocalUbigeo").val();
+    let delivery = (deliveryId == 1) ? "S" : "N";
     let comentario = $("#idComentario").val();
+    let localId = $("#idSelectLocal").val();
 
     productos = JSON.stringify(aProducto);
     var datos = {
@@ -343,7 +344,7 @@ function registrarOrden(aProducto, data){
         delivery: delivery, 
         telefonoDelivery: telefonoDelivery,
         "_token": _token,
-        empresaUbigeoId: empresaUbigeoId,
+        localUbigeoId: localUbigeoId,
         comentario: comentario,
     };
 
@@ -352,10 +353,10 @@ function registrarOrden(aProducto, data){
         type: "POST",
         dataType: "json",
         url: "registrarOrden",
-        success:function(respuesta){//console.log(respuesta.mensaje);
+        success:function(respuesta){
             ordenId = respuesta.mensaje;
-
-            /*clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
+/*
+            clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
             transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
             transaccionPasarelaToken = "tkn_test_yla14jhxmnJnDBGE";
             transaccionPasarelaMonedaCodigo = "PEN";
@@ -374,13 +375,14 @@ function registrarOrden(aProducto, data){
             transaccionPasarelaIgv = "4536";
             transaccionPasarelaMontoDepositar = "570264";
 
-            registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
+            registrarDatos(empresaEmail, localId, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
                 transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, 
                 transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, 
                 transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, 
                 transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
                 transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
-            */ 
+            */
+            
             if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
 
             clienteEmail = data.email;
@@ -404,7 +406,7 @@ function registrarOrden(aProducto, data){
                 transaccionPasarelaIgv = (typeof data.total_fee_taxes !== "undefined") ? data.total_fee_taxes : "NO TIENE";
                 transaccionPasarelaMontoDepositar = (typeof data.transfer_amount !== "undefined") ? data.transfer_amount : "NO TIENE";
 
-                registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
+                registrarDatos(empresaEmail, localId, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
                         transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
                         transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
                         transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
@@ -454,15 +456,16 @@ function iniciaCulqi(){
 }
 
 //Se registran los datos al servidor 
-function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
+function registrarDatos(empresaEmail, localId, monto, descripcion, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
                 transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
                 transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
                 transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
                 transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId){
                 
-                let transaccionPasarelaComisionFija = 110;
-                let transaccionPasarelaComisionFijaIgv = 20;
-                let transaccionComisionComercio = 20;
+                let transaccionPasarelaComisionFija = 108;
+                let transaccionPasarelaComisionFijaIgv = (transaccionPasarelaComisionFija * 0.18);
+                let porcentaje = ((monto * 7) - (transaccionPasarelaComision + transaccionPasarelaIgv));
+                let transaccionComisionComercio = (130 - (transaccionPasarelaComisionFija + transaccionPasarelaComisionFijaIgv)) + porcentaje;
                 let transaccionComercioMontoDepositar = transaccionPasarelaMontoDepositar - transaccionPasarelaComisionFija - 
                                                             transaccionPasarelaComisionFijaIgv - transaccionComisionComercio;
 
@@ -475,7 +478,8 @@ function registrarDatos(empresaEmail, empresaRuc, monto, descripcion, clienteEma
             descripcion:descripcion,
             delivery:delivery,
             enviarCorreoTipo:"1",
-            empresaRuc:empresaRuc,
+            //empresaRuc:empresaRuc,
+            localId:localId,
             transaccionPasarelaPedidoId:transaccionPasarelaPedidoId,
             transaccionPasarelaToken:transaccionPasarelaToken,
             transaccionPasarelaMonedaCodigo:transaccionPasarelaMonedaCodigo,
@@ -546,48 +550,8 @@ function enviarDatos(empresaEmail, empresaRuc, precio, producto, token, clienteE
         dataType: "json",
         url: url,
     })
-    .done(function( data, textStatus, jqXHR ) {console.log(data);
+    .done(function( data, textStatus, jqXHR ) {
         generarOrden(data);
-        /*if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};      
-        
-        if ( (typeof tipoVenta !== 'undefined') && (tipoVenta == "venta_exitosa")) {
-            transaccionPasarelaPedidoId = (typeof data.id !== "undefined") ? data.id : "NO TIENE";
-            transaccionPasarelaToken = (typeof data.source !== "undefined") ? data.source.id : "NO TIENE" ;
-            transaccionPasarelaMonedaCodigo = (typeof data.currency_code !== "undefined") ? "-" + data.currency_code : "NO TIENE";
-            transaccionPasarelaBancoNombre = (typeof data.source !== "undefined") ? "-" + data.source.iin.issuer.name : "NO TIENE";
-            transaccionPasarelaBancoPaisNombre = (typeof data.source !== "undefined") ? "-" + data.source.iin.issuer.country : "NO TIENE";
-            transaccionPasarelaBancoPaisCodigo = (typeof data.source !== "undefined") ? "-" + data.source.iin.issuer.country_code : "NO TIENE";
-            transaccionPasarelaTarjetaMarca = (typeof data.source !== "undefined") ? "-" + data.source.iin.card_brand : "NO TIENE";
-            transaccionPasarelaTarjetaTipo = (typeof data.source !== "undefined") ? "-" + data.source.iin.card_type : "NO TIENE";
-            transaccionPasarelaTarjetaCategoria = (typeof data.source !== "undefined") ? "-" + data.source.iin.card_category : "NO TIENE";
-            transaccionPasarelaTarjetaNumero = (typeof data.source !== "undefined") ? "-" + data.source.card_number : "NO TIENE";
-            transaccionPasarelaDispositivoIp = (typeof data.source !== "undefined") ? data.source.client.ip : "NO TIENE";
-            transaccionPasarelaCodigoAutorizacion = (typeof data.authorization_code !== "undefined") ? data.authorization_code : "NO TIENE";
-            transaccionPasarelaCodigoReferencia = (typeof data.reference_code !== "undefined") ? "-" + data.reference_code : "NO TIENE";
-            transaccionPasarelaCodigoRespuesta = (tipoVenta) ? tipoVenta : "NO TIENE";
-            transaccionPasarelaComision = (typeof data.fee_details !== "undefined") ? data.fee_details.variable_fee.total : "NO TIENE";
-            transaccionPasarelaIgv = (typeof data.total_fee_taxes !== "undefined") ? data.total_fee_taxes : "NO TIENE";
-            transaccionPasarelaMontoDepositar = (typeof data.transfer_amount !== "undefined") ? data.transfer_amount : "NO TIENE";
-
-            registrarDatos(empresaEmail, empresaRuc, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
-                    transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
-                    transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
-                    transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
-                    transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar);
-
-            $('#contenedor_de_cargador').fadeIn(1000).html("Se realizó con éxito la transferencia");
-        } else {
-                $('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
-                $('#modal').modal('hide');
-
-            mensajeRespuestaUsuario = data.user_message.replace(/[^a-zA-Z ]/g, "");
-
-            if (document.domain == "localhost") {
-                $(window).attr('location','http://localhost/pagolibre/laravel/public/tarjetaNoProcede/' + mensajeRespuestaUsuario);
-            } else {
-                $(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede/' + mensajeRespuestaUsuario);
-            }
-        }*/
     })
     .fail(function( jqXHR, textStatus, errorThrown ) {
         $('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");

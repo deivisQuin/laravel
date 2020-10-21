@@ -7,6 +7,16 @@
         <h2>Gracias por utilizar el servicio de Pago Libre.</h2>
         Acabas de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
         El número de Pedido realizado es: <h3>{{str_pad($transaccionId, 4, "0", STR_PAD_LEFT)}}</h3><br>
+        El teléfono de contacto que ha registrado es : <h3>{{$oOrden->ordenTelefono}}</h3><br>
+	
+        @if($oOrden->ordenDelivery == "S")
+            El pedido es para Delivery. <br>	
+        @endif
+
+        @if($oOrden->ordenComentario)
+            Tendremos en cuenta lo siguiente: <h3>{{$oOrden->ordenComentario}}</h3> <br>	
+        @endif
+
         Por el producto y/o servicio de: <br><b>
         <table class="table table-hover">
             <thead>

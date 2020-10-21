@@ -5,29 +5,48 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Empresa;
-use App\EmpresaLineaSublineaProducto;
+use App\LocalLineaSublineaProducto;
 use App\Producto;
-use App\EmpresaUbigeo;
+use App\LocalUbigeoDelivery;
+use App\Local;
+use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
 {
-    public function obtenerProducto($productoId){
-        $aProducto = Producto::where("productoId", "=", $productoId)->firstOrFail();
-        return response()->json($aProducto);
+    public function obtenerProducto($productoId, $localId){
+        //$aProducto = Producto::where("productoId", "=", $productoId)->firstOrFail();
+        $aProducto = DB::table('local_linea_sublinea_producto')
+            ->join('producto', 'local_linea_sublinea_producto.LLSPProductoId', '=', 'producto.productoId')
+            ->where('local_linea_sublinea_producto.LLSPestadoId', '=', 1)
+            ->where('local_linea_sublinea_producto.LLSPProductoId', '=', $productoId)
+            ->where('local_linea_sublinea_producto.LLSPLocalId', '=', $localId)
+            ->select('producto.*', 'local_linea_sublinea_producto.LLSPPrecio')
+            ->get();
+
+        return response()->json($aProducto[0]);
     }
     
-    public function obtenerRuc($empresaRuc){
-        $aEmpresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
+    public function obtenerRuc($empresaRuc) {
+        $oEmpresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
 
-        if ( isset($aEmpresa->empresaId) ) {   
-            //$aProducto = EmpresaLineaSublineaProducto::where("ELSPEmpresaId", "=", 1)->paginate(10);
-            $aProducto = EmpresaLineaSublineaProducto::where("ELSPEmpresaId", "=", $aEmpresa->empresaId)->get();
+        if ( isset($oEmpresa->empresaId) ) {
+            //Se obtiene el local de la empresa
+            $aLocal = Local::where("LocalEmpresaId", "=", $oEmpresa->empresaId)->get();
+            //Se obtiene el listado de productos del local
+            $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $aLocal[0]->localId)->get();
+            
             //Se obtiene los lugares de delivery de la empresa
-            $aEmpresaUbigeo = EmpresaUbigeo::where("EUEmpresaId", "=", $aEmpresa->empresaId)->get();
+            $aLocalUbigeoDelivery = LocalUbigeoDelivery::where("LULocalId", "=", $aLocal[0]->localId)->get();
 
-            return view("iniciar", compact(["aEmpresa", "aProducto", "aEmpresaUbigeo"]));
+            $mostrarLocales = "";
+
+            if (count($aLocal) < 2) {
+                $mostrarLocales = "style=display:none";
+            }
+
+            return view("iniciar", compact(["oEmpresa", "aProducto", "aLocalUbigeoDelivery", "aLocal", "mostrarLocales"]));
         } else {
-            return view("empresaNoRegistrada", compact("aEmpresa"));
+            return view("empresaNoRegistrada");
         }
     }
 
