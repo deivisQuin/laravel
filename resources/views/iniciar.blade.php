@@ -46,6 +46,32 @@
   </div>
 </div>
 
+<div class="modal fade" id="idDivModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><strong style='color:#28a745'><div id="idModalTitulo">Disponemos de las siguientes salsas</div></strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+	  	<div class="row">
+		  <div class="col-md-12" id="idCuerpoModal"></div>
+		</div>
+      </div>
+      <div class="modal-footer">
+		<div class="container">
+			<div class="row">
+			<div class="col-xs-4"><button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button></div>
+			<div class="col-xs-8 ml-auto"></div>
+			</div>
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container panel panel-default">
 	<div class="card">
 		<div class="card-header">
@@ -109,11 +135,14 @@
 		            <h4 style='color:#28a745'><strong>Empresa: {{$oEmpresa->empresaRazonSocial}}</strong></h4>
 		        </div>
 				<div class="form-group">
-	  				<label for=""><strong>Dile a {{$oEmpresa->empresaNombre}}</strong></label>
-	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Que deseas indicarnos?..." class="form-control"></textarea>
+	  				<!--<label for=""><strong>Dile a {{$oEmpresa->empresaNombre}}</strong></label>-->
+	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Cual es tu nombre y dirección?...¿Todas las cremas?" class="form-control"></textarea>
+					  <div class="alert-message" id="comentarioError"></div>
 				</div>
 				<div class="form-group">
-	  				<span style="color:#dc3545"><strong>* El Stock es referencial, cualquier consulta llamar al: {{$oEmpresa->empresaTelefono}}</strong></span>
+	  				<!--<span style="color:#dc3545"><strong>* El Stock es referencial, cualquier consulta llamar al: {{$oEmpresa->empresaTelefono}}</strong></span>-->
+					<button type ="button" class="btn btn-primary" id="idBotonSalsa">Nuestras Cremas</button>
+					  
 				</div>
 				<div class="form-group">
 	  				<div class="row">

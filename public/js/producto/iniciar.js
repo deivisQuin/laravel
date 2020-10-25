@@ -43,9 +43,32 @@ $("#idSelectDelivery").on("change", function(){
     }
 });
 
+$("#idBotonSalsa").on("click", function() {
+    let localId = $("#idSelectLocal").val();
+
+    $.ajax({
+        data:{},
+        url:"listarSalsa/" + localId,
+        type:"GET",
+        dataType: "json",
+        success:function(respuesta){
+            let listarSalsas = "<ul>"; 
+            
+            for(let i = 0; i < respuesta.length; i++) {
+                listarSalsas +="<li>" + respuesta[i]["salsaNombre"] + "</li>";
+            }
+
+            listarSalsas += "</ul>";
+                    
+            $('#idCuerpoModal').html(listarSalsas);
+
+            $("#idDivModal").modal("show");
+        }
+    })
+})
+
 $(document).on("click", ".claseTdProducto",function(){
     let productoNombre = $(this).attr("trProductoNombre");
-    //let productoId = $(this).attr('trProductoId');
     let productoImagen = $(this).attr("trProductoImagen");
     let empresaRuc = $("#empresaRucId").val();
 
@@ -205,6 +228,7 @@ $(".claseBotonEnviar").on("click", function(event){
     $("#divMensajeError").hide();
     $("#telefonoError").hide();
     $("#distritoError").hide();
+    $("#comentarioError").hide();
     $("#idDivMensajeCabeceraError").hide();
 
     monto = $("#idHiddenMontoTotal").val();
@@ -217,6 +241,7 @@ $(".claseBotonEnviar").on("click", function(event){
     telefonoDelivery = $("#idTelefonoDelivery").val();
     empresaUbigeoId = $("#idSelectLocalUbigeo").val();
     _token = $("#idHiddenToken").val();
+    comentario = $("#idComentario").val();
     
     //Se valida entrada del monto debe ser mayor a 5 soles, permitir 2 decimales y no negativos
     if ((monto >= 5) && (monto <= 5000) && (producto.length >= 5) && (producto.length <= 250)) {
@@ -244,6 +269,16 @@ $(".claseBotonEnviar").on("click", function(event){
         } else {
             $("#idTelefonoDelivery").val("");
             $("#idSelectLocalUbigeo").val(0);
+        }
+
+        if (comentario.length < 2) {
+            mensajeComentarioError = "Por favor registrar su nombre y dirección";
+            $("#idSpanMensajeCabeceraError").text(mensajeComentarioError);
+            $("#comentarioError").text(mensajeComentarioError);
+            $("#idDivMensajeCabeceraError").show();
+            $("#comentarioError").show();
+
+            return false;
         }
 
         //event.preventDefault();

@@ -58,6 +58,7 @@ Route::post("producto/transaccion", "TransaccionController@registrar");
 //Route::get("producto/correo", "CorreoController@enviarCorreo");
 Route::get("producto/obtenerLocalUbigeoDelivery/{localUbigeoId}", "LocalUbigeoDeliveryController@obtenerJson");
 Route::post("producto/registrarOrden", "OrdenController@crear");
+Route::get("producto/listarSalsa/{localId}", "SalsaController@listar");
 
 
 //Pago libre:

@@ -24,7 +24,7 @@ $fechaActual = getdate();
                                 </select>
                             </div>
                         </div>
-                            
+                        <!--
                         <div class="row">
                             <div class="col-sx-12 col-md-12 col-lg-2">
                                 <label class="input-group-text" for="idAnio">Año:</label>
@@ -67,7 +67,7 @@ $fechaActual = getdate();
                                 </select>
                             </div>
                         </div>
-
+-->
                     </form>
                     
                 </div>

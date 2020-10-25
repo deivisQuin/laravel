@@ -18,7 +18,9 @@ class Local extends Model
     }
 
     public function empresa(){
-        return $this->hasOne(Empresa::class, "empresaId", "localEmpresaId");
+        //return $this->hasOne(Empresa::class, "empresaId", "localEmpresaId");
+        return $this->belongsTo(Empresa::class, "localEmpresaId");
+
     }
 
     public function ubigeo(){
