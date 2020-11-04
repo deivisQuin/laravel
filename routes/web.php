@@ -25,11 +25,16 @@ Auth::routes(["reset" => true, "register" => true]);//register=>true si desea re
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware("auth");
 
+//Se muestra las ventas del local
+Route::post("/listarTransaccion", "TransaccionController@ventasLocal")->middleware("auth");
+Route::get("/listarLocal/{empresaId}", "LocalController@listar")->middleware("auth");
+
 //Se agrega el registro de usuarios
 //Route::get("/registrar", "Auth\RegisterController@registrarUsuario");
 
 //Transaccion (Se obtienen las ventas del comercio)
-Route::post("transaccion/ventasEmpresa", "TransaccionController@ventasEmpresa");
+//Route::post("transaccion/ventasEmpresa", "TransaccionController@ventasEmpresa"); descontinuado se usará "ventasLocal"
+
 
 Route::post("transaccion/{transaccionId}/ver", "TransaccionController@obtener");
 
@@ -58,8 +63,13 @@ Route::post("producto/transaccion", "TransaccionController@registrar");
 //Route::get("producto/correo", "CorreoController@enviarCorreo");
 Route::get("producto/obtenerLocalUbigeoDelivery/{localUbigeoId}", "LocalUbigeoDeliveryController@obtenerJson");
 Route::post("producto/registrarOrden", "OrdenController@crear");
-Route::get("producto/listarSalsa/{localId}", "SalsaController@listar");
+Route::get("producto/listarSalsa/{localId}", "SalsaController@listarJson");
+Route::get("/listarProducto", "ProductoController@listar")->middleware("auth");
 
+Route::post("modificarLocalLineaSublineaProducto", "LocalLineaSublineaProductoController@modificar");
+
+Route::get("/listarSalsa", "SalsaController@listar")->middleware("auth");
+Route::post("modificarSalsa", "SalsaController@modificar");
 
 //Pago libre:
 //Los clientes inician con el RUC del comercio (Empresa)

@@ -23,8 +23,17 @@ $fechaActual = getdate();
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-sx-12 col-md-12 col-lg-2">
+                                <label class="input-group-text" for="idSelectLocal">Local:</label>
+                            </div>
+                            <div class="col-sx-12 col-md-12 col-lg-10">
+                                <select name = "selectLocal" id = "idSelectLocal" class="custom-select">
+                                    <option value = "">Seleccione Local</option>
+                                    
+                                </select>
+                            </div>
                         </div>
-                        <!--
+                        
                         <div class="row">
                             <div class="col-sx-12 col-md-12 col-lg-2">
                                 <label class="input-group-text" for="idAnio">Año:</label>
@@ -67,7 +76,7 @@ $fechaActual = getdate();
                                 </select>
                             </div>
                         </div>
--->
+
                     </form>
                     
                 </div>

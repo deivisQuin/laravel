@@ -135,14 +135,13 @@
 		            <h4 style='color:#28a745'><strong>Empresa: {{$oEmpresa->empresaRazonSocial}}</strong></h4>
 		        </div>
 				<div class="form-group">
-	  				<!--<label for=""><strong>Dile a {{$oEmpresa->empresaNombre}}</strong></label>-->
-	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Cual es tu nombre y dirección?...¿Todas las cremas?" class="form-control"></textarea>
+	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Cual es tu nombre y dirección?...Especifica tu pedido" class="form-control"></textarea>
 					  <div class="alert-message" id="comentarioError"></div>
 				</div>
 				<div class="form-group">
-	  				<!--<span style="color:#dc3545"><strong>* El Stock es referencial, cualquier consulta llamar al: {{$oEmpresa->empresaTelefono}}</strong></span>-->
-					<button type ="button" class="btn btn-primary" id="idBotonSalsa">Nuestras Cremas</button>
-					  
+					<strong>Nuestras Salsas:</strong><br>
+					<button type ="button" class="btn btn-primary" id="idBotonSalsa">Mayonesa, Mostaza, Ketchup, Golf,<br> Tártara, Aceituna, Ají, Ajiole</button>
+					<br>
 				</div>
 				<div class="form-group">
 	  				<div class="row">

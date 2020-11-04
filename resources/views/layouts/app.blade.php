@@ -51,6 +51,12 @@
                         </a>
                         
                     @endif
+                    <a class="navbar-brand" href="{{ url('listarProducto') }}">
+                        <strong>Productos</strong>
+                    </a>
+                    <a class="navbar-brand" href="{{ url('listarSalsas') }}">
+                        <strong>Salsas</strong>
+                    </a>
                 @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

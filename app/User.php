@@ -37,7 +37,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function rol(){
+    /*public function rol(){
         return $this->belongsTo("App\Rol", "usersRolId");
+    }*/
+
+    public function rol() {
+        return $this->hasOne(Rol::class, "rolId", "usersRolId");
     }
 }

@@ -272,7 +272,7 @@ $(".claseBotonEnviar").on("click", function(event){
         }
 
         if (comentario.length < 2) {
-            mensajeComentarioError = "Por favor registrar su nombre y dirección";
+            mensajeComentarioError = "Por favor registrar su nombre, dirección y especifica tu pedido";
             $("#idSpanMensajeCabeceraError").text(mensajeComentarioError);
             $("#comentarioError").text(mensajeComentarioError);
             $("#idDivMensajeCabeceraError").show();

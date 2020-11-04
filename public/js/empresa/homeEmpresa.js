@@ -1,6 +1,29 @@
 $(document).ready(function() {
-	$("#idSelectEmpresa, #idAnio, #idMes, #idDia").on("change", function(){
+	$("#idSelectEmpresa").on("change", function(){
 		let empresaId = $("#idSelectEmpresa").val();
+
+		if (empresaId > 0) {
+			$.ajax({
+				data: {},
+				type: "GET",
+				dataType: "json",
+				url: "listarLocal/" + empresaId,
+				success:function(respuesta){
+					if (respuesta.length > 0) {
+						for (let i = 0; i < respuesta.length; i++) {
+							$("#idSelectLocal").prepend('<option value = "'+respuesta[i].localId+'">'+respuesta[i].localNombre+'</option>');
+						}
+					}
+				},
+				error: function(response) {//Si hubo algún problema en el servidor o no pasó la validación
+					console.log("error");
+				}
+			})	
+		}
+	})
+
+	$("#idSelectLocal, #idAnio, #idMes, #idDia").on("change", function(){
+		let localId = $("#idSelectLocal").val();
 		let idAnio = $("#idAnio option:selected").val();
 		let idMes = $("#idMes option:selected").val()
 		let mesFormato = (idMes < 10) ? "0" + idMes : idMes;
@@ -10,10 +33,11 @@ $(document).ready(function() {
 		let fechaTransaccion = idAnio + "-" + mesFormato + "-" + diaFormato;
 
 		$.ajax({
-		    data: {"empresaId" : empresaId, "transaccionFechaCrea" : fechaTransaccion,  "_token": $("meta[name='csrf-token']").attr("content")},
+		    data: {"localId" : localId, "transaccionFechaCrea" : fechaTransaccion,  "_token": $("meta[name='csrf-token']").attr("content")},
 		    type: "POST",
 		    dataType: "json",
-		    url: "transaccion/ventasEmpresa",
+			//url: "transaccion/ventasEmpresa",
+			url: "listarTransaccion",
 		    success:function(response){
 				$("#divVentasEmpresa").html(response);
 			},

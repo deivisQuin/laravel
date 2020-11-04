@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use App\Transaccion;
 use App\Empresa;
+use App\UserLocal;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Generator;
 
@@ -93,13 +96,13 @@ class TransaccionController extends Controller
     }
 
     public function tarjetaNoProcede($mensajeUsuario = null){
-        return view("tarjetaNoProcede",compact("mensajeUsuario")); 
+        return view("tarjetaNoProcede",compact("mensajeUsuario"));
     }
 
     public function gracias(){
         return view("gracias");
     }
-
+/* Se usará el método ventasLocal()
     public function ventasEmpresa(Request $request) {
         $empresaId = $request->all()["empresaId"];
         $transaccionFechaCrea = $request->all()["transaccionFechaCrea"];
@@ -109,6 +112,18 @@ class TransaccionController extends Controller
 
         //Se obtiene las ventas de la empresa
         $aTransaccion = Transaccion::where("transaccionEmpresaId", "=", $empresaId)
+                        ->where("transaccionFechaCrea", "like", "$transaccionFechaCrea%")
+                        ->orderBy("transaccionId", "desc")
+                        ->paginate(10);
+        return response()->json(view("empresaTransaccion.empresaTransaccion", compact("aTransaccion"))->render());
+    }*/
+
+    public function ventasLocal(Request $request) {
+        $localId = $request->all()["localId"];
+        $transaccionFechaCrea = $request->all()["transaccionFechaCrea"];
+
+        //Se obtiene las ventas del local
+        $aTransaccion = Transaccion::where("transaccionLocalId", "=", $localId)
                         ->where("transaccionFechaCrea", "like", "$transaccionFechaCrea%")
                         ->orderBy("transaccionId", "desc")
                         ->paginate(10);
@@ -123,7 +138,7 @@ class TransaccionController extends Controller
 
     public function registrar(Request $request) {
         //$empresaRuc     = $request->input("empresaRuc");
-        $localId = $request->input("localId");
+        $localId        = $request->input("localId");
         $comercioCorreo = $request->input("empresaEmail");
         $clienteCorreo  = $request->input("clienteEmail");
         $monto          = $request->input("monto");
@@ -176,7 +191,6 @@ class TransaccionController extends Controller
         $transaccion->transaccionPasarelaComisionFijaIgv = $request->input("transaccionPasarelaComisionFijaIgv")/100;
         $transaccion->transaccionComisionComercio = $request->input("transaccionComisionComercio")/100;
         $transaccion->transaccionComercioMontoDepositar = $request->input("transaccionComercioMontoDepositar")/100;
-        //$transaccion->transaccionEmpresaId = $aEmpresa->empresaId;
         $transaccion->transaccionLocalId = $localId;
         $transaccion->transaccionOrdenId = $request->input("ordenId");
 

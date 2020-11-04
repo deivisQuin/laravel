@@ -58,6 +58,7 @@ class HomeController extends Controller
         }
 
         $empresaId = 0;
+
         foreach ($oUserLocal as $userLocal) {
             $aLocal[] = $userLocal->local;
             
@@ -68,7 +69,7 @@ class HomeController extends Controller
             $empresaId = $userLocal->local->empresa->empresaId;   
         }
 
-        return view('empresa.homeEmpresa', compact("aEmpresa", "oUserLocal"));
+        return view('empresa.homeEmpresa', compact("aEmpresa"));
 
         //return view('empresa.homeEmpresa', compact("aEmpresa", "usersRolId"));
 

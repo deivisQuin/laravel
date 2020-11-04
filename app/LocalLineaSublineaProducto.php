@@ -8,9 +8,11 @@ class LocalLineaSublineaProducto extends Model
 {
     protected $table = "local_linea_sublinea_producto";
     protected $primaryKey = "LLSPId";
-	protected $fillable = ["LLSPLocalId", "LLSPLineaId", "LLSPSublineaId", "LLSPProductoId", "LLSPPrecio", "LLSPEstadoId", "LLSPImagen"];
+    protected $fillable = ["LLSPLocalId", "LLSPLineaId", "LLSPSublineaId", "LLSPProductoId", "LLSPPrecio", "LLSPEstadoId", "LLSPImagen"];
+    public $timestamps = false;
     
     public function producto(){
     	return $this->hasOne(Producto::class, "productoId", "LLSPProductoId");
     }
+
 }

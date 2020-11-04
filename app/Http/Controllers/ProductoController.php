@@ -3,25 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use App\Empresa;
 use App\LocalLineaSublineaProducto;
 use App\Producto;
 use App\LocalUbigeoDelivery;
 use App\Local;
+use App\UserLocal;
 use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
 {
-    public function obtenerProducto($productoId, $localId){
-        //$aProducto = Producto::where("productoId", "=", $productoId)->firstOrFail();
+    public function listar() {
+        $usersRolId = Auth::user()->usersRolId;
+
+        if (Auth::user()->rol->rolNombreCorto == "VENT") {
+            $aUserLocal = UserLocal::where("ULUsersId", "=", $usersRolId)->get();
+
+            $aProducto = DB::table("local_linea_sublinea_producto")
+                            ->leftJoin("producto", "local_linea_sublinea_producto.LLSPProductoId", "=", "producto.productoId")
+                            ->leftJoin("local", "local_linea_sublinea_producto.LLSPLocalId", "=", "local.localId")
+                            ->leftJoin("estado", "local_linea_sublinea_producto.LLSPEstadoId", "=", "estado.estadoId")
+                            ->where("local.localId", "=", $aUserLocal[0]->ULLocalId)                            
+                            ->get();
+
+            return view("producto.listarProducto",compact("aProducto"));
+        }
+    }
+
+    public function obtenerProducto($productoId, $localId) {
         $aProducto = DB::table('local_linea_sublinea_producto')
-            ->join('producto', 'local_linea_sublinea_producto.LLSPProductoId', '=', 'producto.productoId')
-            ->where('local_linea_sublinea_producto.LLSPestadoId', '=', 1)
-            ->where('local_linea_sublinea_producto.LLSPProductoId', '=', $productoId)
-            ->where('local_linea_sublinea_producto.LLSPLocalId', '=', $localId)
-            ->select('producto.*', 'local_linea_sublinea_producto.LLSPPrecio')
-            ->get();
+                        ->join('producto', 'local_linea_sublinea_producto.LLSPProductoId', '=', 'producto.productoId')
+                        ->where('local_linea_sublinea_producto.LLSPEstadoId', '=', 1)
+                        ->where('local_linea_sublinea_producto.LLSPProductoId', '=', $productoId)
+                        ->where('local_linea_sublinea_producto.LLSPLocalId', '=', $localId)
+                        ->select('producto.*', 'local_linea_sublinea_producto.LLSPPrecio')
+                        ->get();
 
         return response()->json($aProducto[0]);
     }
@@ -33,7 +51,7 @@ class ProductoController extends Controller
             //Se obtiene el local de la empresa
             $aLocal = Local::where("LocalEmpresaId", "=", $oEmpresa->empresaId)->get();
             //Se obtiene el listado de productos del local
-            $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $aLocal[0]->localId)->get();
+            $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $aLocal[0]->localId)->where("LLSPEstadoId", "=", 1)->get();
             
             //Se obtiene los lugares de delivery de la empresa
             $aLocalUbigeoDelivery = LocalUbigeoDelivery::where("LULocalId", "=", $aLocal[0]->localId)->get();
