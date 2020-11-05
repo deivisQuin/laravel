@@ -22,7 +22,7 @@ class SalsaController extends Controller
         if (Auth::user()->rol->rolNombreCorto == "VENT") {
             $aUserLocal = UserLocal::where("ULUsersId", "=", $usersRolId)->get();
 
-            $aSalsa = Salsa::where("salsaLocalId", "=", $aUserLocal[0]->ULLocalId)->where("salsaEstadoId", "=", 1)->get();
+            $aSalsa = Salsa::where("salsaLocalId", "=", $aUserLocal[0]->ULLocalId)->get();
 
             return view("salsa.listarSalsa",compact("aSalsa"));
         }
@@ -31,7 +31,7 @@ class SalsaController extends Controller
     public function modificar(Request $request) {
         $salsaId       = $request->input("salsaId");
         $estadoIdNuevo = $request->input("estadoIdNuevo");
-dd($salsaId);
+
         $oSalsa = Salsa::find($salsaId);
         
         $oSalsa->salsaEstadoId = $estadoIdNuevo;

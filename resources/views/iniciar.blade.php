@@ -132,7 +132,7 @@
 		            <h4 style='color:#28a745'><strong>RUC: {{$oEmpresa->empresaRuc}}</strong></h4>
 		        </div>
 				<div class="form-group">
-		            <h4 style='color:#28a745'><strong>Empresa: {{$oEmpresa->empresaRazonSocial}}</strong></h4>
+		            <h4 style='color:#28a745'><strong>Empresa: {{$oEmpresa->empresaNombreComecial}}</strong></h4>
 		        </div>
 				<div class="form-group">
 	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Cual es tu nombre y dirección?...Especifica tu pedido" class="form-control"></textarea>
@@ -140,19 +140,19 @@
 				</div>
 				<div class="form-group">
 					<strong>Nuestras Salsas:</strong><br>
-					<button type ="button" class="btn btn-primary" id="idBotonSalsa">Mayonesa, Mostaza, Ketchup, Golf,<br> Tártara, Aceituna, Ají, Ajiole</button>
+					<button type ="button" class="btn btn-primary" id="idBotonSalsa">Mayonesa, Mostaza, Ketchup...</button>
 					<br>
 				</div>
 				<div class="form-group">
 	  				<div class="row">
-						
 						<div class="col-sx-12 col-md-12 col-lg-3" {{$mostrarLocales}} >
 							<select name="nameSelectLocal" id="idSelectLocal" class="form-control">
 								<option value="0">Elegir Tu Local</option>
 								@foreach($aLocal as $local)
 									<option value="{{$local->localId}}" <?php if(count($aLocal)==1){?>selected="selected"<?php } ?>>{{$local->localNombre}}</option>
 								@endforeach
-							</select>  
+							</select>
+							<div class="alert-message" id="localError"></div>
 						</div>
 
 	  					<div class="col-sx-12 col-md-12 col-lg-3">

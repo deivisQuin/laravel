@@ -54,7 +54,7 @@
                     <a class="navbar-brand" href="{{ url('listarProducto') }}">
                         <strong>Productos</strong>
                     </a>
-                    <a class="navbar-brand" href="{{ url('listarSalsas') }}">
+                    <a class="navbar-brand" href="{{ url('listarSalsa') }}">
                         <strong>Salsas</strong>
                     </a>
                 @endauth

@@ -8,9 +8,9 @@ class Salsa extends Model
 {
     protected $table = "salsa";
     protected $primaryKey = "salsaId";
-            
     protected $fillable = ["salsaLocalId", "salsaNombre", "salsaEstadoId", "salsaUsuarioCrea", 
                             "salsaFechaCrea", "salsaUsuarioModifica", "salsaFechaModifica"];
+    public $timestamps = false;
     
     public function estado(){
         return $this->hasOne(Estado::class, "estadoId", "salsaEstadoId");

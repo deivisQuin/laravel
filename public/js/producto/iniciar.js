@@ -44,14 +44,29 @@ $("#idSelectDelivery").on("change", function(){
 });
 
 $("#idBotonSalsa").on("click", function() {
+    $("#idSpanMensajeCabeceraError").text("");
+    $("#idDivMensajeCabeceraError").hide();
+    $("#localError").hide();
+
     let localId = $("#idSelectLocal").val();
+
+    if (localId == 0) {
+        mensajeLocalError = "* Antes de elegir el producto Debe Elegir un Local";
+
+        $("#idSpanMensajeCabeceraError").text(mensajeLocalError);
+        $("#idDivMensajeCabeceraError").show();
+
+        $("#localError").html("<strong>Elegir el Local</strong>");
+        $("#localError").show();
+        return false;
+    }
 
     $.ajax({
         data:{},
         url:"listarSalsa/" + localId,
         type:"GET",
         dataType: "json",
-        success:function(respuesta){
+        success:function(respuesta){console.log(respuesta);
             let listarSalsas = "<ul>"; 
             
             for(let i = 0; i < respuesta.length; i++) {
@@ -95,11 +110,29 @@ $(document).on("click", ".claseTdProducto",function(){
 })
 
 $(".claseSelectCantidad").on("change", function(){
+    $("#idSpanMensajeCabeceraError").text("");
+    $("#idDivMensajeCabeceraError").show();
+    $("#localError").hide();
+
     let idProducto = $(this).attr("idProducto");
     let idSelectCantidad = $(this).attr("id");
     let cantidad =$("#"+idSelectCantidad).val();
     let localId = $("#idSelectLocal").val();
     let precioDelivery = $("#idHiddenPrecioDelivery").val();
+
+    if (localId == 0) {
+        $("#"+idSelectCantidad).val("0");
+
+        mensajeLocalError = "* Antes de elegir el producto Debe Elegir un Local";
+
+        $("#idSpanMensajeCabeceraError").text(mensajeLocalError);
+        $("#idDivMensajeCabeceraError").show();
+
+        $("#localError").html("<strong>Elegir el Local</strong>");
+        $("#localError").show();
+
+        return false;
+    }
 
     if (!precioDelivery) {
         precioDelivery = 0.00;

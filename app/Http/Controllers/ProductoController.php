@@ -49,7 +49,7 @@ class ProductoController extends Controller
 
         if ( isset($oEmpresa->empresaId) ) {
             //Se obtiene el local de la empresa
-            $aLocal = Local::where("LocalEmpresaId", "=", $oEmpresa->empresaId)->get();
+            $aLocal = Local::where("localEmpresaId", "=", $oEmpresa->empresaId)->where("localEstadoId", "=", 1)->get();
             //Se obtiene el listado de productos del local
             $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $aLocal[0]->localId)->where("LLSPEstadoId", "=", 1)->get();
             

@@ -46,8 +46,8 @@
 
 @section('js')
     @if ($_SERVER['SERVER_NAME'] == "localhost")
-        <script src="{{url('js/producto/listarProducto.js')}}"></script>
+        <script src="{{url('js/salsa/listarSalsa.js')}}"></script>
     @else
-        <script src="https://comparadordeventas.com/pagolibre/public/js/producto/listarProducto.js"></script>
+        <script src="https://comparadordeventas.com/pagolibre/public/js/salsa/listarSalsa.js"></script>
     @endif
 @endsection
