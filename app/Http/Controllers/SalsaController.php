@@ -11,7 +11,7 @@ use App\UserLocal;
 class SalsaController extends Controller
 {
     public function listarJson($localId) {
-        $aSalsa = Salsa::where("salsaEstadoId", "=", 1)->where("salsaLocalId", "=", $localId)->get();
+        $aSalsa = Salsa::where("salsaLocalId", "=", $localId)->get();
         
         return response()->json($aSalsa);
     }

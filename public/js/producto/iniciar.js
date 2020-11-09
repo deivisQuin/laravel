@@ -70,7 +70,10 @@ $("#idBotonSalsa").on("click", function() {
             let listarSalsas = "<ul>"; 
             
             for(let i = 0; i < respuesta.length; i++) {
-                listarSalsas +="<li>" + respuesta[i]["salsaNombre"] + "</li>";
+                let salsaDescripcion =(respuesta[i]["salsaEstadoId"] != 1) ? 
+                    respuesta[i]["salsaNombre"] + "___" + "<input type='text' size='5' disabled='disabled' value='[Agotado]' class='alert-message'/>"
+                    : "<strong>" + respuesta[i]["salsaNombre"] + "</strong>";
+                listarSalsas +="<li>" + salsaDescripcion + "</li>";
             }
 
             listarSalsas += "</ul>";
