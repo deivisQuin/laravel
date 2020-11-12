@@ -41,7 +41,6 @@
                                     <th>Fecha</th>
                                     <th>Num Pedido</th>
                                     <th>Monto Realizado</th>
-                                    <th>Estado</th>
                                     <th>Entregado</th>
                                     <th>Contraseña</th>
                                 </tr>
@@ -60,7 +59,6 @@
                                     <td>{{$venta->transaccionFechaCrea}}</td>
                                     <td>{{str_pad($venta->transaccionId, 4, "0", STR_PAD_LEFT)}}</td>
                                     <td>{{$venta->transaccionMonto}}</td>
-                                    <td><span style="color:<?php echo $colorEstado;?>"><strong>{{$venta->estado->estadoNombre}}</strong></span></td>
                                     <td><span style="color:<?php echo $colorComercioEstado;?>"><strong>{{($venta->transaccionComercioEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>
                                     <td>{{$venta->transaccionComercioPassword}}</td>
                                 </tr>

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Empresa;
 use App\UserLocal;
 use App\Transaccion;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -46,15 +47,13 @@ class HomeController extends Controller
             return view('empresa.homeEmpresa', compact("aEmpresa"));
         }
 
-        if ($usersRolId == 3) {$fechaHoy = date("Y-m-d");
-            $fechaHoy = "2020-10-19";
-            //Se obtiene las ventas de la empresa
-            $aTransaccion = Transaccion::where("transaccionLocalId", "=", 1)
-                ->where("transaccionFechaCrea", "like", "$fechaHoy%")
-                ->orderBy("transaccionId", "desc")
-                ->paginate(10);
+        if ($usersRolId == 3) {
+            $aTransaccion = DB::table("transaccion")
+                ->leftJoin("orden", "transaccion.transaccionOrdenId", "=", "orden.ordenId")
+                ->where("orden.ordenEstadoId", "=", 1)                            
+                ->get();
+
             return view('empresa.listarTransaccion', compact("aTransaccion"));
-            //return response()->json(view("empresa.listarTransaccion", compact("aTransaccion"))->render());
         }
 
         $empresaId = 0;
