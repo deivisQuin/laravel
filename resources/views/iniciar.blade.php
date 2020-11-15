@@ -95,7 +95,9 @@
 			  <div class="col-md-8">
 			  	<h2 class="panel-heading"><strong>Pago Libre</strong></h2>
 			  </div>
-			  <div class="col-md-4">
+			  <div class="col-md-4" align="right" style="position:relative;padding-bottom: 0px;bottom: 0px;top: 15px;">
+	  			<div style="position:absolute; bottom:1px; right:10px;"><strong  style='color:#dc3545; '>consultas al 993083387</strong>
+				  </div>
 	  			
 			  </div>
 			</div>
@@ -128,14 +130,14 @@
 				<!--@csrf-->
 				<input type="hidden" id="idHiddenToken" name="_token" value="{{ csrf_token() }}">
 				<br>
-				<div class="form-group">
+				<!--<div class="form-group">
 		            <h4 style='color:#28a745'><strong>RUC: {{$oEmpresa->empresaRuc}}</strong></h4>
-		        </div>
+		        </div>-->
 				<div class="form-group">
 		            <h4 style='color:#28a745'><strong>Empresa: {{$oEmpresa->empresaNombreComecial}}</strong></h4>
 		        </div>
 				<div class="form-group">
-	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Cual es tu nombre y dirección?...Especifica tu pedido" class="form-control"></textarea>
+	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Cual es tu nombre y dirección?...¿Todas las cremas?" class="form-control"></textarea>
 					  <div class="alert-message" id="comentarioError"></div>
 				</div>
 				<div class="form-group">

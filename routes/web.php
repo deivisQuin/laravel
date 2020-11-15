@@ -38,6 +38,7 @@ Route::get("/listarLocal/{empresaId}", "LocalController@listar")->middleware("au
 
 Route::post("transaccion/{transaccionId}/ver", "TransaccionController@obtener");
 
+Route::get("ventaDiarioLocal", "TransaccionController@ventaDiarioLocal");
 
 //CRUD de las empresas
 Route::get("empresa/listar", "EmpresaController@index")->middleware("auth");

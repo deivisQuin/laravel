@@ -57,6 +57,11 @@
                     <a class="navbar-brand" href="{{ url('listarSalsa') }}">
                         <strong>Salsas</strong>
                     </a>
+                    @if(isset(Auth::user()->usersRolId) && Auth::user()->usersRolId==3)
+                        <a class="navbar-brand" href="{{ url('ventaDiarioLocal') }}">
+                            <strong>Ventas</strong>
+                        </a>
+                    @endif
                 @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

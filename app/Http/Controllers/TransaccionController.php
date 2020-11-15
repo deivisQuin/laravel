@@ -130,6 +130,26 @@ class TransaccionController extends Controller
         return response()->json(view("empresaTransaccion.empresaTransaccion", compact("aTransaccion"))->render());
     }
 
+    public function ventaDiarioLocal() {
+        $usersId = Auth::id();
+        //Se obtiene los locales
+        $oUserLocal = UserLocal::where("ULUsersId", "=", $usersId)->get();
+
+        $empresaId = 0;
+        
+        foreach ($oUserLocal as $userLocal) {
+            $aLocal[] = $userLocal->local;
+            
+            if ($empresaId != $userLocal->local->empresa->empresaId) {
+                $aEmpresa[] = $userLocal->local->empresa;
+            }
+
+            $empresaId = $userLocal->local->empresa->empresaId;   
+        }
+
+        return view('empresa.homeEmpresa', compact("aEmpresa"));
+    }
+
     public function obtener($transaccionId) {
         $aTransaccion = Transaccion::where("transaccionId" , "=", $transaccionId)->firstOrFail();
 

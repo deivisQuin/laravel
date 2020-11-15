@@ -1,13 +1,13 @@
 //Culqi.publicKey = 'pk_test_4838227e3d8eadce'; //panel de integración
 Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
 
-var producto = "";
-var precio = "";
-var empresaEmail = "";
-var empresaRuc = "";
-var delivery = 1;
+var producto         = "";
+var precio           = "";
+var empresaEmail     = "";
+var empresaRuc       = "";
+var delivery         = 1;
 var telefonoDelivery = "";
-var _token = "";
+var _token           = "";
 
 $("#idTelefonoDelivery").show();
 $("#idDivLocalUbigeo").show();
@@ -478,15 +478,15 @@ function registrarOrden(aProducto, data){
                 transaccionPasarelaMontoDepositar = (typeof data.transfer_amount !== "undefined") ? data.transfer_amount : "NO TIENE";
 
                 registrarDatos(empresaEmail, localId, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
-                        transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
-                        transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
-                        transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
-                        transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
+                    transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
+                    transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
+                    transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
+                    transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
 
                 $('#contenedor_de_cargador').fadeIn(1000).html("Se realizó con éxito la transferencia");
             } else {
-                    $('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
-                    $('#modal').modal('hide');
+                $('#contenedor_de_cargador').fadeIn(1000).html("No se realizó la transacción.");
+                $('#modal').modal('hide');
 
                 mensajeRespuestaUsuario = data.user_message.replace(/[^a-zA-Z ]/g, "");
 
@@ -528,17 +528,17 @@ function iniciaCulqi(){
 
 //Se registran los datos al servidor 
 function registrarDatos(empresaEmail, localId, monto, descripcion, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
-                transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
-                transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
-                transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
-                transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId){
-                
-                let transaccionPasarelaComisionFija = 108;
-                let transaccionPasarelaComisionFijaIgv = (transaccionPasarelaComisionFija * 0.18);
-                let porcentaje = ((monto * 7) - (transaccionPasarelaComision + transaccionPasarelaIgv));
-                let transaccionComisionComercio = (130 - (transaccionPasarelaComisionFija + transaccionPasarelaComisionFijaIgv)) + porcentaje;
-                let transaccionComercioMontoDepositar = transaccionPasarelaMontoDepositar - transaccionPasarelaComisionFija - 
-                                                            transaccionPasarelaComisionFijaIgv - transaccionComisionComercio;
+    transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
+    transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
+    transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
+    transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId){
+    
+    let transaccionPasarelaComisionFija = 108;
+    let transaccionPasarelaComisionFijaIgv = (transaccionPasarelaComisionFija * 0.18);
+    let porcentaje = ((monto * 7) - (transaccionPasarelaComision + transaccionPasarelaIgv));
+    let transaccionComisionComercio = (130 - (transaccionPasarelaComisionFija + transaccionPasarelaComisionFijaIgv)) + porcentaje;
+    let transaccionComercioMontoDepositar = transaccionPasarelaMontoDepositar - transaccionPasarelaComisionFija - 
+            transaccionPasarelaComisionFijaIgv - transaccionComisionComercio;
 
     data = {
             "_token":_token,
