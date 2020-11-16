@@ -43,6 +43,49 @@ $("#idSelectDelivery").on("change", function(){
     }
 });
 
+$("#idSelectLocal").on("change", function() {
+    localId = $(this).val();
+
+    $.ajax({
+        data: {},
+        type: "GET",
+        dataType: "json",
+        url: "listarProductoLocal/" + localId,
+        success:function(respuesta){
+            $("#idDivListadoProducto").html(respuesta);
+            listarLocalUbigeo(localId);
+            limpiar();
+        }
+    })
+})
+
+function limpiar() {
+    $("#idSpanMontoTotal").text("");
+    $("#idHiddenMontoTotal").val("");
+    $("#idHiddenPrecioTotal").val("");
+    $("#idHiddenDescripcion").val("");
+}
+
+function listarLocalUbigeo(localId) {
+    $.ajax({
+        data: {},
+        type: "GET",
+        dataType: "json",
+        url: "listarLocalUbigeoDelivery/" + localId,
+        success:function(respuesta){
+            let selectLocalUbigeo = "<select><option value = '0'>Distrito de Entrega</option>";
+
+            for (var localUbigeoDelivery in respuesta){
+                selectLocalUbigeo += "<option value = '" + respuesta[localUbigeoDelivery]["LUId"] + "'>" + respuesta[localUbigeoDelivery]["ubigeoNombre"] + " : " + respuesta[localUbigeoDelivery]["LUPrecioDelivery"] + "</option>";
+            }
+
+            selectLocalUbigeo += "</select>";
+
+            $("#idSelectLocalUbigeo").html(selectLocalUbigeo);
+        }
+    })
+}
+
 $("#idBotonSalsa").on("click", function() {
     $("#idSpanMensajeCabeceraError").text("");
     $("#idDivMensajeCabeceraError").hide();
@@ -66,7 +109,7 @@ $("#idBotonSalsa").on("click", function() {
         url:"listarSalsa/" + localId,
         type:"GET",
         dataType: "json",
-        success:function(respuesta){console.log(respuesta);
+        success:function(respuesta){
             let listarSalsas = "<ul>"; 
             
             for(let i = 0; i < respuesta.length; i++) {

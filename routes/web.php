@@ -63,9 +63,12 @@ Route::post("producto/validarFormularioCarrito", "ProductoController@validarForm
 Route::post("producto/transaccion", "TransaccionController@registrar");
 //Route::get("producto/correo", "CorreoController@enviarCorreo");
 Route::get("producto/obtenerLocalUbigeoDelivery/{localUbigeoId}", "LocalUbigeoDeliveryController@obtenerJson");
+Route::get("producto/listarLocalUbigeoDelivery/{localId}", "LocalUbigeoDeliveryController@listar");
 Route::post("producto/registrarOrden", "OrdenController@crear");
 Route::get("producto/listarSalsa/{localId}", "SalsaController@listarJson");
 Route::get("/listarProducto", "ProductoController@listar")->middleware("auth");
+
+Route::get("producto/listarProductoLocal/{localId}", "ProductoController@listarProductoLocal");
 
 Route::post("modificarLocalLineaSublineaProducto", "LocalLineaSublineaProductoController@modificar");
 

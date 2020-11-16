@@ -151,7 +151,7 @@
 							<select name="nameSelectLocal" id="idSelectLocal" class="form-control">
 								<option value="0">Elegir Tu Local</option>
 								@foreach($aLocal as $local)
-									<option value="{{$local->localId}}" <?php if(count($aLocal)==1){?>selected="selected"<?php } ?>>{{$local->localNombre}}</option>
+									<option value="{{$local->localId}}" <?php if(count($aLocal)==1){?>selected="selected"<?php } ?>>{{$oEmpresa->empresaNombreComecial}} {{$local->localNombre}}</option>
 								@endforeach
 							</select>
 							<div class="alert-message" id="localError"></div>
@@ -171,7 +171,7 @@
 							<input type="hidden" id="idHiddenPrecioDelivery" value="">
 							<div id="idDivLocalUbigeo">
 								<select name="nameLocalUbigeo" id="idSelectLocalUbigeo" class="form-control">
-									<option value="0">Elegir Tu Distrito</option>
+									<option value="0">Distrito de Entrega</option>
 									@foreach($aLocalUbigeoDelivery as $localUbigeo)
 										<option value="{{$localUbigeo->LUId}}">{{$localUbigeo->ubigeo->ubigeoNombre}} : {{$localUbigeo->LUPrecioDelivery}}</option>
 									@endforeach

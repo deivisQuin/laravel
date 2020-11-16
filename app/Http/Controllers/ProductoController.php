@@ -68,6 +68,14 @@ class ProductoController extends Controller
         }
     }
 
+    public function listarProductoLocal($localId) {
+        //Se obtiene el listado de productos del local
+        $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $localId)->where("LLSPEstadoId", "=", 1)->get();
+
+        //return view("producto/productoLocalPartial", compact("aProducto"));
+        return response()->json(view("producto.productoLocalPartial", compact("aProducto"))->render());
+    }
+
     public function validarFormularioCarrito(Request $request){
         $aEmpresa = Empresa::where([["empresaRuc", "=", $request->input("empresaRuc")]])->first();
 
