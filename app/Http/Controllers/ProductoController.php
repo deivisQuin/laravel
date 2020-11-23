@@ -70,9 +70,10 @@ class ProductoController extends Controller
 
     public function listarProductoLocal($localId) {
         //Se obtiene el listado de productos del local
-        $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $localId)->where("LLSPEstadoId", "=", 1)->get();
-
-        //return view("producto/productoLocalPartial", compact("aProducto"));
+        $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $localId)
+            ->where("LLSPEstadoId", "=", 1)
+            ->orderBy('LLSPPosicion', 'Asc')->get();
+            
         return response()->json(view("producto.productoLocalPartial", compact("aProducto"))->render());
     }
 

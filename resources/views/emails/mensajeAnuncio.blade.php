@@ -9,13 +9,16 @@
 	El número de Pedido realizado es: <h3>{{str_pad($transaccionId, 4, "0", STR_PAD_LEFT)}}</h3><br>
 	El teléfono de contacto es : <h3>{{$oOrden->ordenTelefono}}</h3><br>
 	
+	Local de Despacho : {{$oLocalUbigeoDelivery->local->localNombre}}<br>
+
 	@if($oOrden->ordenDelivery == "S")
-		El pedido es para Delivery. <br>	
+		El pedido es para Delivery.<br>	
+		Distrito de Entrega : {{$oLocalUbigeoDelivery->ubigeo->ubigeoNombre}}<br>
 	@endif
 
 	
 	@if($oOrden->ordenComentario)
-		Tener en cuenta lo siguiente: <h3>{{$oOrden->ordenComentario}}</h3> <br>	
+		Tener en cuenta lo siguiente: <h3>{{$oOrden->ordenComentario}}</h3><br>	
 	@endif
 	
 	Por el producto y/o servicio de: <br><br>

@@ -21,6 +21,7 @@ class MessageReceived extends Mailable
     public $transaccionId;
     public $transaccionComercioPasswordLink;
     public $oOrden;
+    public $oLocalUbigeoDelivery;
 
     /**
      * Create a new message instance.
@@ -28,7 +29,7 @@ class MessageReceived extends Mailable
      * @return void
      */
     public function __construct($subject, $aOrdenDetalle, $enviarCorreoTipo, $transaccionComercioClientePassword, $transaccionComercioClientePasswordLink, 
-                                $transaccionId, $transaccionComercioPasswordLink, $oOrden)
+                                $transaccionId, $transaccionComercioPasswordLink, $oOrden, $oLocalUbigeoDelivery)
     {
         $this->subject = $subject;
         $this->content = $aOrdenDetalle;
@@ -39,6 +40,7 @@ class MessageReceived extends Mailable
         $this->transaccionId = $transaccionId;
         $this->transaccionComercioPasswordLink = $transaccionComercioPasswordLink;
         $this->oOrden = $oOrden;
+        $this->oLocalUbigeoDelivery = $oLocalUbigeoDelivery;
     }
 
     /**
@@ -50,6 +52,7 @@ class MessageReceived extends Mailable
     {
         if ($this->enviarCorreoTipo === "1") {
             $this->view('emails.mensajeAnuncio')->subject("Pago Libre - Informe del Pedido");
+            //$this->view('emails.mensajeAnuncio')->subject("Pago Libre (Testing) - Informe del Pedido");
         }
         if ($this->enviarCorreoTipo === "2") {
             $this->view('emails.mensajeConfirmacion')->subject("Pago Libre - Confirmar Entrega del Pedido");

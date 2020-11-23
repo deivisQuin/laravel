@@ -64,6 +64,13 @@ function limpiar() {
     $("#idHiddenMontoTotal").val("");
     $("#idHiddenPrecioTotal").val("");
     $("#idHiddenDescripcion").val("");
+    $("#idHiddenPrecioDelivery").val("");
+    $("#idSpanMensajeCabeceraError").val("");
+    $("#idDivMensajeCabeceraError").hide();
+    $("#localError").val("");
+    $("#localError").hide();
+    $("#distritoError").val("");
+    $("#distritoError").hide();
 }
 
 function listarLocalUbigeo(localId) {
@@ -269,6 +276,11 @@ $(".claseSelectCantidad").on("change", function(){
 });
 
 $("#idSelectLocalUbigeo").on("change", function(){
+    $("#idSpanMensajeCabeceraError").val("");
+    $("#idDivMensajeCabeceraError").hide();
+    $("#distritoError").val("");
+    $("#distritoError").hide();
+
     let localUbigeoId = $(this).val();
     
     let montoTotal = $("#idHiddenPrecioTotal").val();
@@ -329,7 +341,7 @@ $(".claseBotonEnviar").on("click", function(event){
                 mensajeTelefonoError = "* Debe Registrar un número de telefono de contacto";
                 
                 $("#idSpanMensajeCabeceraError").text(mensajeTelefonoError);
-                $("#telefonoError").text(mensajeTelefonoError);
+                $("#telefonoError").html("<strong>Registrar tu teléfono</strong>");
                 $("#idDivMensajeCabeceraError").show();
                 $("#telefonoError").show();
                 
@@ -339,7 +351,7 @@ $(".claseBotonEnviar").on("click", function(event){
                 mensajeDistritoError = "* Debe Registrar el Distrito de Entrega del pedido";
                 
                 $("#idSpanMensajeCabeceraError").text(mensajeDistritoError);
-                $("#distritoError").text(mensajeDistritoError);
+                $("#distritoError").html("<strong>Elegir Distrito de Entrega</strong>");
                 $("#idDivMensajeCabeceraError").show();
                 $("#distritoError").show();
                 

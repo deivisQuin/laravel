@@ -96,12 +96,10 @@
 			  	<h2 class="panel-heading"><strong>Pago Libre</strong></h2>
 			  </div>
 			  <div class="col-md-4" align="right" style="position:relative;padding-bottom: 0px;bottom: 0px;top: 15px;">
-	  			<div style="position:absolute; bottom:1px; right:10px;"><strong  style='color:#dc3545; '>consultas al 993083387</strong>
+	  			<div style="position:absolute; bottom:1px; right:10px;"><strong  style='color:#dc3545; '>Consultas al 993083387</strong>
 				  </div>
-	  			
 			  </div>
 			</div>
-			
 
 		</div>
 		<div class="class-body">
@@ -127,12 +125,8 @@
 			</div>
 
 			<form id="myForm" method="POST" action="validacionFormulario">
-				<!--@csrf-->
 				<input type="hidden" id="idHiddenToken" name="_token" value="{{ csrf_token() }}">
 				<br>
-				<!--<div class="form-group">
-		            <h4 style='color:#28a745'><strong>RUC: {{$oEmpresa->empresaRuc}}</strong></h4>
-		        </div>-->
 				<div class="form-group">
 		            <h4 style='color:#28a745'><strong>Empresa: {{$oEmpresa->empresaNombreComecial}}</strong></h4>
 		        </div>

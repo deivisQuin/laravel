@@ -10,6 +10,7 @@ use App\Transaccion;
 use App\Empresa;
 use App\OrdenDetalle;
 use App\Orden;
+use App\LocalUbigeoDelivery;
 
 use Illuminate\Support\Facades\DB;
 
@@ -122,6 +123,12 @@ class CorreoController extends Controller
         
         $oOrden = Orden::findOrFail($aTransaccion->transaccionOrdenId);
 
+        $oLocalUbigeoDelivery = null;
+
+        if ($oOrden->ordenDelivery == "S") {
+            $oLocalUbigeoDelivery = LocalUbigeoDelivery::findOrFail($oOrden->ordenLUId);
+        }
+
         //Enviamos los correos al cliente y al comercio
         $correo = new MessageReceived(
             $aTransaccion->transaccionMonto,
@@ -132,7 +139,8 @@ class CorreoController extends Controller
             "",
             $aTransaccion->transaccionId,
             "",
-            $oOrden
+            $oOrden,
+            $oLocalUbigeoDelivery
         );
 
         Mail::to($aTransaccion->transaccionComercioCorreo)
@@ -148,7 +156,8 @@ class CorreoController extends Controller
             $aTransaccion->transaccionClientePasswordLink,
             $aTransaccion->transaccionId,
             $aTransaccion->transaccionComercioPasswordLink,
-            $oOrden
+            $oOrden,
+            $oLocalUbigeoDelivery
         );
 
         Mail::to($aTransaccion->transaccionClienteCorreo)

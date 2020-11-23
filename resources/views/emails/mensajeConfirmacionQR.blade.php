@@ -8,9 +8,12 @@
         Acabas de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
         El número de Pedido realizado es: <h3>{{str_pad($transaccionId, 4, "0", STR_PAD_LEFT)}}</h3><br>
         El teléfono de contacto que ha registrado es : <h3>{{$oOrden->ordenTelefono}}</h3><br>
-	
+    
+        Local de Despacho : {{$oLocalUbigeoDelivery->local->localNombre}}<br>
+
         @if($oOrden->ordenDelivery == "S")
-            El pedido es para Delivery. <br>	
+            El pedido es para Delivery.<br>
+            Distrito de Entrega : {{$oLocalUbigeoDelivery->ubigeo->ubigeoNombre}}<br>
         @endif
 
         @if($oOrden->ordenComentario)
