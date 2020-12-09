@@ -51,6 +51,7 @@ class HomeController extends Controller
         if ($usersRolId == 3) {
             $aTransaccion = DB::table("transaccion")
                 ->leftJoin("orden", "transaccion.transaccionOrdenId", "=", "orden.ordenId")
+                ->leftJoin("local_ubigeo_delivery", "orden.ordenLUId", "=", "local_ubigeo_delivery.LUId")
                 ->where("orden.ordenEstadoId", "=", 1) 
                 ->where("transaccion.transaccionLocalId", "=", $localId)                            
                 ->get();

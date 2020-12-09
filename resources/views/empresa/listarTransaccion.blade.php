@@ -53,12 +53,13 @@
                                     $colorClienteEstado = ($venta->transaccionClienteEstado == 1) ? "red": "blue";
                                     $montoDepositarAcumulado += $venta->transaccionPasarelaMontoDepositar;
                                     $comisionAcumulado += $venta->transaccionPasarelaComision;
-                                    $montoAcumulado += $venta->transaccionMonto;
+                                    $montoSinDelivery = $venta->transaccionMonto - $venta->LUPrecioDelivery;
+                                    $montoAcumulado += $montoSinDelivery;
                                 ?>
                                 <tr class="claseTr" id="{{$venta->transaccionId}}">
                                     <td>{{$venta->transaccionFechaCrea}}</td>
                                     <td>{{str_pad($venta->transaccionId, 4, "0", STR_PAD_LEFT)}}</td>
-                                    <td>{{$venta->transaccionMonto}}</td>
+                                    <td align="right">{{number_format($montoSinDelivery, 2, ".", "")}}</td>
                                     <td><span style="color:<?php echo $colorComercioEstado;?>"><strong>{{($venta->transaccionComercioEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>
                                     <td>{{$venta->transaccionComercioPassword}}</td>
                                 </tr>
@@ -67,8 +68,8 @@
                             <tfoot>
                                 <tr>
                                     <th>Total</th>
-                                    <th>{{number_format($montoDepositarAcumulado,2,".","")}}</th>
-                                    <th>{{number_format($montoAcumulado,2,".","")}}</th>
+                                    <th></th>
+                                    <th>{{number_format($montoAcumulado, 2, ".", "")}}</th>
                                 </tr>
                             </tfoot>
                         </table>
