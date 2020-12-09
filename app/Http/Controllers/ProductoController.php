@@ -62,19 +62,60 @@ class ProductoController extends Controller
                 $mostrarLocales = "style=display:none";
             }
 
-            return view("iniciar", compact(["oEmpresa", "aProducto", "aLocalUbigeoDelivery", "aLocal", "mostrarLocales"]));
+            //Verificar Si el lcal está atendiendo
+            $horaActual         = strtotime(date("H:i"));
+            $localHoraApertura  = strtotime($aLocal[0]->localHoraApertura);
+            $localHoraCierre    = strtotime($aLocal[0]->localHoraCierre);
+            $indLocalAtendiendo = 0;
+
+            //Hora de apertura es mayor que la hora del cierre
+            if ($localHoraApertura > $localHoraCierre) {  
+                if (($horaActual >= $localHoraApertura) && ($horaActual <= strtotime("23:59"))) {
+                    $indLocalAtendiendo = 1;
+                } elseif ($horaActual <= $localHoraCierre) {
+                    $indLocalAtendiendo = 1;
+                }
+            } else {
+                if (($localHoraApertura <= $horaActual) && ($localHoraCierre >= $horaActual)) {
+                    $indLocalAtendiendo = 1;
+                }
+            }
+
+            return view("iniciar", compact(["oEmpresa", "aProducto", "aLocalUbigeoDelivery", "aLocal", "mostrarLocales", "indLocalAtendiendo"]));
         } else {
             return view("empresaNoRegistrada");
         }
     }
 
     public function listarProductoLocal($localId) {
+        //Se obtiene los datos del local
+        $local = Local::findOrFail($localId);
+
         //Se obtiene el listado de productos del local
         $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $localId)
             ->where("LLSPEstadoId", "=", 1)
             ->orderBy('LLSPPosicion', 'Asc')->get();
+
+        //Verificar Si el lcal está atendiendo
+        $horaActual         = strtotime(date("H:i"));
+        $localHoraApertura  = strtotime($local->localHoraApertura);
+        $localHoraCierre    = strtotime($local->localHoraCierre);
+        $indLocalAtendiendo = 0;
+
+        //Hora de apertura es mayor que la hora del cierre
+        if ($localHoraApertura > $localHoraCierre) {  
+            if (($horaActual >= $localHoraApertura) && ($horaActual <= strtotime("23:59"))) {
+                $indLocalAtendiendo = 1;
+            } elseif ($horaActual <= $localHoraCierre) {
+                $indLocalAtendiendo = 1;
+            }
+        } else {
+            if (($localHoraApertura <= $horaActual) && ($localHoraCierre >= $horaActual)) {
+                $indLocalAtendiendo = 1;
+            }
+        }
             
-        return response()->json(view("producto.productoLocalPartial", compact("aProducto"))->render());
+        return response()->json(view("producto.productoLocalPartial", compact("aProducto", "local", "indLocalAtendiendo"))->render());
     }
 
     public function validarFormularioCarrito(Request $request){

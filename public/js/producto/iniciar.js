@@ -310,9 +310,6 @@ $("#idSelectLocalUbigeo").on("change", function(){
         $("#idSpanMontoTotal").text(montoTotal.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
         $("#idHiddenMontoTotal").val(montoTotal.toFixed(2));
     }
-    
-
-
 });
 
 $(".claseBotonEnviar").on("click", function(event){
@@ -333,6 +330,12 @@ $(".claseBotonEnviar").on("click", function(event){
     empresaUbigeoId = $("#idSelectLocalUbigeo").val();
     _token = $("#idHiddenToken").val();
     comentario = $("#idComentario").val();
+    indLocalAtendiendo = $("#idIndLocalAtendiendo").val();
+
+    if (indLocalAtendiendo === "0") {
+        $("#idDivModalLocalSinAtencion").modal("show");
+        return false;
+    }
     
     //Se valida entrada del monto debe ser mayor a 5 soles, permitir 2 decimales y no negativos
     if ((monto >= 5) && (monto <= 5000) && (producto.length >= 5) && (producto.length <= 250)) {
@@ -366,6 +369,7 @@ $(".claseBotonEnviar").on("click", function(event){
             mensajeComentarioError = "Por favor registrar su nombre, dirección y especifica tu pedido";
             $("#idSpanMensajeCabeceraError").text(mensajeComentarioError);
             $("#comentarioError").text(mensajeComentarioError);
+            $("#comentarioError").html("<strong>Registrar Nombre, dirección e indicar las cremas</strong>");
             $("#idDivMensajeCabeceraError").show();
             $("#comentarioError").show();
 
@@ -481,7 +485,7 @@ function registrarOrden(aProducto, data){
         url: "registrarOrden",
         success:function(respuesta){
             ordenId = respuesta.mensaje;
-/*
+            /*
             clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
             transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
             transaccionPasarelaToken = "tkn_test_yla14jhxmnJnDBGE";

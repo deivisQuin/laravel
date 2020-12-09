@@ -38,6 +38,8 @@
             </tbody>
         </table>
         <br>
+        <strong>Cualquier consulta o si tuviera alguna observación por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387</strong>
+        <br>
         Presentar el siguiente códigoQR al momento de Recibir su producto:<br><br>
         <!--<span>{!! $imagen !!}</span>-->
         <!--<span><img src="data:image/png;base64, {!! base64_encode($imagen) !!} "></span>-->

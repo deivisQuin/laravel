@@ -23,7 +23,7 @@
 				<strong style="color:green">La página a la cual deseas ingresar no está habilitado</strong>, por tanto:<br><br>
 				<strong>1.- Revisar si la página a ingresar es la correcta</strong><br><br>
                 <strong>2.- Si la página es la correcta, volver a intentarlo</strong><br><br>
-				<strong>3.- Si el problema persiste informar a Pago Libre-Soporte  captura la imagen y enviar a soporte@pagolibre.com</strong><br><br><br>
+				<strong>3.- Si el problema persiste informar a Pago Libre-Soporte al número 993083387</strong><br><br><br>
 				Que tengas un buen día. 				
 			</div>
 		</div>

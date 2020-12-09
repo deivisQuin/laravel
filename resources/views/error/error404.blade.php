@@ -20,7 +20,7 @@
 
 				<strong style="color:green">La página a la cual deseas ingresar no existe</strong>, por tanto:<br><br>
 				<strong>1.- Volver a intentarlo</strong><br><br>
-				<strong>2.- Si el problema persiste informar a Pago Libre-Soporte  captura la imagen y enviar a soporte@pagolibre.com</strong><br><br><br>
+				<strong>2.- Si el problema persiste informar a Pago Libre-Soporte  al número 993083387</strong><br><br><br>
 				Que tengas un buen día. 				
 			</div>
 		</div>

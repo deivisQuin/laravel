@@ -1,3 +1,4 @@
+<input type="hidden" name="indLocalAtendiendo" class="form-control required"  id="idIndLocalAtendiendo" value="{{$indLocalAtendiendo}}">
 <table class="table table-hover">
     <thead>
         <tr>

@@ -72,6 +72,33 @@
   </div>
 </div>
 
+<div class="modal fade" id="idDivModalLocalSinAtencion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><strong style='color:#28a745'><div id="idModalTitulo">En estos momentos no atendemos</div></strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+	  	<div class="row">
+		  <div class="col-md-12" id="idCuerpoModalLocalSinAtenciion"><strong>Lo sentimos pero en estos momentos el local nos indica que no realizará atención.<br>
+				Si tuviera alguna consulta por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387 </strong></div>
+		</div>
+      </div>
+      <div class="modal-footer">
+		<div class="container">
+			<div class="row">
+			<div class="col-xs-4"><button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button></div>
+			<div class="col-xs-8 ml-auto"></div>
+			</div>
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container panel panel-default">
 	<div class="card">
 		<div class="card-header">
@@ -178,12 +205,13 @@
 
 		        <div class="form-group">
 		            <input type="hidden" name="empresaRuc" class="form-control required"  id="empresaRucId" value="{{$oEmpresa->empresaRuc}}">
-		            <input type="hidden" name="empresaEmail" class="form-control required"  id="empresaEmailId" value="{{$oEmpresa->empresaEmail}}">
+					<input type="hidden" name="empresaEmail" class="form-control required"  id="empresaEmailId" value="{{$oEmpresa->empresaEmail}}">
 		        </div>
 
 				<div class="row">
 					<div class="col">
 	  					<div id="idDivListadoProducto" class="form-group">
+						  	<input type="hidden" name="indLocalAtendiendo" class="form-control required"  id="idIndLocalAtendiendo" value="{{$indLocalAtendiendo}}">
 							<table class="table table-hover">
 								<thead>
 									<tr>
@@ -224,12 +252,11 @@
 							</table>
 						</div>
 					</div>
-				</div>
-
-		        <div class="form-group">
-		            <button class="btn btn-success form-control claseBotonEnviar" id="enviarId"><i class="fas fa-credit-card"></i> REALIZAR PAGO</button>
-		        </div>
-		    </form>
+				</div> 
+			</form>
+			<div class="form-group">
+				<button class="btn btn-success form-control claseBotonEnviar" id="enviarId"><i class="fas fa-credit-card"></i> REALIZAR PAGO</button>
+			</div>
 		</div>
 	</div>
 </div>
