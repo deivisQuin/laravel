@@ -39,6 +39,7 @@ class HomeController extends Controller
 
         //Se obtiene los locales
         $oUserLocal = UserLocal::where("ULUsersId", "=", $usersId)->get();
+        $localId    = $oUserLocal[0]->ULLocalId;
 
         if (count($oUserLocal) < 1) {
             //$aEmpresa = Empresa::all();
@@ -50,7 +51,8 @@ class HomeController extends Controller
         if ($usersRolId == 3) {
             $aTransaccion = DB::table("transaccion")
                 ->leftJoin("orden", "transaccion.transaccionOrdenId", "=", "orden.ordenId")
-                ->where("orden.ordenEstadoId", "=", 1)                            
+                ->where("orden.ordenEstadoId", "=", 1) 
+                ->where("transaccion.transaccionLocalId", "=", $localId)                            
                 ->get();
 
             return view('empresa.listarTransaccion', compact("aTransaccion"));
