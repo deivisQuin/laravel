@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,6 +61,9 @@
                     @if(isset(Auth::user()->usersRolId) && Auth::user()->usersRolId==3)
                         <a class="navbar-brand" href="{{ url('ventaDiarioLocal') }}">
                             <strong>Ventas</strong>
+                        </a>
+                        <a class="navbar-brand" href="{{ url('home') }}">
+                            <strong>Venta del Día</strong>
                         </a>
                     @endif
                 @endauth

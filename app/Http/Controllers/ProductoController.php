@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\DB;
 class ProductoController extends Controller
 {
     public function listar() {
-        $usersRolId = Auth::user()->usersRolId;
+        $usersId = Auth::user()->id;
 
         if (Auth::user()->rol->rolNombreCorto == "VENT") {
-            $aUserLocal = UserLocal::where("ULUsersId", "=", $usersRolId)->get();
+            $aUserLocal = UserLocal::where("ULUsersId", "=", $usersId)->get();
 
             $aProducto = DB::table("local_linea_sublinea_producto")
                             ->leftJoin("producto", "local_linea_sublinea_producto.LLSPProductoId", "=", "producto.productoId")

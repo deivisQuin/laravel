@@ -1,4 +1,7 @@
 <input type="hidden" name="indLocalAtendiendo" class="form-control required"  id="idIndLocalAtendiendo" value="{{$indLocalAtendiendo}}">
+<input type="hidden" name="localHoraApertura" class="form-control required"  id="idLocalHoraApertura" value="{{$local->localHoraApertura}}">
+<input type="hidden" name="localHoraCierre" class="form-control required"  id="idLocalHoraCierre" value="{{$local->localHoraCierre}}">
+<input type="hidden" name="localNombre" class="form-control required"  id="idLocalNombre" value="{{$local->localNombre}}">
 <table class="table table-hover">
     <thead>
         <tr>

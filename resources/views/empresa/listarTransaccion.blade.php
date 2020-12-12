@@ -31,6 +31,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
+                    <h4><strong>Ventas del Día</strong></h4>
                 </div>
 
                 <div class="card-body">

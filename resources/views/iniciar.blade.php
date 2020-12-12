@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>Pago Libre</title>
-
+	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @if ($_SERVER['SERVER_NAME'] == "localhost")
 		<link rel="stylesheet" href="{{url('/estilo/bootstrap4/bootstrap.min.css')}}">
@@ -76,15 +76,16 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><strong style='color:#28a745'><div id="idModalTitulo">En estos momentos no atendemos</div></strong></h5>
+		<div id="idDivTituloLocalSinAtencion"></div>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" >
 	  	<div class="row">
-		  <div class="col-md-12" id="idCuerpoModalLocalSinAtenciion"><strong>Lo sentimos pero en estos momentos el local nos indica que no realizará atención.<br>
-				Si tuviera alguna consulta por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387 </strong></div>
+		  <div class="col-md-12" id="idCuerpoModalLocalSinAtenciion">
+	  			<div id="idDivMensajeLocalSinAtencion"></div>
+		  		<strong>Si tuviera alguna consulta por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387 </strong></div>
 		</div>
       </div>
       <div class="modal-footer">
@@ -106,7 +107,7 @@
 			  	<div class="col-md-12  fixed-top">
 				  <div class="row">
 					<strong class="h2"><span class="badge badge-danger">Total S/.  </span><span id="idSpanMontoTotal" class="badge badge-danger"></span>
-					<button id="idBotonPagarCabecera" class="claseBotonEnviar btn btn-success"><i class="fas fa-credit-card"></i> PAGAR</button></strong>
+					<button id="idBotonPagarCabecera" class="claseBotonEnviar btn btn-success"><i class="fas fa-credit-card"></i><span class="badge badge-success h1">REALIZAR PAGO</span></button></strong>
 					
 					<input type="hidden" id="idHiddenPrecioTotal" value="">
 					<input type="hidden" id="idHiddenDescripcion" value="">
@@ -115,12 +116,12 @@
 				  </div>
 				  <div class="row">
 					<div id="idDivMensajeCabeceraError" class="col-md-12">
-						<strong class="h6"><span class="badge badge-danger h2" id="idSpanMensajeCabeceraError"></span></strong>
+						<strong class="h5"><span class="badge badge-danger h2" id="idSpanMensajeCabeceraError"></span></strong>
 					</div>
 				  </div>
 				</div>
 			  <div class="col-md-8">
-			  	<h2 class="panel-heading"><strong>Pago Libre</strong></h2>
+			  	<h2 class="panel-heading" style="color:#071619"><strong>Pago Libre</strong></h2>
 			  </div>
 			  <div class="col-md-4" align="right" style="position:relative;padding-bottom: 0px;bottom: 0px;top: 15px;">
 	  			<div style="position:absolute; bottom:1px; right:10px;"><strong  style='color:#dc3545; '>Consultas al 993083387</strong>
@@ -211,7 +212,7 @@
 				<div class="row">
 					<div class="col">
 	  					<div id="idDivListadoProducto" class="form-group">
-						  	<input type="hidden" name="indLocalAtendiendo" class="form-control required"  id="idIndLocalAtendiendo" value="{{$indLocalAtendiendo}}">
+							  <input type="hidden" name="indLocalAtendiendo" class="form-control required"  id="idIndLocalAtendiendo" value="{{$indLocalAtendiendo}}">
 							<table class="table table-hover">
 								<thead>
 									<tr>

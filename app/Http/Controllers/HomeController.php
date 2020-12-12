@@ -39,14 +39,15 @@ class HomeController extends Controller
 
         //Se obtiene los locales
         $oUserLocal = UserLocal::where("ULUsersId", "=", $usersId)->get();
-        $localId    = $oUserLocal[0]->ULLocalId;
-
+        
         if (count($oUserLocal) < 1) {
             //$aEmpresa = Empresa::all();
             $aEmpresa = Empresa::where("empresaEstadoId", "=", 1)->get();
 
             return view('empresa.homeEmpresa', compact("aEmpresa"));
         }
+
+        $localId    = $oUserLocal[0]->ULLocalId;
 
         if ($usersRolId == 3) {
             $aTransaccion = DB::table("transaccion")

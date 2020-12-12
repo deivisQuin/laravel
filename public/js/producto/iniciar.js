@@ -333,6 +333,19 @@ $(".claseBotonEnviar").on("click", function(event){
     indLocalAtendiendo = $("#idIndLocalAtendiendo").val();
 
     if (indLocalAtendiendo === "0") {
+        let localHoraApertura = $("#idLocalHoraApertura").val();
+        let localHoraCierre = $("#idLocalHoraCierre").val();
+        let localNombre = $("#idLocalNombre").val();
+
+        let tituloMensajeLocalSinAtencion = "<strong style='color:#28a745'><p>Local " + localNombre + " Anuncia lo siguiente:</p></strong>";
+
+        let mensajeLocalSinAtencion = "<strong><p>Lo sentimos pero en estos momentos el local " + localNombre + 
+            " está fuera de su horario de atención. El horario de atencion de este local es de: " + localHoraApertura.substring(0, 5) + " a: " + localHoraCierre.substring(0, 5) +
+            ". Esperamos pronto volver a atenderlo</p></strong>";
+
+        $("#idDivTituloLocalSinAtencion").html(tituloMensajeLocalSinAtencion);
+        $("#idDivMensajeLocalSinAtencion").html(mensajeLocalSinAtencion);
+
         $("#idDivModalLocalSinAtencion").modal("show");
         return false;
     }
