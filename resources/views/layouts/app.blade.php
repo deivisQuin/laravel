@@ -1,13 +1,14 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     @if ($_SERVER['SERVER_NAME'] == "localhost")
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
         <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
     @else
+        <link rel="shortcut icon" href="https://comparadordeventas.com/pagolibre/public/favicon.ico">
         <script src="https://comparadordeventas.com/pagolibre/public/js/jquery/jquery-3.0.0.min.js"></script>
     @endif
     
