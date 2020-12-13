@@ -45,25 +45,25 @@
                 <strong>{{ config('app.name', 'Laravel') }} &emsp;&emsp;</strong>
                 @auth
                     @if(isset(Auth::user()->usersRolId) && Auth::user()->usersRolId==1)
-                        <a class="navbar-brand" href="{{ $urlEmpresaListado }}">
+                        <a class="navbar-brand  caret h7" href="{{ $urlEmpresaListado }}">
                             Empresa
                         </a>
-                        <a class="navbar-brand" href="{{ url('usuario/listar') }}">
+                        <a class="navbar-brand  caret h7" href="{{ url('usuario/listar') }}">
                             Usuario
                         </a>
                         
                     @endif
-                    <a class="navbar-brand" href="{{ url('listarProducto') }}">
+                    <a class="navbar-brand  caret h7 btn btn-success" href="{{ url('listarProducto') }}">
                         <strong>Productos</strong>
                     </a>
-                    <a class="navbar-brand" href="{{ url('listarSalsa') }}">
+                    <a class="navbar-brand caret h7 btn btn-success" href="{{ url('listarSalsa') }}">
                         <strong>Salsas</strong>
                     </a>
                     @if(isset(Auth::user()->usersRolId) && Auth::user()->usersRolId==3)
-                        <a class="navbar-brand" href="{{ url('ventaDiarioLocal') }}">
+                        <a class="navbar-brand caret h7 btn btn-success" href="{{ url('ventaDiarioLocal') }}">
                             <strong>Ventas</strong>
                         </a>
-                        <a class="navbar-brand" href="{{ url('home') }}">
+                        <a class="navbar-brand caret h7 btn btn-success" href="{{ url('home') }}">
                             <strong>Venta del Día</strong>
                         </a>
                     @endif

@@ -389,7 +389,6 @@ $(".claseBotonEnviar").on("click", function(event){
             return false;
         }
 
-        //event.preventDefault();
         //Validamos datos desde el servidor
         validarDatos(monto, producto, empresaEmail, empresaRuc);
         //generarOrden("variableDePrueba");
@@ -525,7 +524,7 @@ function registrarOrden(aProducto, data){
                 transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
                 transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
             */
-            
+
             if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
 
             clienteEmail = data.email;
@@ -568,7 +567,7 @@ function registrarOrden(aProducto, data){
                     $(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede/' + mensajeRespuestaUsuario);
                 }
             }
-            
+
         }
     });
 }

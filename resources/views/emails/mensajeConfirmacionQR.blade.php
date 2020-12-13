@@ -4,38 +4,71 @@
         <title>Document</title>
     </head>
     <body>
-        <h2>Gracias por utilizar el servicio de Pago Libre.</h2>
-        Acabas de realizar una transferencia por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3><br>
-        El número de Pedido realizado es: <h3>{{str_pad($transaccionId, 4, "0", STR_PAD_LEFT)}}</h3><br>
-        El teléfono de contacto que ha registrado es : <h3>{{$oOrden->ordenTelefono}}</h3><br>
-    
-        Local de Despacho : {{$oLocalUbigeoDelivery->local->localNombre}}<br>
-
-        @if($oOrden->ordenDelivery == "S")
-            El pedido es para Delivery.<br>
-            Distrito de Entrega : {{$oLocalUbigeoDelivery->ubigeo->ubigeoNombre}}<br>
-        @endif
-
-        @if($oOrden->ordenComentario)
-            Tendremos en cuenta lo siguiente: <h3>{{$oOrden->ordenComentario}}</h3> <br>	
-        @endif
-
-        Por el producto y/o servicio de: <br><b>
-        <table class="table table-hover">
-            <thead>
+        <table style="border-radius:20px; border: 1px solid black; background-color: #00f191">
+            <tr>
+                <td align="center"><h2>Gracias por utilizar el servicio de Pago Libre</h2></td>
+            </tr>
+            <tr>
+                <td>Acabas de realizar una compra por la cantidad de: <h3>S/. {{$monto}} Nuevos Soles.</h3></td>
+            </tr>
+            <tr>
+                <td>El número de Pedido realizado es: <h3>{{str_pad($transaccionId, 4, "0", STR_PAD_LEFT)}}</h3></td>
+            </tr>
+            <tr>
+                <td>El teléfono de contacto que ha registrado es : <h3>{{$oOrden->ordenTelefono}}</h3></td>
+            </tr>
+            <tr>
+                <td><h1></h1><br></td>
+            </tr>
+            <tr>
+                <td>Local de Despacho : <strong>{{$oLocalUbigeoDelivery->local->localNombre}}</strong></td>
+            </tr>
+            @if($oOrden->ordenDelivery == "S")
                 <tr>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
+                    <td>El pedido es para Delivery</td>
                 </tr>
-            </thead>
-            <tbody>
-            @foreach($content as $pedidoDetalle)
                 <tr>
-                    <td>{{$pedidoDetalle->productoNombre}}</td>
-                    <td>{{$pedidoDetalle->ODCantidad}}</td>
+                    <td>Distrito de Entrega : <strong>{{$oLocalUbigeoDelivery->ubigeo->ubigeoNombre}}</strong></td>
                 </tr>
-            @endforeach
-            </tbody>
+            @endif
+
+            @if($oOrden->ordenComentario)
+                <tr>
+                    <td><h1></h1><br></td>
+                </tr>
+                <tr>
+                    <td>Tendremos en cuenta lo siguiente: <h3>{{$oOrden->ordenComentario}}</h3></td>
+                </tr>
+            @endif
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Su pedido es el siguiente:</td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="background-color: pink; border: 1px solid black;">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($content as $pedidoDetalle)
+                            <tr>
+                                <td>{{$pedidoDetalle->productoNombre}}</td>
+                                <td align="right">{{$pedidoDetalle->ODCantidad}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
         </table>
         <br>
         <strong>Cualquier consulta o si tuviera alguna observación por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387</strong>
