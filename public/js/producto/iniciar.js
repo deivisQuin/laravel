@@ -391,7 +391,9 @@ $(".claseBotonEnviar").on("click", function(event){
 
         //Validamos datos desde el servidor
         validarDatos(monto, producto, empresaEmail, empresaRuc);
+        //Inicio de pruebas sin mostrar modal de pagp
         //generarOrden("variableDePrueba");
+        //Fin de pruebas sin mostrar modal de pago
         
     } else {
         //Validar campos por parte del front
@@ -497,7 +499,8 @@ function registrarOrden(aProducto, data){
         url: "registrarOrden",
         success:function(respuesta){
             ordenId = respuesta.mensaje;
-            /*
+            /* 
+            // Inicio de realizar pruebas 
             clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
             transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
             transaccionPasarelaToken = "tkn_test_yla14jhxmnJnDBGE";
@@ -523,8 +526,11 @@ function registrarOrden(aProducto, data){
                 transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, 
                 transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
                 transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
+            
+            //Fin de realizar pruebas
             */
 
+            //Inicio de envío de datos sin hacer pruebas
             if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
 
             clienteEmail = data.email;
@@ -567,6 +573,7 @@ function registrarOrden(aProducto, data){
                     $(window).attr('location','https://comparadordeventas.com/pagolibre/public/tarjetaNoProcede/' + mensajeRespuestaUsuario);
                 }
             }
+            //Fin de envio de datos sin hacer pruebas
 
         }
     });
