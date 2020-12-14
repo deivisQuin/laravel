@@ -106,7 +106,7 @@ $("#idBotonSalsa").on("click", function() {
         $("#idSpanMensajeCabeceraError").text(mensajeLocalError);
         $("#idDivMensajeCabeceraError").show();
 
-        $("#localError").html("<strong>Elegir el Local</strong>");
+        $("#localError").html("<strong>*Elegir el Local</strong>");
         $("#localError").show();
         return false;
     }
@@ -181,7 +181,7 @@ $(".claseSelectCantidad").on("change", function(){
         $("#idSpanMensajeCabeceraError").text(mensajeLocalError);
         $("#idDivMensajeCabeceraError").show();
 
-        $("#localError").html("<strong>Elegir el Local</strong>");
+        $("#localError").html("<strong>*Elegir el Local</strong>");
         $("#localError").show();
 
         return false;
@@ -351,13 +351,13 @@ $(".claseBotonEnviar").on("click", function(event){
     }
     
     //Se valida entrada del monto debe ser mayor a 5 soles, permitir 2 decimales y no negativos
-    if ((monto >= 5) && (monto <= 5000) && (producto.length >= 5) && (producto.length <= 250)) {
+    if ((monto >= 5) && (monto <= 500) && (producto.length >= 5) && (producto.length <= 250)) {
         if(delivery == 1) {
             if (telefonoDelivery.length < 6) {
                 mensajeTelefonoError = "* Debe Registrar un número de telefono de contacto";
                 
                 $("#idSpanMensajeCabeceraError").text(mensajeTelefonoError);
-                $("#telefonoError").html("<strong>Registrar tu teléfono</strong>");
+                $("#telefonoError").html("<strong>*Registrar tu teléfono</strong>");
                 $("#idDivMensajeCabeceraError").show();
                 $("#telefonoError").show();
                 
@@ -367,7 +367,7 @@ $(".claseBotonEnviar").on("click", function(event){
                 mensajeDistritoError = "* Debe Registrar el Distrito de Entrega del pedido";
                 
                 $("#idSpanMensajeCabeceraError").text(mensajeDistritoError);
-                $("#distritoError").html("<strong>Elegir Distrito de Entrega</strong>");
+                $("#distritoError").html("<strong>*Elegir Distrito de Entrega</strong>");
                 $("#idDivMensajeCabeceraError").show();
                 $("#distritoError").show();
                 
@@ -382,7 +382,7 @@ $(".claseBotonEnviar").on("click", function(event){
             mensajeComentarioError = "Por favor registrar su nombre, dirección y especifica tu pedido";
             $("#idSpanMensajeCabeceraError").text(mensajeComentarioError);
             $("#comentarioError").text(mensajeComentarioError);
-            $("#comentarioError").html("<strong>Registrar Nombre, dirección e indicar las cremas</strong>");
+            $("#comentarioError").html("<strong>*Registrar Nombre, dirección e indicar las cremas</strong>");
             $("#idDivMensajeCabeceraError").show();
             $("#comentarioError").show();
 
@@ -499,7 +499,7 @@ function registrarOrden(aProducto, data){
         url: "registrarOrden",
         success:function(respuesta){
             ordenId = respuesta.mensaje;
-            /* 
+            /*
             // Inicio de realizar pruebas 
             clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
             transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";

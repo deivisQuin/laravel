@@ -18,6 +18,8 @@ class CreateLocalUbigeoDeliveryTable extends Migration
             $table->bigInteger("LULocalId")->unsigned();
             $table->bigInteger("LUUbigeoId")->unsigned();
             $table->decimal("LUPrecioDelivery", 8, 2);
+            $table->bigInteger("LUEstadoId")->unsigned();
+            $table->foreign('LUEstadoId')->references('estadoId')->on('estado')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('LULocalId')->references('localId')->on('local')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('LUUbigeoId')->references('ubigeoId')->on('ubigeo')->onDelete('cascade')->onUpdate('cascade');
         });

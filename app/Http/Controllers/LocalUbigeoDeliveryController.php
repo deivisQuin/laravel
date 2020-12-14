@@ -14,7 +14,7 @@ class LocalUbigeoDeliveryController extends Controller
     }
 
     public function listar($localId) {
-        $oLocalUbigeoDelivery = LocalUbigeoDelivery::where("LULocalId", "=", $localId)->get();
+        $oLocalUbigeoDelivery = LocalUbigeoDelivery::where([["LULocalId", "=", $localId], ["LUEstadoId", "=", 1]])->get();
 
         $i = 0;
         foreach ($oLocalUbigeoDelivery as $localUbigeoDelivery) {
