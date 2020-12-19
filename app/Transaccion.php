@@ -18,7 +18,7 @@ class Transaccion extends Model
                             "transaccionPasarelaTarjetaMarca", "transaccionPasarelaTarjetaTipo", "transaccionPasarelaTarjetaCategoria", 
                             "transaccionPasarelaTarjetaNumero", "transaccionPasarelaDispositivoIp", "transaccionPasarelaCodigoAutorizacion", 
                             "transaccionPasarelaCodigoReferencia", "transaccionPasarelaCodigoRespuesta", "transaccionPasarelaComision", 
-                            "transaccionPasarelaIgv", "transaccionPasarelaMontoDepositar", "transaccionEmpresaId", "transaccionOrdenId"];
+                            "transaccionPasarelaIgv", "transaccionPasarelaMontoDepositar", "transaccionEmpresaId", "transaccionLocalId", "transaccionOrdenId"];
     
     public $timestamps = false;
 
@@ -29,5 +29,9 @@ class Transaccion extends Model
 
     public function orden(){
     	return $this->belongsTo('App\Orden' , 'transaccionOrdenId', 'ordenId');
+    }
+
+    public function local(){
+    	return $this->belongsTo('App\Local' , 'transaccionLocalId', 'localId');
     }
 }

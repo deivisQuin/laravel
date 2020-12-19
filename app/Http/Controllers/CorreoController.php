@@ -131,8 +131,8 @@ class CorreoController extends Controller
 
         //Enviamos los correos al cliente y al comercio
         $correo = new MessageReceived(
-            $aTransaccion->transaccionMonto,
-            //$aTransaccion->transaccionDescripcion,
+            //$aTransaccion->transaccionMonto,
+            $aTransaccion,
             $aOrdenDetalle,
             "1",
             "",
@@ -148,8 +148,8 @@ class CorreoController extends Controller
 
         //Se envia Correo al cliente
         $correo = new MessageReceived(
-            $aTransaccion->transaccionMonto,
-            //$aTransaccion->transaccionDescripcion,
+            //$aTransaccion->transaccionMonto,
+            $aTransaccion,
             $aOrdenDetalle,
             "4",
             $aTransaccion->transaccionClientePassword,

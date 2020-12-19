@@ -528,7 +528,7 @@ function registrarOrden(aProducto, data){
                 transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
             
             //Fin de realizar pruebas
-            */
+          */  
 
             //Inicio de envío de datos sin hacer pruebas
             if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};

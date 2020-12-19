@@ -15,27 +15,37 @@
                 <td>El número de Pedido realizado es: <h3>{{str_pad($transaccionId, 4, "0", STR_PAD_LEFT)}}</h3></td>
             </tr>
             <tr>
-                <td>El teléfono de contacto que ha registrado es : <h3>{{$oOrden->ordenTelefono}}</h3></td>
-            </tr>
-            <tr>
                 <td><h1></h1><br></td>
             </tr>
-            <tr>
-                <td>Local de Despacho : <strong>{{$oLocalUbigeoDelivery->local->localNombre}}</strong></td>
-            </tr>
             @if($oOrden->ordenDelivery == "S")
+                <tr>
+                    <td>Local de Despacho : <strong>{{$oLocalUbigeoDelivery->local->localNombre}}</strong></td>
+                </tr>
                 <tr>
                     <td>El pedido es para Delivery</td>
                 </tr>
                 <tr>
                     <td>Distrito de Entrega : <strong>{{$oLocalUbigeoDelivery->ubigeo->ubigeoNombre}}</strong></td>
                 </tr>
-            @endif
-
-            @if($oOrden->ordenComentario)
                 <tr>
                     <td><h1></h1><br></td>
                 </tr>
+                <tr>
+                    <td>El teléfono de contacto que ha registrado es : <h3>{{$oOrden->ordenTelefono}}</h3></td>
+                </tr>
+            @else
+                <tr>
+                    <td><strong>El cliente recogerá su pedido en el local</strong></td>
+                </tr>
+                <tr>
+                    <td>Local de Despacho : <strong>{{$localNombre}}</strong></td>
+                </tr>
+                <tr>
+                    <td><h1></h1><br></td>
+                </tr>
+            @endif
+
+            @if($oOrden->ordenComentario)
                 <tr>
                     <td>Tendremos en cuenta lo siguiente: <h3>{{$oOrden->ordenComentario}}</h3></td>
                 </tr>
@@ -72,13 +82,7 @@
         </table>
         <br>
         <strong>Cualquier consulta o si tuviera alguna observación por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387</strong>
-        <br>
-        Presentar el siguiente códigoQR al momento de Recibir su producto:<br><br>
-        <!--<span>{!! $imagen !!}</span>-->
-        <!--<span><img src="data:image/png;base64, {!! base64_encode($imagen) !!} "></span>-->
-            
-        <img src="{{asset('qrcodes/'.$imagen.'.png')}}">    
-
-        <!--{!! QrCode::size(250)->generate('https://comparadordeventas.com/pagolibre/public/producto/20602566251'); !!}-->
+        <br><br>
+        <img src="{{asset('qrcodes/'.$imagen.'.png')}}">
     </body>
 </html>

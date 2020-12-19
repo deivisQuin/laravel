@@ -12,7 +12,7 @@ class MessageReceived extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject;
+    //public $subject;
     public $content;
     public $monto;
     public $enviarCorreoTipo;
@@ -22,18 +22,23 @@ class MessageReceived extends Mailable
     public $transaccionComercioPasswordLink;
     public $oOrden;
     public $oLocalUbigeoDelivery;
+    public $localNombre;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($subject, $aOrdenDetalle, $enviarCorreoTipo, $transaccionComercioClientePassword, $transaccionComercioClientePasswordLink, 
+    //public function __construct($subject, $aOrdenDetalle, $enviarCorreoTipo, $transaccionComercioClientePassword, $transaccionComercioClientePasswordLink, 
+//                                $transaccionId, $transaccionComercioPasswordLink, $oOrden, $oLocalUbigeoDelivery)
+    public function __construct($oTransaccion, $aOrdenDetalle, $enviarCorreoTipo, $transaccionComercioClientePassword, $transaccionComercioClientePasswordLink, 
                                 $transaccionId, $transaccionComercioPasswordLink, $oOrden, $oLocalUbigeoDelivery)
     {
-        $this->subject = $subject;
+        //$this->subject = $subject;
         $this->content = $aOrdenDetalle;
-        $this->monto = $subject;
+        //$this->monto = $subject;
+        $this->monto = $oTransaccion->transaccionMonto;
+        $this->localNombre = $oTransaccion->local->localNombre;
         $this->transaccionComercioClientePassword = $transaccionComercioClientePassword;
         $this->transaccionComercioClientePasswordLink = $transaccionComercioClientePasswordLink;
         $this->enviarCorreoTipo = $enviarCorreoTipo;

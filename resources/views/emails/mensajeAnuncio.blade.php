@@ -17,24 +17,34 @@
 		<tr>
 			<td><h1></h1><br></td>
 		</tr>
-		<tr>
-			<td>El teléfono de contacto es : <h3>{{$oOrden->ordenTelefono}}</h3></td>
-		</tr>
-		<tr>
-			<td>Local de Despacho : <strong>{{$oLocalUbigeoDelivery->local->localNombre}}</strong></td>
-		</tr>
-
 		@if($oOrden->ordenDelivery == "S")
+			<tr>
+				<td>Local de Despacho : <strong>{{$oLocalUbigeoDelivery->local->localNombre}}</strong></td>
+			</tr>
 			<tr>
 				<td>El pedido es para Delivery.</td>
 			</tr>
 			<tr>
 				<td>Distrito de Entrega : <strong>{{$oLocalUbigeoDelivery->ubigeo->ubigeoNombre}}</strong></td>
 			</tr>
+			<tr>
+				<td><h1></h1><br></td>
+			</tr>
+			<tr>
+				<td>El teléfono de contacto es : <h3>{{$oOrden->ordenTelefono}}</h3></td>
+			</tr>
+		@else 
+			<tr>
+				<td><strong>El cliente recogerá su pedido en el local</strong></td>
+			</tr>
+			<tr>
+				<td>Local de Despacho : <strong>{{$localNombre}}</strong></td>
+			</tr>
+			<tr>
+				<td><h1></h1><br></td>
+			</tr>
 		@endif
-		<tr>
-			<td><h1></h1><br></td>
-		</tr>
+		
 		@if($oOrden->ordenComentario)
 			<tr>
 				<td>Tener en cuenta lo siguiente: <h3>{{$oOrden->ordenComentario}}</h3></td>
