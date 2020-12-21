@@ -110,8 +110,9 @@ class ProductoController extends Controller
             } elseif ($horaActual <= $localHoraCierre) {
                 $indLocalAtendiendo = 1;
             }
-        } else {dd($localHoraApertura, $horaActual, $localHoraCierre, "hola");
+        } else {
             if (($localHoraApertura <= $horaActual) && ($localHoraCierre >= $horaActual)) {
+                dd($localHoraApertura, $horaActual, $localHoraCierre, "entra");
                 $indLocalAtendiendo = 1;
             }
         }
