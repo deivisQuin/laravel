@@ -16,7 +16,7 @@
                     @if ($_SERVER['SERVER_NAME'] == "localhost")
                         <img src="{{url('/imagen/' . $empresaRuc . '/' . $imagen. '')}}" width="100" height="100">
                     @else
-                        <img src="https://comparadordeventas.com/pagolibre/public/imagen/" . $empresaRuc . "/" . $imagen >
+                        <img src="https://comparadordeventas.com/pagolibre/public/imagen/{{$empresaRuc}}/{{$imagen}}" >
                     @endif
                     <br>
                     <strong>{{$producto['productoNombre']}}</strong>
