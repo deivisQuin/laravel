@@ -79,6 +79,29 @@
                     </table>
                 </td>
             </tr>
+            <tr>
+                <td><h1></h1><br></td>
+            </tr>
+            <tr>
+                <td><strong>Las salsas solicitados por usted son:</strong></td>
+            </tr>
+            <tr>
+                <td>
+                    <table style="background-color: pink; border: 1px solid black;">
+                        <thead>
+                            <tr>
+                                <th>Producto:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?php echo $transaccionDescripcion; ?>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
         </table>
         <br>
         <strong>Cualquier consulta o si tuviera alguna observación por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387</strong>

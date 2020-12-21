@@ -23,6 +23,7 @@ class MessageReceived extends Mailable
     public $oOrden;
     public $oLocalUbigeoDelivery;
     public $localNombre;
+    public $transaccionDescripcion;
 
     /**
      * Create a new message instance.
@@ -38,6 +39,7 @@ class MessageReceived extends Mailable
         $this->content = $aOrdenDetalle;
         //$this->monto = $subject;
         $this->monto = $oTransaccion->transaccionMonto;
+        $this->transaccionDescripcion = $oTransaccion->transaccionDescripcion;
         $this->localNombre = $oTransaccion->local->localNombre;
         $this->transaccionComercioClientePassword = $transaccionComercioClientePassword;
         $this->transaccionComercioClientePasswordLink = $transaccionComercioClientePasswordLink;

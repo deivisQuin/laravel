@@ -11,6 +11,7 @@ use App\Producto;
 use App\LocalUbigeoDelivery;
 use App\Local;
 use App\UserLocal;
+use App\Salsa;
 use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
@@ -128,12 +129,38 @@ class ProductoController extends Controller
         if($request->input("empresaEmail") != $aEmpresa->empresaEmail) {
             return response()->json(["success" => false, "mensajeError"=>"El correo de la empresa no pertence al RUC registrado"]);
         }
-
+/*
         $validaciones = $request->validate([
             'monto' => 'required|numeric|min:5|max:5000',
             'producto' => 'required|between:5,250',
-        ]);
+            'salsa' => 'required|between:5,7'
+        ]);*/
 
         return response()->json(["success" => false, "mensajeError"=>false]);
+    }
+
+    public function listarProductoSalsa($productoId, $productoCantidad, $localId) {
+        //Se obtiene la empresa
+        $aLocal = Local::findOrFail($localId);
+
+        $empresaRuc = $aLocal->empresa->empresaRuc;
+
+        //Se obtienen las salsas activas
+        $aSalsa = Salsa::where("salsaLocalId", "=", $localId)->where("salsaEstadoId", "=", 1)->get();
+
+        $aLocalLineaSublineaProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $localId)->where("LLSPEstadoId", "=", 1)
+                ->where("LLSPProductoId", "=", $productoId)->get();
+
+        $i = 0;
+
+        foreach ($aLocalLineaSublineaProducto as $localLineaSublineaProducto) {
+            $aProducto[$i]["productoId"]       = $localLineaSublineaProducto->LLSPProductoId;
+            $aProducto[$i]["productoNombre"]   = $localLineaSublineaProducto->producto->productoNombre;
+            $aProducto[$i]["productoImagen"]   = $localLineaSublineaProducto->LLSPImagen;
+            $aProducto[$i]["productoCantidad"] = $productoCantidad;
+            $i++;
+        }
+        
+        return response()->json(view("producto.productoSalsa", compact("aProducto", "empresaRuc", "aSalsa"))->render());
     }
 }

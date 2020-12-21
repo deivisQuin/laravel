@@ -2,7 +2,7 @@
 <input type="hidden" name="localHoraApertura" class="form-control required"  id="idLocalHoraApertura" value="{{$local->localHoraApertura}}">
 <input type="hidden" name="localHoraCierre" class="form-control required"  id="idLocalHoraCierre" value="{{$local->localHoraCierre}}">
 <input type="hidden" name="localNombre" class="form-control required"  id="idLocalNombre" value="{{$local->localNombre}}">
-<table class="table table-hover">
+<table class="table table-hover" style="font-size: calc(0.6em + 0.6vw)">
     <thead>
         <tr>
             <th>Producto</th>
@@ -24,7 +24,7 @@
             </td>
             <td>
                 <select id="idSelectCantidad_{{$producto->producto->productoId}}" 
-                    idProducto="{{$producto->producto->productoId}}" class="claseSelectCantidad">
+                    idProducto="{{$producto->producto->productoId}}" idSublineaId="{{$producto->LLSPSublineaId}}" class="claseSelectCantidad">
                     <option value="0">0</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -48,6 +48,7 @@
 
         let idProducto = $(this).attr("idProducto");
         let idSelectCantidad = $(this).attr("id");
+        let idSublineaId = $(this).attr("idSublineaId");
         let cantidad =$("#"+idSelectCantidad).val();
         let localId = $("#idSelectLocal").val();
         let precioDelivery = $("#idHiddenPrecioDelivery").val();
@@ -116,14 +117,32 @@
                     })
 
                     $("#idHiddenDescripcion").val(texto);
+
+                    if (idSublineaId == 1) {
+                        var datos = {};
+
+                        $.ajax({
+                            data: datos,
+                            type: "GET",
+                            dataType: "json",
+                            url:"listarProductoSalsa/" + idProducto + "/" + cantidad + "/" + localId,
+                            success:function(respuesta){
+                                $("#idCuerpoModalElegirSalsa").append(respuesta);
+
+                                if (idSublineaId == 1) {
+                                    $("#idDivModalElegirSalsa").modal("show");
+                                }
+                            }
+                        });
+                    }
                 }
             });
             
         }else {
             $(this).removeClass("badge badge-primary");
-            $("#idSpanProductoNombre_"+idProducto).removeClass("badge badge-primary");
-            $("#idSpanMonto_"+idProducto).text("");
-            $("#idHiddenMonto_"+idProducto).val("");
+            $("#idSpanProductoNombre_" + idProducto).removeClass("badge badge-primary");
+            $("#idSpanMonto_" + idProducto).text("");
+            $("#idHiddenMonto_" + idProducto).val("");
             
             //Cálculamos el Monto Total
             let montoTotal = 0;
@@ -133,9 +152,9 @@
                 
                 if ($("#"+idMontoHidden).val()) {
                     let producto_id = idMontoHidden.substr(14);
-                    let producto_cantidad = $("#idSelectCantidad_"+producto_id).val();
-                    let producto_nombre = $("#idHiddenProductoNombre_"+producto_id).val();
-                    let producto_precio = $("#idHiddenProductoPrecio_"+producto_id).val();
+                    let producto_cantidad = $("#idSelectCantidad_" + producto_id).val();
+                    let producto_nombre = $("#idHiddenProductoNombre_" + producto_id).val();
+                    let producto_precio = $("#idHiddenProductoPrecio_" + producto_id).val();
                     let montoHidden = parseFloat($("#"+idMontoHidden).val());
 
                     texto +="cant: " + producto_cantidad + "Nombre: " + producto_nombre + "precio: " + producto_precio +"---";
@@ -151,6 +170,14 @@
             })
 
             $("#idHiddenDescripcion").val(texto);
+
+            if (idSublineaId == 1) {
+                for (j = 1; j <= 8; j++) {
+                    $("#" + idProducto + "_" + j + "").remove();
+                }
+
+                $("#idHiddenSalsa").val("");
+            }
         }
     });
 </script>

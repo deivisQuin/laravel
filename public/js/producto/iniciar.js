@@ -2,6 +2,7 @@
 Culqi.publicKey = 'pk_live_L62EXjQFQFTCPtRk'; // Panel administrativo
 
 var producto         = "";
+var salsa            = "";
 var precio           = "";
 var empresaEmail     = "";
 var empresaRuc       = "";
@@ -73,6 +74,15 @@ function limpiar() {
     $("#distritoError").hide();
 }
 
+function limpiarMensajesError() {
+    $("#idSpanMensajeCabeceraError").val("");
+    $("#idDivMensajeCabeceraError").hide();
+    $("#localError").val("");
+    $("#localError").hide();
+    $("#distritoError").val("");
+    $("#distritoError").hide();
+}
+
 function listarLocalUbigeo(localId) {
     $.ajax({
         data: {},
@@ -135,15 +145,82 @@ $("#idBotonSalsa").on("click", function() {
     })
 })
 
+$("#idBotonElegirSalsa").on("click", function(){
+    let cantidadProductoSeleccionado = 0;
+    let i = 0;
+
+    aProductoId       = [];
+    aProductoCantidad = [];
+
+    $('.claseSelectCantidad').each(function() {
+        let selectProductoId = this.id;
+        let cantidadProductoPorItem = $("#" + selectProductoId + "").val();
+        let numProductosPorItem = parseFloat(cantidadProductoPorItem);
+        
+        cantidadProductoSeleccionado += numProductosPorItem;
+
+        if (numProductosPorItem > 0) {
+            let cantidadTotalCaracteres = selectProductoId.length;
+            let cantidadCaracteres      = cantidadTotalCaracteres - 17;
+
+            aProductoId[i] = selectProductoId.substr(17, cantidadCaracteres);
+            aProductoCantidad[i] = numProductosPorItem;
+            i++;
+        }
+    });
+
+    if (cantidadProductoSeleccionado > 1) {
+        $("#idDivModalElegirSalsa").modal("show");
+    } else {
+        mensajeLocalError = "* Antes de elegir las salsas deberá elegir un producto";
+
+        $("#idSpanMensajeCabeceraError").text(mensajeLocalError);
+        $("#idDivMensajeCabeceraError").show();
+    }
+})
+
+$("#idBotonGrabarSalsa").on("click", function() {
+    let productoSalsa = "";
+    let check_identificadorAnterior = "";
+
+    $(".checkElegirSalsa").each(function() {
+        let salsaElegidaId = this.id;
+        if ($("#" + salsaElegidaId + "").is(':checked')) {
+    
+            let salsaNombre    = $("#" + salsaElegidaId + "").attr("check_salsaNombre");
+            let productoNombre = $("#" + salsaElegidaId + "").attr("check_productoNombre");
+            let productoId     = $("#" + salsaElegidaId + "").attr("check_productoId");
+            let orden          = $("#" + salsaElegidaId + "").attr("check_orden");
+
+            check_identificadorNuevo = productoId + "_" + orden;
+
+            if (check_identificadorNuevo != check_identificadorAnterior) {
+                if (check_identificadorAnterior != "") {productoSalsa += "<br>";}
+
+                productoSalsa += "<strong>" + productoNombre + " " + orden + ":</strong><br>";
+                productoSalsa += salsaNombre + "<br>";
+            } else {
+                productoSalsa += salsaNombre + "<br>";
+            }
+
+            check_identificadorAnterior = check_identificadorNuevo;
+
+            /*productoSalsa += productoNombre + " " + orden + ": " + salsaNombre + "<br>";*/
+        }
+    })
+    $("#idHiddenSalsa").val(productoSalsa);
+    limpiarMensajesError();
+})
+
 $(document).on("click", ".claseTdProducto",function(){
     let productoNombre = $(this).attr("trProductoNombre");
     let productoImagen = $(this).attr("trProductoImagen");
-    let empresaRuc = $("#empresaRucId").val();
+    let empresaRuc     = $("#empresaRucId").val();
 
     $("#idModalTitulo").text(productoNombre);
 
     var image = new Image();
-    var src = "";
+    var src   = "";
     
     if (document.domain == "localhost") {
         src = 'http://localhost/pagolibre/laravel/public/imagen/' + empresaRuc + '/' + productoImagen;
@@ -169,10 +246,11 @@ $(".claseSelectCantidad").on("change", function(){
 
     let idProducto = $(this).attr("idProducto");
     let idSelectCantidad = $(this).attr("id");
-    let cantidad =$("#"+idSelectCantidad).val();
+    let idSublineaId = $(this).attr("idSublineaId");
+    let cantidad = $("#"+idSelectCantidad).val();
     let localId = $("#idSelectLocal").val();
     let precioDelivery = $("#idHiddenPrecioDelivery").val();
-
+    
     if (localId == 0) {
         $("#"+idSelectCantidad).val("0");
 
@@ -206,10 +284,10 @@ $(".claseSelectCantidad").on("change", function(){
                 let productoPrecio = respuesta.LLSPPrecio;
                 let monto = productoPrecio * cantidad;
 
-                $("#idSpanMonto_"+idProducto).text(monto.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
-                $("#idHiddenMonto_"+idProducto).val(monto);
-                $("#idHiddenProductoNombre_"+idProducto).val(productoNombre);
-                $("#idHiddenProductoPrecio_"+idProducto).val(productoPrecio);
+                $("#idSpanMonto_" + idProducto).text(monto.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+                $("#idHiddenMonto_" + idProducto).val(monto);
+                $("#idHiddenProductoNombre_" + idProducto).val(productoNombre);
+                $("#idHiddenProductoPrecio_" + idProducto).val(productoPrecio);
 
                 //Cálculamos el Monto Total
                 let montoTotal = 0;
@@ -218,11 +296,11 @@ $(".claseSelectCantidad").on("change", function(){
                     let idMontoHidden = $(this).attr("id");
                     
                     if ($("#"+idMontoHidden).val()) {
-                        let producto_id = idMontoHidden.substr(14);
-                        let producto_cantidad = $("#idSelectCantidad_"+producto_id).val();
-                        let producto_nombre = $("#idHiddenProductoNombre_"+producto_id).val();
-                        let producto_precio = $("#idHiddenProductoPrecio_"+producto_id).val();
-                        let montoHidden = parseFloat($("#"+idMontoHidden).val());
+                        let producto_id       = idMontoHidden.substr(14);
+                        let producto_cantidad = $("#idSelectCantidad_" + producto_id).val();
+                        let producto_nombre   = $("#idHiddenProductoNombre_" + producto_id).val();
+                        let producto_precio   = $("#idHiddenProductoPrecio_" + producto_id).val();
+                        let montoHidden       = parseFloat($("#"+idMontoHidden).val());
 
                         texto +="Cant: " + producto_cantidad + " Nombre: " + producto_nombre + " Precio: " + producto_precio + "---";
                         montoTotal = montoTotal + montoHidden;
@@ -237,14 +315,33 @@ $(".claseSelectCantidad").on("change", function(){
                 })
 
                 $("#idHiddenDescripcion").val(texto);
+
+                if (idSublineaId == 1) {
+                    var datos = {};
+
+                    $.ajax({
+                        data: datos,
+                        type: "GET",
+                        dataType: "json",
+                        url:"listarProductoSalsa/" + idProducto + "/" + cantidad + "/" + localId,
+                        success:function(respuesta){
+                            $("#idCuerpoModalElegirSalsa").append(respuesta);
+
+                            if (idSublineaId == 1) {
+                                $("#idDivModalElegirSalsa").modal("show");
+                            }
+                        }
+                    });
+                }
+
             }
         });
         
     }else {
         $(this).removeClass("badge badge-primary");
-        $("#idSpanProductoNombre_"+idProducto).removeClass("badge badge-primary");
-        $("#idSpanMonto_"+idProducto).text("");
-        $("#idHiddenMonto_"+idProducto).val("");
+        $("#idSpanProductoNombre_" + idProducto).removeClass("badge badge-primary");
+        $("#idSpanMonto_" + idProducto).text("");
+        $("#idHiddenMonto_" + idProducto).val("");
         
         //Cálculamos el Monto Total
         let montoTotal = 0;
@@ -254,10 +351,10 @@ $(".claseSelectCantidad").on("change", function(){
             
             if ($("#"+idMontoHidden).val()) {
                 let producto_id = idMontoHidden.substr(14);
-                let producto_cantidad = $("#idSelectCantidad_"+producto_id).val();
-                let producto_nombre = $("#idHiddenProductoNombre_"+producto_id).val();
-                let producto_precio = $("#idHiddenProductoPrecio_"+producto_id).val();
-                let montoHidden = parseFloat($("#"+idMontoHidden).val());
+                let producto_cantidad = $("#idSelectCantidad_" + producto_id).val();
+                let producto_nombre = $("#idHiddenProductoNombre_" + producto_id).val();
+                let producto_precio = $("#idHiddenProductoPrecio_" + producto_id).val();
+                let montoHidden = parseFloat($("#" + idMontoHidden).val());
 
                 texto +="cant: " + producto_cantidad + "Nombre: " + producto_nombre + "precio: " + producto_precio +"---";
                 montoTotal = montoTotal + montoHidden;
@@ -272,6 +369,15 @@ $(".claseSelectCantidad").on("change", function(){
         })
 
         $("#idHiddenDescripcion").val(texto);
+
+        if (idSublineaId == 1) {
+            for (j = 1; j <= 8; j++) {
+                $("#" + idProducto + "_" + j + "").remove();
+            }
+    
+            $("#idHiddenSalsa").val("");
+        }
+
     }
 });
 
@@ -323,6 +429,7 @@ $(".claseBotonEnviar").on("click", function(event){
     precio = monto * 100;
     precio = precio.toFixed(0);
     producto = $("#idHiddenDescripcion").val();
+    salsa = $("#idHiddenSalsa").val();
     empresaEmail = $('#empresaEmailId').val();
     empresaRuc = $("#empresaRucId").val();
     delivery = $("#idSelectDelivery").val();
@@ -351,7 +458,7 @@ $(".claseBotonEnviar").on("click", function(event){
     }
     
     //Se valida entrada del monto debe ser mayor a 5 soles, permitir 2 decimales y no negativos
-    if ((monto >= 5) && (monto <= 500) && (producto.length >= 5) && (producto.length <= 250)) {
+    if ((monto >= 5) && (monto <= 500) && (producto.length >= 5) && (salsa.length >= 5)) {
         if(delivery == 1) {
             if (telefonoDelivery.length < 6) {
                 mensajeTelefonoError = "* Debe Registrar un número de telefono de contacto";
@@ -379,10 +486,10 @@ $(".claseBotonEnviar").on("click", function(event){
         }
 
         if (comentario.length < 2) {
-            mensajeComentarioError = "Por favor registrar su nombre, dirección y especifica tu pedido";
+            mensajeComentarioError = "Por favor registrar su nombre y dirección";
             $("#idSpanMensajeCabeceraError").text(mensajeComentarioError);
             $("#comentarioError").text(mensajeComentarioError);
-            $("#comentarioError").html("<strong>*Registrar Nombre, dirección e indicar las cremas</strong>");
+            $("#comentarioError").html("<strong>*Registrar tu Nombre y dirección</strong>");
             $("#idDivMensajeCabeceraError").show();
             $("#comentarioError").show();
 
@@ -390,29 +497,41 @@ $(".claseBotonEnviar").on("click", function(event){
         }
 
         //Validamos datos desde el servidor
-        validarDatos(monto, producto, empresaEmail, empresaRuc);
+        validarDatos(monto, producto, salsa, empresaEmail, empresaRuc);
         //Inicio de pruebas sin mostrar modal de pagp
         //generarOrden("variableDePrueba");
         //Fin de pruebas sin mostrar modal de pago
         
     } else {
         //Validar campos por parte del front
-        mensajeError = "* Debe Seleccionar un producto";
+        if (producto.length <= 5) {
+            mensajeError = "* Debe Seleccionar un producto";
 
-        $("#idSpanMensajeCabeceraError").text(mensajeError);
-        $("#idDivMensajeCabeceraError").show();
-        
-        event.preventDefault();
+            $("#idSpanMensajeCabeceraError").text(mensajeError);
+            $("#idDivMensajeCabeceraError").show();
+
+            return false;
+        }
+
+        if (salsa.length <= 5) {
+            mensajeError = "* Debe Elegir sus cremas";
+
+            $("#idSpanMensajeCabeceraError").text(mensajeError);
+            $("#idDivMensajeCabeceraError").show();
+
+            return false;
+        }
     }
 });
 
 //Se validan datos de parte del servidor
-function validarDatos(monto, producto, empresaEmail, empresaRuc){
+function validarDatos(monto, producto, salsa, empresaEmail, empresaRuc){
     var datos = {
-            producto:producto, 
-            monto:monto, 
-            empresaEmail:empresaEmail,
-            "_token":_token,
+            producto: producto,
+            salsa: salsa,
+            monto: monto, 
+            empresaEmail: empresaEmail,
+            "_token": _token,
             empresaRuc: empresaRuc,
         };
 
@@ -458,14 +577,17 @@ function validarDatos(monto, producto, empresaEmail, empresaRuc){
 function generarOrden(data){
     let i = 0;
     var aProducto = {};
+
     $(".claseSelectCantidad").each(function(){
         let idSelectCantidad = $(this).attr("id");
-        let productoId = $(this).attr("idProducto");
-        let cantidad = $("#"+idSelectCantidad+"").val();
+        let productoId       = $(this).attr("idProducto");
+
+        let cantidad = $("#" + idSelectCantidad + "").val();
         
         if (cantidad > 0) {
             aProducto[i] = {};
-            aProducto[i]["id"] = productoId;
+
+            aProducto[i]["id"]       = productoId;
             aProducto[i]["cantidad"] = cantidad;
             i++;
         }
@@ -475,12 +597,12 @@ function generarOrden(data){
 }
 
 function registrarOrden(aProducto, data){
-    let deliveryId = $("#idSelectDelivery").val();
+    let deliveryId       = $("#idSelectDelivery").val();
     let telefonoDelivery = $("#idTelefonoDelivery").val();
-    let localUbigeoId = $("#idSelectLocalUbigeo").val();
-    let delivery = (deliveryId == 1) ? "S" : "N";
-    let comentario = $("#idComentario").val();
-    let localId = $("#idSelectLocal").val();
+    let localUbigeoId    = $("#idSelectLocalUbigeo").val();
+    let delivery         = (deliveryId == 1) ? "S" : "N";
+    let comentario       = $("#idComentario").val();
+    let localId          = $("#idSelectLocal").val();
 
     productos = JSON.stringify(aProducto);
     var datos = {
@@ -520,7 +642,7 @@ function registrarOrden(aProducto, data){
             transaccionPasarelaIgv = "4536";
             transaccionPasarelaMontoDepositar = "570264";
 
-            registrarDatos(empresaEmail, localId, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
+            registrarDatos(empresaEmail, localId, monto, salsa, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
                 transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, 
                 transaccionPasarelaBancoPaisCodigo, transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, 
                 transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, transaccionPasarelaDispositivoIp, 
@@ -528,7 +650,7 @@ function registrarOrden(aProducto, data){
                 transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
             
             //Fin de realizar pruebas
-          */  
+            */
 
             //Inicio de envío de datos sin hacer pruebas
             if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
@@ -554,7 +676,7 @@ function registrarOrden(aProducto, data){
                 transaccionPasarelaIgv = (typeof data.total_fee_taxes !== "undefined") ? data.total_fee_taxes : "NO TIENE";
                 transaccionPasarelaMontoDepositar = (typeof data.transfer_amount !== "undefined") ? data.transfer_amount : "NO TIENE";
 
-                registrarDatos(empresaEmail, localId, monto, producto, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
+                registrarDatos(empresaEmail, localId, monto, salsa, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
                     transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
                     transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
                     transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
@@ -605,7 +727,7 @@ function iniciaCulqi(){
 }
 
 //Se registran los datos al servidor 
-function registrarDatos(empresaEmail, localId, monto, descripcion, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
+function registrarDatos(empresaEmail, localId, monto, descripcionSalsa, clienteEmail, transaccionPasarelaPedidoId, transaccionPasarelaToken, 
     transaccionPasarelaMonedaCodigo, transaccionPasarelaBancoNombre, transaccionPasarelaBancoPaisNombre, transaccionPasarelaBancoPaisCodigo, 
     transaccionPasarelaTarjetaMarca, transaccionPasarelaTarjetaTipo, transaccionPasarelaTarjetaCategoria, transaccionPasarelaTarjetaNumero, 
     transaccionPasarelaDispositivoIp, transaccionPasarelaCodigoAutorizacion, transaccionPasarelaCodigoReferencia, transaccionPasarelaCodigoRespuesta, 
@@ -619,38 +741,38 @@ function registrarDatos(empresaEmail, localId, monto, descripcion, clienteEmail,
             transaccionPasarelaComisionFijaIgv - transaccionComisionComercio;
 
     data = {
-            "_token":_token,
-            empresaEmail:empresaEmail,
-            clienteEmail:clienteEmail,
+            "_token": _token,
+            empresaEmail: empresaEmail,
+            clienteEmail: clienteEmail,
             //clienteEmail:"jgalarza123456789@gmail.com",
-            monto:monto,
-            descripcion:descripcion,
-            delivery:delivery,
-            enviarCorreoTipo:"1",
+            monto: monto,
+            descripcion: descripcionSalsa,
+            delivery: delivery,
+            enviarCorreoTipo: "1",
             //empresaRuc:empresaRuc,
-            localId:localId,
-            transaccionPasarelaPedidoId:transaccionPasarelaPedidoId,
-            transaccionPasarelaToken:transaccionPasarelaToken,
-            transaccionPasarelaMonedaCodigo:transaccionPasarelaMonedaCodigo,
-            transaccionPasarelaBancoNombre:transaccionPasarelaBancoNombre,
-            transaccionPasarelaBancoPaisNombre:transaccionPasarelaBancoPaisNombre,
-            transaccionPasarelaBancoPaisCodigo:transaccionPasarelaBancoPaisCodigo,
-            transaccionPasarelaTarjetaMarca:transaccionPasarelaTarjetaMarca,
-            transaccionPasarelaTarjetaTipo:transaccionPasarelaTarjetaTipo,
-            transaccionPasarelaTarjetaCategoria:transaccionPasarelaTarjetaCategoria,
-            transaccionPasarelaTarjetaNumero:transaccionPasarelaTarjetaNumero,
-            transaccionPasarelaDispositivoIp:transaccionPasarelaDispositivoIp,
-            transaccionPasarelaCodigoAutorizacion:transaccionPasarelaCodigoAutorizacion,
-            transaccionPasarelaCodigoReferencia:transaccionPasarelaCodigoReferencia,
-            transaccionPasarelaCodigoRespuesta:transaccionPasarelaCodigoRespuesta,
-            transaccionPasarelaComision:transaccionPasarelaComision,
-            transaccionPasarelaIgv:transaccionPasarelaIgv,
-            transaccionPasarelaComisionFija:transaccionPasarelaComisionFija,
+            localId: localId,
+            transaccionPasarelaPedidoId: transaccionPasarelaPedidoId,
+            transaccionPasarelaToken: transaccionPasarelaToken,
+            transaccionPasarelaMonedaCodigo: transaccionPasarelaMonedaCodigo,
+            transaccionPasarelaBancoNombre: transaccionPasarelaBancoNombre,
+            transaccionPasarelaBancoPaisNombre: transaccionPasarelaBancoPaisNombre,
+            transaccionPasarelaBancoPaisCodigo: transaccionPasarelaBancoPaisCodigo,
+            transaccionPasarelaTarjetaMarca: transaccionPasarelaTarjetaMarca,
+            transaccionPasarelaTarjetaTipo: transaccionPasarelaTarjetaTipo,
+            transaccionPasarelaTarjetaCategoria: transaccionPasarelaTarjetaCategoria,
+            transaccionPasarelaTarjetaNumero: transaccionPasarelaTarjetaNumero,
+            transaccionPasarelaDispositivoIp: transaccionPasarelaDispositivoIp,
+            transaccionPasarelaCodigoAutorizacion: transaccionPasarelaCodigoAutorizacion,
+            transaccionPasarelaCodigoReferencia: transaccionPasarelaCodigoReferencia,
+            transaccionPasarelaCodigoRespuesta: transaccionPasarelaCodigoRespuesta,
+            transaccionPasarelaComision: transaccionPasarelaComision,
+            transaccionPasarelaIgv: transaccionPasarelaIgv,
+            transaccionPasarelaComisionFija: transaccionPasarelaComisionFija,
             transaccionPasarelaComisionFijaIgv: transaccionPasarelaComisionFijaIgv,
-            transaccionPasarelaMontoDepositar:transaccionPasarelaMontoDepositar,
-            transaccionComisionComercio:transaccionComisionComercio,
-            transaccionComercioMontoDepositar:transaccionComercioMontoDepositar,
-            ordenId:ordenId
+            transaccionPasarelaMontoDepositar: transaccionPasarelaMontoDepositar,
+            transaccionComisionComercio: transaccionComisionComercio,
+            transaccionComercioMontoDepositar: transaccionComercioMontoDepositar,
+            ordenId: ordenId
         }
 
     $.ajax({

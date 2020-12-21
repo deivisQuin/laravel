@@ -14,5 +14,6 @@ class LocalLineaSublineaProducto extends Model
     public function producto(){
     	return $this->hasOne(Producto::class, "productoId", "LLSPProductoId");
     }
+    
 
 }

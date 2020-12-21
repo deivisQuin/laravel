@@ -66,6 +66,8 @@ Route::get("producto/obtenerLocalUbigeoDelivery/{localUbigeoId}", "LocalUbigeoDe
 Route::get("producto/listarLocalUbigeoDelivery/{localId}", "LocalUbigeoDeliveryController@listar");
 Route::post("producto/registrarOrden", "OrdenController@crear");
 Route::get("producto/listarSalsa/{localId}", "SalsaController@listarJson");
+Route::get("producto/listarProductoSalsa/{productoId}/{productoCantidad}/{localId}", "ProductoController@listarProductoSalsa");
+
 Route::get("/listarProducto", "ProductoController@listar")->middleware("auth");
 
 Route::get("producto/listarProductoLocal/{localId}", "ProductoController@listarProductoLocal");

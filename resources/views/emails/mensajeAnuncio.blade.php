@@ -80,6 +80,29 @@
 				</table>
 			</td>
 		</tr>
+		<tr>
+			<td><h1></h1><br></td>
+		</tr>
+		<tr>
+			<td><strong>Las salsas solicitados por el cliente son:</strong></td>
+		</tr>
+		<tr>
+			<td>
+				<table style="background-color: pink; border: 1px solid black;">
+					<thead>
+						<tr>
+							<th>Producto:</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php echo $transaccionDescripcion;?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
 	</table>
 	<br>
 	Al momento de realizar la entrega del pedido escanea el código QR enviado al correo de tu cliente.<br><br>

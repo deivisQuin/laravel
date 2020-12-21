@@ -101,6 +101,33 @@
   </div>
 </div>
 
+<div class="modal fade" id="idDivModalElegirSalsa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><strong style='color:#28a745'><div id="idModalTitulo">Elegir sus cremas</div></strong></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+	  	<div class="row">
+		  <div class="col-md-12" id="idCuerpoModalElegirSalsa"></div>
+		</div>
+      </div>
+      <div class="modal-footer">
+		<div class="container">
+			<div class="row">
+			<!--<div class="col-xs-4"><button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button></div>-->
+			<div class="col-xs-8 "><button type="button" class="btn btn-primary" id="idBotonGrabarSalsa" data-dismiss="modal">Confirmar</button></div>
+			<div class="col-xs-4 ml-auto"></div>
+			</div>
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container panel panel-default">
 	<div class="card">
 		<div class="card-header">
@@ -112,6 +139,7 @@
 					
 					<input type="hidden" id="idHiddenPrecioTotal" value="">
 					<input type="hidden" id="idHiddenDescripcion" value="">
+					<input type="hidden" id="idHiddenSalsa" value="">
 					<input type="hidden" id="idHiddenMontoTotal" value="">
 					
 				  </div>
@@ -153,25 +181,26 @@
 				
 			</div>
 
-			<form id="myForm" method="POST" action="validacionFormulario">
+			<form id="myForm" method="POST" action="validacionFormulario" style="font-size: calc(0.6em + 1vw)">
 				<input type="hidden" id="idHiddenToken" name="_token" value="{{ csrf_token() }}">
 				<br>
 				<div class="form-group">
 		            <h4 style='color:#28a745'><strong>Empresa: {{$oEmpresa->empresaNombreComecial}}</strong></h4>
 		        </div>
 				<div class="form-group">
-	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Cual es tu nombre y dirección?...¿Todas las cremas?" class="form-control"></textarea>
+	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Cual es tu nombre y dirección?" class="form-control"></textarea>
 					  <div class="alert-message" id="comentarioError"></div>
 				</div>
 				<div class="form-group">
-					<strong>Nuestras Salsas:</strong><br>
-					<button type ="button" class="btn btn-primary" id="idBotonSalsa">Mayonesa, Mostaza, Ketchup...</button>
+					<strong>Nuestras Cremas:</strong><br>
+					<!--<button type ="button" class="btn btn-primary" id="idBotonSalsa">Mayonesa, Mostaza, Ketchup...</button>-->
+					<button type ="button" class="btn btn-primary" id="idBotonElegirSalsa">Elegir sus Cremas</button>
 					<br>
 				</div>
 				<div class="form-group">
 	  				<div class="row">
 						<div class="col-sx-12 col-md-12 col-lg-3" {{$mostrarLocales}} >
-							<select name="nameSelectLocal" id="idSelectLocal" class="form-control">
+							<select name="nameSelectLocal" id="idSelectLocal" class="form-control" style="font-size: calc(0.6em + 0.6vw)">
 								<option value="0">Elegir Tu Local</option>
 								@foreach($aLocal as $local)
 									<option value="{{$local->localId}}" <?php if(count($aLocal)==1){?>selected="selected"<?php } ?>>{{$oEmpresa->empresaNombreComecial}} {{$local->localNombre}}</option>
@@ -181,19 +210,19 @@
 						</div>
 
 	  					<div class="col-sx-12 col-md-12 col-lg-3">
-							<select name="nameSelectDelivery" id="idSelectDelivery" class="form-control">
+							<select name="nameSelectDelivery" id="idSelectDelivery" class="form-control" style="font-size: calc(0.6em + 0.6vw)">
 								<option value="1">Delivery</option>
 								<option value="2">Sin Delivery</option>
 							</select>  
 						</div>
 						<div class="col-sx-12 col-md-12 col-lg-3">
-							<input type="text" id="idTelefonoDelivery" placeholder="Teléfono de Contacto" class="form-control">
+							<input type="text" id="idTelefonoDelivery" placeholder="Teléfono de Contacto" class="form-control" style="font-size: calc(0.6em + 0.6vw)">
 							<div class="alert-message" id="telefonoError"></div>
 						</div>
 						<div class="col-sx-12 col-md-12 col-lg-3">
 							<input type="hidden" id="idHiddenPrecioDelivery" value="">
 							<div id="idDivLocalUbigeo">
-								<select name="nameLocalUbigeo" id="idSelectLocalUbigeo" class="form-control">
+								<select name="nameLocalUbigeo" id="idSelectLocalUbigeo" class="form-control" style="font-size: calc(0.6em + 0.6vw)">
 									<option value="0">Distrito de Entrega</option>
 									@foreach($aLocalUbigeoDelivery as $localUbigeo)
 										<option value="{{$localUbigeo->LUId}}">{{$localUbigeo->ubigeo->ubigeoNombre}} : {{$localUbigeo->LUPrecioDelivery}}</option>
@@ -217,7 +246,7 @@
 							<input type="hidden" name="localHoraApertura" class="form-control required"  id="idLocalHoraApertura" value="{{$local->localHoraApertura}}">
 							<input type="hidden" name="localHoraCierre" class="form-control required"  id="idLocalHoraCierre" value="{{$local->localHoraCierre}}">
 							<input type="hidden" name="localNombre" class="form-control required"  id="idLocalNombre" value="{{$local->localNombre}}">
-							<table class="table table-hover">
+							<table class="table table-hover" style="font-size: calc(0.6em + 0.6vw)">
 								<thead>
 									<tr>
 										<th>Producto</th>
@@ -239,7 +268,7 @@
 										</td>
 										<td>
 											<select id="idSelectCantidad_{{$producto->producto->productoId}}" 
-												idProducto="{{$producto->producto->productoId}}" class="claseSelectCantidad">
+												idProducto="{{$producto->producto->productoId}}" idSublineaId="{{$producto->LLSPSublineaId}}" class="claseSelectCantidad">
 												<option value="0">0</option>
 												<option value="1">1</option>
 												<option value="2">2</option>
@@ -277,10 +306,6 @@
 <script src="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.js"></script>
 <script src="https://comparadordeventas.com/pagolibre/public/js/producto/iniciar.js"></script>
 @endif
-
-<script type="text/javascript">
-
-</script>
 
 </body>
 </html>
