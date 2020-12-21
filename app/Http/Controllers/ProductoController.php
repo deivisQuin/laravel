@@ -98,7 +98,7 @@ class ProductoController extends Controller
             ->orderBy('LLSPPosicion', 'Asc')->get();
 
         //Verificar Si el lcal está atendiendo
-        $horaActual         = strtotime(date("H:i"));
+        $horaActual         = strtotime(date("H:i:s"));
         $localHoraApertura  = strtotime($local->localHoraApertura);
         $localHoraCierre    = strtotime($local->localHoraCierre);
         $indLocalAtendiendo = 0;
