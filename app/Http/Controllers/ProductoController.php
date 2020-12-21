@@ -102,7 +102,7 @@ class ProductoController extends Controller
         $localHoraApertura  = strtotime($local->localHoraApertura);
         $localHoraCierre    = strtotime($local->localHoraCierre);
         $indLocalAtendiendo = 0;
-
+dd($localHoraApertura);
         //Hora de apertura es mayor que la hora del cierre
         if ($localHoraApertura > $localHoraCierre) {  
             if (($horaActual >= $localHoraApertura) && ($horaActual <= strtotime("23:59"))) {
