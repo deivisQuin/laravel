@@ -64,7 +64,7 @@ class ProductoController extends Controller
             }
 
             //Verificar Si el lcal está atendiendo
-            $horaActual         = strtotime(date("H:i"));
+            $horaActual         = strtotime(date("H:i:s"));
             $localHoraApertura  = strtotime($aLocal[0]->localHoraApertura);
             $localHoraCierre    = strtotime($aLocal[0]->localHoraCierre);
             $indLocalAtendiendo = 0;
