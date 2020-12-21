@@ -112,7 +112,7 @@ class ProductoController extends Controller
             }
         } else {
             if (($localHoraApertura <= $horaActual) && ($localHoraCierre >= $horaActual)) {
-                dd($localHoraApertura, $horaActual, $localHoraCierre, "entra");
+                //dd($localHoraApertura, $horaActual, $localHoraCierre, "entra");
                 $indLocalAtendiendo = 1;
             }
         }
