@@ -47,7 +47,6 @@
             </tr>
             <tr>
                 <td><strong style='color:#28a745'>Comentario</strong></td>
-                <!--<td>{{$aTransaccion->orden->ordenComentario}}</td>-->
                 <td><textarea rows="4" cols="30">{{$aTransaccion->orden->ordenComentario}}</textarea></td>
             </tr>
             <tr>
@@ -57,6 +56,8 @@
         </tbody>
         <tfoot>
             <tr>
+                <th><button type="button" class="btn btn-primary claseEntregarPedido" id="idBotonEntregarPedido_{{$aTransaccion->transaccionId}}" >Pedido Entregado</button></th>
+                
             </tr>
         </tfoot>
     </table>

@@ -101,14 +101,11 @@
   </div>
 </div>
 
-<div class="modal fade" id="idDivModalElegirSalsa" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="idDivModalElegirSalsa" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><strong style='color:#28a745'><div id="idModalTitulo">Elegir sus cremas</div></strong></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body" >
 	  	<div class="row">
@@ -118,7 +115,6 @@
       <div class="modal-footer">
 		<div class="container">
 			<div class="row">
-			<!--<div class="col-xs-4"><button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button></div>-->
 			<div class="col-xs-8 "><button type="button" class="btn btn-primary" id="idBotonGrabarSalsa" data-dismiss="modal">Confirmar</button></div>
 			<div class="col-xs-4 ml-auto"></div>
 			</div>
@@ -193,7 +189,6 @@
 				</div>
 				<div class="form-group">
 					<strong>Nuestras Cremas:</strong><br>
-					<!--<button type ="button" class="btn btn-primary" id="idBotonSalsa">Mayonesa, Mostaza, Ketchup...</button>-->
 					<button type ="button" class="btn btn-primary" id="idBotonElegirSalsa">Elegir sus Cremas</button>
 					<br>
 				</div>

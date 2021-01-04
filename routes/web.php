@@ -95,7 +95,7 @@ Route::get("tarjetaNoProcede/{mensajeUsuario}", "TransaccionController@tarjetaNo
 Route::post("empresa/transaccion", "CorreoController@sendMail");
 
 //Se concluye la transacción
-Route::get("gracias", "TransaccionController@gracias");
+Route::get("gracias/{localId}", "TransaccionController@gracias");
 
 
 //Cambiar estado de los pedidos cliente a Recepcionado y Comercio a Entregado

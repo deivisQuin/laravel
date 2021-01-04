@@ -21,6 +21,7 @@ class CreateLocalLineaSublineaProductoTable extends Migration
             $table->bigInteger("LLSPProductoId")->unsigned();
             $table->integer("LLSPPosicion")->nullable();
             $table->decimal("LLSPPrecio", 8, 2);
+            $table->decimal("LLSPPrecioLocal", 8, 2);
             $table->bigInteger("LLSPEstadoId")->unsigned();
             $table->string("LLSPImagen",20);
             $table->foreign('LLSPEstadoId')->references('estadoId')->on('estado')->onDelete('cascade')->onUpdate('cascade');

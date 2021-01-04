@@ -169,7 +169,7 @@ $("#idBotonElegirSalsa").on("click", function(){
         }
     });
 
-    if (cantidadProductoSeleccionado > 1) {
+    if (cantidadProductoSeleccionado >= 1) {
         $("#idDivModalElegirSalsa").modal("show");
     } else {
         mensajeLocalError = "* Antes de elegir las salsas deberá elegir un producto";
@@ -204,8 +204,6 @@ $("#idBotonGrabarSalsa").on("click", function() {
             }
 
             check_identificadorAnterior = check_identificadorNuevo;
-
-            /*productoSalsa += productoNombre + " " + orden + ": " + salsaNombre + "<br>";*/
         }
     })
     $("#idHiddenSalsa").val(productoSalsa);
@@ -779,16 +777,16 @@ function registrarDatos(empresaEmail, localId, monto, descripcionSalsa, clienteE
         url: "transaccion",
         type: "POST",
         data: data,
-        success:function(response){
+        success:function(respuesta){
             $('#modal').modal('hide');
 
             if (document.domain == "localhost") {
-                $(window).attr('location','http://localhost/pagolibre/laravel/public/gracias');
+                $(window).attr('location','http://localhost/pagolibre/laravel/public/gracias/' + localId);
             } else {
-                $(window).attr('location','https://comparadordeventas.com/pagolibre/public/gracias');
+                $(window).attr('location','https://comparadordeventas.com/pagolibre/public/gracias/' + localId);
             }
         },
-        error: function(response) {
+        error: function(respuesta) {
             console.log("error");
         }
     });

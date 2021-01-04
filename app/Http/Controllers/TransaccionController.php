@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Transaccion;
 use App\Empresa;
 use App\UserLocal;
+use App\Local;
+use App\OrdenDetalle;
+use App\LocalLineaSublineaProducto;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Generator;
 
@@ -42,7 +45,7 @@ class TransaccionController extends Controller
             return "Debe ingresar una contraseña";
         }
 
-        if (!isset($transaccionTipo) || ($transaccionTipo >= 3)) {
+        if (!isset($transaccionTipo) || ($transaccionTipo > 3)) {
             return "La transacción no existe";
         }
 
@@ -68,6 +71,8 @@ class TransaccionController extends Controller
             } else {
                 return "No puede Recibir el Producto y/o Servicio mientas que el comercio no lo haya Entregado y registrado en el sistema";    
             }   
+        } elseif ($transaccionTipo == 3) {// transaccionTipo = 3 se cambia de estado a "entregado al cliente" desde el listado de ventas
+            $aTransaccion = Transaccion::where([["transaccionId", "=", $transaccionId],["transaccionComercioEstado", "=", 1]])->first();
         }
 
         if (!isset($aTransaccion->transaccionId)) {
@@ -75,7 +80,7 @@ class TransaccionController extends Controller
         }
 
         // Se modifica el estado 
-        if ($transaccionTipo == 1) {
+        if ($transaccionTipo == 1 || $transaccionTipo == 3) {
             $update = DB::update("update transaccion set transaccionComercioEstado = 2 where transaccionId  = ?", [$transaccionId]);
         } else {
             $update = DB::update("update transaccion set transaccionClienteEstado = 2 where transaccionId  = ?", [$transaccionId]);
@@ -83,6 +88,10 @@ class TransaccionController extends Controller
 
         if ($update == 0) {
             return "No se ha modificado el estado del pedido";
+        }
+
+        if ($transaccionTipo == 3) {
+            return true;
         }
 
         return redirect("gracias/graciasCambioEstado/$transaccionId/$transaccionTipo");
@@ -99,8 +108,12 @@ class TransaccionController extends Controller
         return view("tarjetaNoProcede",compact("mensajeUsuario"));
     }
 
-    public function gracias(){
-        return view("gracias");
+    public function gracias($localId){
+        //Se obtiene el Ruc de la empresa
+        $oLocal = Local::findOrfail($localId);
+        $empresaRuc = $oLocal->empresa->empresaRuc;
+
+        return view("gracias", compact("empresaRuc"));
     }
 /* Se usará el método ventasLocal()
     public function ventasEmpresa(Request $request) {
@@ -157,16 +170,39 @@ class TransaccionController extends Controller
     }
 
     public function registrar(Request $request) {
-        //$empresaRuc     = $request->input("empresaRuc");
         $localId        = $request->input("localId");
         $comercioCorreo = $request->input("empresaEmail");
         $clienteCorreo  = $request->input("clienteEmail");
         $monto          = $request->input("monto");
         $descripcion    = $request->input("descripcion");
+        $ordenId        = $request->input("ordenId");
         
-        //Se obtienen los datos de la empresa
-        //$aEmpresa = Empresa::where([["empresaRuc", "=", $empresaRuc],["empresaEstadoId", "=", "1"]])->first();
-        
+        //Se obtiene el monto a depositar
+        $oOrdenDetalle = OrdenDetalle::where("ODOrdenId", "=", $ordenId)->get();
+
+        $precioLocalTotal   = 0;
+        $precioPublicoTotal = 0;
+
+        foreach($oOrdenDetalle as $ordenDetalle) {
+            $cantidad   = $ordenDetalle->ODCantidad;
+            $productoId = $ordenDetalle->ODProductoId;
+
+            $aLocalLineaSublineaProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $localId)->where("LLSPProductoId", "=", $productoId)->get();
+
+            $precioLocal   = $aLocalLineaSublineaProducto[0]->LLSPPrecioLocal;
+            $precioPublico = $aLocalLineaSublineaProducto[0]->LLSPPrecio;
+
+            $precioLocalProductoCantidad = $precioLocal * $cantidad;
+            $precioLocalTotal           += $precioLocalProductoCantidad;
+
+            $precioPublicoProductoCantidad = $precioPublico * $cantidad;
+            $precioPublicoTotal           += $precioPublicoProductoCantidad;
+        }
+
+
+        $precioDelivery = $monto - $precioPublicoTotal;
+
+        $comercioMontoDepositar = $precioLocalTotal + $precioDelivery;
 
         //Se obtienen datos aleatorios
         $transaccionComercioPassword = rand(1001, 9999);
@@ -210,9 +246,9 @@ class TransaccionController extends Controller
         $transaccion->transaccionPasarelaComisionFija = $request->input("transaccionPasarelaComisionFija")/100;
         $transaccion->transaccionPasarelaComisionFijaIgv = $request->input("transaccionPasarelaComisionFijaIgv")/100;
         $transaccion->transaccionComisionComercio = $request->input("transaccionComisionComercio")/100;
-        $transaccion->transaccionComercioMontoDepositar = $request->input("transaccionComercioMontoDepositar")/100;
+        $transaccion->transaccionComercioMontoDepositar = $comercioMontoDepositar;
         $transaccion->transaccionLocalId = $localId;
-        $transaccion->transaccionOrdenId = $request->input("ordenId");
+        $transaccion->transaccionOrdenId = $ordenId;
 
         $transaccion->save();
 

@@ -18,7 +18,8 @@ class Transaccion extends Model
                             "transaccionPasarelaTarjetaMarca", "transaccionPasarelaTarjetaTipo", "transaccionPasarelaTarjetaCategoria", 
                             "transaccionPasarelaTarjetaNumero", "transaccionPasarelaDispositivoIp", "transaccionPasarelaCodigoAutorizacion", 
                             "transaccionPasarelaCodigoReferencia", "transaccionPasarelaCodigoRespuesta", "transaccionPasarelaComision", 
-                            "transaccionPasarelaIgv", "transaccionPasarelaMontoDepositar", "transaccionEmpresaId", "transaccionLocalId", "transaccionOrdenId"];
+                            "transaccionPasarelaIgv", "transaccionPasarelaMontoDepositar", "transaccionEmpresaId", "transaccionComercioMontoDepositar", 
+                            "transaccionLocalId", "transaccionOrdenId"];
     
     public $timestamps = false;
 

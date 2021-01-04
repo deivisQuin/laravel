@@ -13,14 +13,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><strong style='color:#28a745'>Detalle del Pedido</strong></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close claseActivarIndicadorModal" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" id="idContenidoModal">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-success claseActivarIndicadorModal" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
@@ -36,14 +36,15 @@
 
                 <div class="card-body">
                     <div class="col-sm-12 col-md-12 col-xl-12">
+                        <input type="hidden" id="idIndModalEnUso" value="0">
                         <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
                                     <th>Num Pedido</th>
-                                    <th>Monto Realizado</th>
+                                    <th>Monto a Depositar</th>
                                     <th>Entregado</th>
-                                    <th>Contraseña</th>
+                                    <!--<th>Contraseña</th>-->
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,18 +52,18 @@
                                 <?php 
                                     $colorEstado = ($venta->transaccionEstadoId == 2) ? "red": "green";
                                     $colorComercioEstado = ($venta->transaccionComercioEstado == 1) ? "red": "blue";
-                                    $colorClienteEstado = ($venta->transaccionClienteEstado == 1) ? "red": "blue";
-                                    $montoDepositarAcumulado += $venta->transaccionPasarelaMontoDepositar;
-                                    $comisionAcumulado += $venta->transaccionPasarelaComision;
-                                    $montoSinDelivery = $venta->transaccionMonto - $venta->LUPrecioDelivery;
-                                    $montoAcumulado += $montoSinDelivery;
+                                    //$colorClienteEstado = ($venta->transaccionClienteEstado == 1) ? "red": "blue";
+                                    //$montoDepositarAcumulado += $venta->transaccionPasarelaMontoDepositar;
+                                    //$comisionAcumulado += $venta->transaccionPasarelaComision;
+                                    $montoAcumulado += $venta->transaccionComercioMontoDepositar;
+
                                 ?>
                                 <tr class="claseTr" id="{{$venta->transaccionId}}">
                                     <td>{{$venta->transaccionFechaCrea}}</td>
                                     <td>{{str_pad($venta->transaccionId, 4, "0", STR_PAD_LEFT)}}</td>
-                                    <td align="right">{{number_format($montoSinDelivery, 2, ".", "")}}</td>
+                                    <td align="right">{{number_format($venta->transaccionComercioMontoDepositar, 2, ".", "")}}</td>
                                     <td><span style="color:<?php echo $colorComercioEstado;?>"><strong>{{($venta->transaccionComercioEstado == 1) ? "PENDIENTE" : "OK" }}</strong></span></td>
-                                    <td>{{$venta->transaccionComercioPassword}}</td>
+                                    <!--<td>{{$venta->transaccionComercioPassword}}</td>-->
                                 </tr>
                                 @endforeach
                             </tbody>
