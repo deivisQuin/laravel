@@ -225,7 +225,7 @@ class TransaccionController extends Controller
         $transaccion->transaccionDescripcion = $descripcion;
         $transaccion->transaccionEstadoId = "1";
         $transaccion->transaccionUsuarioCrea = "1";
-        $transaccion->transaccionFechaCrea = date("Y-m-d H:m:s");
+        $transaccion->transaccionFechaCrea = date("Y-m-d H:i:s");
         $transaccion->transaccionPasarelaPedidoId = $request->input("transaccionPasarelaPedidoId");
         $transaccion->transaccionPasarelaToken = $request->input("transaccionPasarelaToken");
         $transaccion->transaccionPasarelaMonedaCodigo = $request->input("transaccionPasarelaMonedaCodigo");

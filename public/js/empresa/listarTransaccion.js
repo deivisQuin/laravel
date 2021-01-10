@@ -1,19 +1,20 @@
 $(document).ready(function() {
-	var time = new Date().getTime();
+	/*var time = new Date().getTime();
 	$(document.body).bind("mousemove keypress", function(e) {
 			time = new Date().getTime();
-	});
+	});*/
 
 	//método que actualiza la página
 	function refresh() {
 		if ($("#idIndModalEnUso").val() == 0) {
-			if(new Date().getTime() - time >= 180000) 
+			/*if(new Date().getTime() - time >= 180000) 
 				window.location.reload(true);
 			else 
-				setTimeout(refresh, 300000);
+				setTimeout(refresh, 300000);*/
+			window.location.reload(true);
+		} else {
+			setTimeout(refresh, 300000);
 		}
-
-		setTimeout(refresh, 300000);
 	}
 
 	//cada 5 minutos llama al método refresh para actualizar la página
@@ -59,7 +60,7 @@ $(document).ready(function() {
 				type:"POST",
 				dataType: "json",
 				url: "nuevoEstado",
-				success: function(respuesta) {
+				success: function(respuesta) {console.log("se ejecuta");
 					window.location.reload(true);
 				}
 			})

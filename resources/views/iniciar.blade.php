@@ -207,7 +207,7 @@
 	  					<div class="col-sx-12 col-md-12 col-lg-3">
 							<select name="nameSelectDelivery" id="idSelectDelivery" class="form-control" style="font-size: calc(0.6em + 0.6vw)">
 								<option value="1">Delivery</option>
-								<option value="2">Sin Delivery</option>
+								<option value="2">Recojo en Local</option>
 							</select>  
 						</div>
 						<div class="col-sx-12 col-md-12 col-lg-3">

@@ -72,6 +72,7 @@ function limpiar() {
     $("#localError").hide();
     $("#distritoError").val("");
     $("#distritoError").hide();
+    $("#idCuerpoModalElegirSalsa").html("");
 }
 
 function limpiarMensajesError() {
@@ -619,7 +620,7 @@ function registrarOrden(aProducto, data){
         url: "registrarOrden",
         success:function(respuesta){
             ordenId = respuesta.mensaje;
-            /*
+/*
             // Inicio de realizar pruebas 
             clienteEmail = "jgalarza123456789@gmail.com";//Este dato lo obtengo desde el modal de culqui desde: culqi.email
             transaccionPasarelaPedidoId = "chr_test_Q0vyMmLw8yGyUl7v";
@@ -648,7 +649,7 @@ function registrarOrden(aProducto, data){
                 transaccionPasarelaComision, transaccionPasarelaIgv, transaccionPasarelaMontoDepositar, ordenId);
             
             //Fin de realizar pruebas
-            */
+*/            
 
             //Inicio de envío de datos sin hacer pruebas
             if(typeof data.outcome !== "undefined"){tipoVenta = data.outcome.type;}else{tipoVenta = data.type};
