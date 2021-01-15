@@ -212,11 +212,14 @@ $("#idBotonGrabarSalsa").on("click", function() {
 })
 
 $(document).on("click", ".claseTdProducto",function(){
-    let productoNombre = $(this).attr("trProductoNombre");
-    let productoImagen = $(this).attr("trProductoImagen");
-    let empresaRuc     = $("#empresaRucId").val();
+    let productoNombre      = $(this).attr("trProductoNombre");
+    let productoObservacion = $(this).attr("trProductoObservacion");
+    let productoImagen      = $(this).attr("trProductoImagen");
+    let empresaRuc          = $("#empresaRucId").val();
 
     $("#idModalTitulo").text(productoNombre);
+
+    $("#idSpanProductoObservacion").text(productoObservacion);
 
     var image = new Image();
     var src   = "";

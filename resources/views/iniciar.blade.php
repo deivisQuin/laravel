@@ -30,7 +30,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" >
+      <div class="modal-body">
+	  	<div class="row">
+		  <div class="col-md-12" >
+	  		<strong><span id="idSpanProductoObservacion"></span></strong>
+		  </div>
+		</div><br>
 	  	<div class="row">
 		  <div class="col-md-12" id="idContenidoModal"></div>
 		</div>
@@ -181,7 +186,7 @@
 				<input type="hidden" id="idHiddenToken" name="_token" value="{{ csrf_token() }}">
 				<br>
 				<div class="form-group">
-		            <h4 style='color:#28a745'><strong>Empresa: {{$oEmpresa->empresaNombreComecial}}</strong></h4>
+		            <h4 style='color:#28a745'><strong>{{$oEmpresa->empresaNombreComecial}}</strong></h4>
 		        </div>
 				<div class="form-group">
 	  				<textarea name="nameComentario" id="idComentario" cols="30" rows="2" placeholder="¿Cual es tu nombre y dirección?" class="form-control"></textarea>
@@ -253,11 +258,13 @@
 								<tbody>
 								@foreach($aProducto as $producto)
 									<tr>
-										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}">
+										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
+											trProductoObservacion= "{{$producto->producto->productoObservacion}}">
 										<span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
 										<input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
 										</td>
-										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}">
+										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
+											trProductoObservacion= "{{$producto->producto->productoObservacion}}">
 											<span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->LLSPPrecio}}</span>
 											<input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
 										</td>
@@ -271,8 +278,9 @@
 												<option value="4">4</option>
 											</select>
 										</td>
-										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}"
-										align="right"><strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
+										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
+											trProductoObservacion= "{{$producto->producto->productoObservacion}}" align="right">
+											<strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
 											<input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
 										</td>
 									</tr>
