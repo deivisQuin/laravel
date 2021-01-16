@@ -17,10 +17,10 @@ class SalsaController extends Controller
     }
 
     public function listar() {
-        $usersRolId = Auth::user()->usersRolId;
-
+        $usersId = Auth::user()->id;
+//dd(Auth::user());
         if (Auth::user()->rol->rolNombreCorto == "VENT") {
-            $aUserLocal = UserLocal::where("ULUsersId", "=", $usersRolId)->get();
+            $aUserLocal = UserLocal::where("ULUsersId", "=", $usersId)->get();
 
             $aSalsa = Salsa::where("salsaLocalId", "=", $aUserLocal[0]->ULLocalId)->get();
 

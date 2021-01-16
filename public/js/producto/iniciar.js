@@ -212,14 +212,14 @@ $("#idBotonGrabarSalsa").on("click", function() {
 })
 
 $(document).on("click", ".claseTdProducto",function(){
-    let productoNombre      = $(this).attr("trProductoNombre");
-    let productoObservacion = $(this).attr("trProductoObservacion");
-    let productoImagen      = $(this).attr("trProductoImagen");
-    let empresaRuc          = $("#empresaRucId").val();
+    let productoNombre        = $(this).attr("trProductoNombre");
+    let productoNombreExtenso = $(this).attr("trProductoNombreExtenso");
+    let productoImagen        = $(this).attr("trProductoImagen");
+    let empresaRuc            = $("#empresaRucId").val();
 
     $("#idModalTitulo").text(productoNombre);
 
-    $("#idSpanProductoObservacion").text(productoObservacion);
+    $("#idSpanProductoNombreExtenso").text(productoNombreExtenso);
 
     var image = new Image();
     var src   = "";
@@ -440,15 +440,17 @@ $(".claseBotonEnviar").on("click", function(event){
     _token = $("#idHiddenToken").val();
     comentario = $("#idComentario").val();
     indLocalAtendiendo = $("#idIndLocalAtendiendo").val();
+    indLocalDeliveryHabilitado = $("#idIndLocalDeliveryHabilitado").val();
 
+    //Si el local está fuera del horario de atención se muesta modal
     if (indLocalAtendiendo === "0") {
         let localHoraApertura = $("#idLocalHoraApertura").val();
         let localHoraCierre = $("#idLocalHoraCierre").val();
         let localNombre = $("#idLocalNombre").val();
 
-        let tituloMensajeLocalSinAtencion = "<strong style='color:#28a745'><p>Local " + localNombre + " Anuncia lo siguiente:</p></strong>";
+        let tituloMensajeLocalSinAtencion = "<strong style='color:#28a745'><p>Nuestro Local de " + localNombre + " Anuncia lo siguiente:</p></strong>";
 
-        let mensajeLocalSinAtencion = "<strong><p>Lo sentimos pero en estos momentos el local " + localNombre + 
+        let mensajeLocalSinAtencion = "<strong><p>Lo sentimos pero en estos momentos nuestro local de " + localNombre + 
             " está fuera de su horario de atención. El horario de atencion de este local es de: " + localHoraApertura.substring(0, 5) + " a: " + localHoraCierre.substring(0, 5) +
             ". Esperamos pronto volver a atenderlo</p></strong>";
 
@@ -456,6 +458,21 @@ $(".claseBotonEnviar").on("click", function(event){
         $("#idDivMensajeLocalSinAtencion").html(mensajeLocalSinAtencion);
 
         $("#idDivModalLocalSinAtencion").modal("show");
+        return false;
+    }
+
+    //Si el local no tiene  habilitado realizar delivery se muestra el modal de anuncio 
+    if ((indLocalDeliveryHabilitado === "0") && (delivery === "1")) {
+        let localNombre = $("#idLocalNombre").val();
+
+        let tituloMensajeLocalSinDeliveryHabilitado = "<strong style='color:#28a745'><p>Nuestro Local de " + localNombre + " Anuncia lo siguiente:</p></strong>";
+        let mensajeLocalSinDeliveryHabilitado       = "<strong><p>Lo sentimos pero en estos momentos nuestro local de " + localNombre + 
+            " no está realizando delivery. Solo tiene habilitado la opción de Recojo en Local </p></strong>";
+
+        $("#idDivTituloLocalSinDeliveryHabilitado").html(tituloMensajeLocalSinDeliveryHabilitado);
+        $("#idDivMensajeLocalSinDeliveryHabilitado").html(mensajeLocalSinDeliveryHabilitado);
+
+        $("#idDivModalLocalSinDeliveryHabilitado").modal("show");
         return false;
     }
     

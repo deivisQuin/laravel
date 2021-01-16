@@ -2,6 +2,7 @@
 <input type="hidden" name="localHoraApertura" class="form-control required"  id="idLocalHoraApertura" value="{{$local->localHoraApertura}}">
 <input type="hidden" name="localHoraCierre" class="form-control required"  id="idLocalHoraCierre" value="{{$local->localHoraCierre}}">
 <input type="hidden" name="localNombre" class="form-control required"  id="idLocalNombre" value="{{$local->localNombre}}">
+<input type="hidden" name="indLocalDeliveryHabilitado" class="form-control required"  id="idIndLocalDeliveryHabilitado" value="{{$indLocalDeliveryHabilitado}}">
 <table class="table table-hover" style="font-size: calc(0.6em + 0.6vw)">
     <thead>
         <tr>
@@ -15,12 +16,12 @@
     @foreach($aProducto as $producto)
         <tr>
             <td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-                trProductoObservacion= "{{$producto->producto->productoObservacion}}">
+                trProductoNombreExtenso= "{{$producto->producto->productoNombreExtenso}}">
             <span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
             <input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
             </td>
             <td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-                trProductoObservacion= "{{$producto->producto->productoObservacion}}">
+                trProductoNombreExtenso= "{{$producto->producto->productoNombreExtenso}}">
                 <span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->LLSPPrecio}}</span>
                 <input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
             </td>
@@ -35,7 +36,7 @@
                 </select>
             </td>
             <td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}"
-                trProductoObservacion= "{{$producto->producto->productoObservacion}}" align="right">
+                trProductoNombreExtenso="{{$producto->producto->productoNombreExtenso}}" align="right">
                 <strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
                 <input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
             </td>

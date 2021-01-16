@@ -63,7 +63,11 @@ class ProductoController extends Controller
                 $mostrarLocales = "style=display:none";
             }
 
-            //Verificar Si el lcal está atendiendo
+            //Se verifica si el local 1 tiene habilitado realizar delivery
+            $localDeliveryHabilitado    = $aLocal[0]->localDeliveryHabilitado;
+            $indLocalDeliveryHabilitado = ($localDeliveryHabilitado == "SI") ? 1 : 0;
+
+            //Verificar Si el local 1 está atendiendo
             $horaActual         = strtotime(date("H:i:s"));
             $localHoraApertura  = strtotime($aLocal[0]->localHoraApertura);
             $localHoraCierre    = strtotime($aLocal[0]->localHoraCierre);
@@ -82,7 +86,7 @@ class ProductoController extends Controller
                 }
             }
 
-            return view("iniciar", compact(["oEmpresa", "aProducto", "aLocalUbigeoDelivery", "aLocal", "mostrarLocales", "indLocalAtendiendo"]));
+            return view("iniciar", compact(["oEmpresa", "aProducto", "aLocalUbigeoDelivery", "aLocal", "mostrarLocales", "indLocalAtendiendo", "indLocalDeliveryHabilitado"]));
         } else {
             return view("empresaNoRegistrada");
         }
@@ -96,6 +100,10 @@ class ProductoController extends Controller
         $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $localId)
             ->where("LLSPEstadoId", "=", 1)
             ->orderBy('LLSPPosicion', 'Asc')->get();
+
+        //Se verifica si el local 1 tiene habilitado realizar delivery
+        $localDeliveryHabilitado    = $local->localDeliveryHabilitado;
+        $indLocalDeliveryHabilitado = ($localDeliveryHabilitado == "SI") ? 1 : 0;
 
         //Verificar Si el lcal está atendiendo
         $horaActual         = strtotime(date("H:i:s"));
@@ -116,7 +124,7 @@ class ProductoController extends Controller
             }
         }
             
-        return response()->json(view("producto.productoLocalPartial", compact("aProducto", "local", "indLocalAtendiendo"))->render());
+        return response()->json(view("producto.productoLocalPartial", compact("aProducto", "local", "indLocalAtendiendo", "indLocalDeliveryHabilitado"))->render());
     }
 
     public function validarFormularioCarrito(Request $request){

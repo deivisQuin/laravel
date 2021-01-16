@@ -10,8 +10,8 @@ class Local extends Model
     protected $primaryKey = "localId";
             
     protected $fillable = ["localEmpresaId", "localNombre", "localEmail", "localHoraApertura", "localHoraCierre", "localEstadoId", 
-                            "localTelefono", "localDireccion", "localRepresentante", "localUbigeoId", "localUsuarioCrea", 
-                            "localFechaCrea", "localUsuarioModifica", "localFechaModifica"];
+                            "localTelefono", "localDireccion", "localRepresentante", "localUbigeoId", "localDeliveryHabilitado", 
+                            "localUsuarioCrea", "localFechaCrea", "localUsuarioModifica", "localFechaModifica"];
     
     public function estado(){
         return $this->hasOne(Estado::class, "estadoId", "localEstadoId");

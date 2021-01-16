@@ -25,6 +25,7 @@ class CreateLocalTable extends Migration
             $table->string("localDireccion",100)->nullable();
             $table->string("localRepresentante",50)->nullable();
             $table->bigInteger("localUbigeoId")->unsigned();
+            $table->char("localDeliveryHabilitado",2);
             $table->bigInteger("localUsuarioCrea");
             $table->datetime("localFechaCrea");
             $table->bigInteger("localUsuarioModifica")->nullable();

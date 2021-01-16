@@ -8,8 +8,9 @@ class Producto extends Model
 {
     protected $table = "producto";
     protected $primaryKey = "productoId";
-    protected $fillable = ["productoNombre", "productoNombreCorto", "productoObservacion", "productoUnidadMedidaId", "productoSublineaId", 
-                            "productoPrecio", "productoEstadoId", "productoUsuarioCrea", "productoFechaCrea", "productoUsuarioModifica", "productoFechaModifica"];
+    protected $fillable = ["productoNombre", "productoNombreCorto", "productoNombreExtenso", "productoObservacion", "productoUnidadMedidaId", 
+                            "productoSublineaId", "productoPrecio", "productoEstadoId", "productoUsuarioCrea", "productoFechaCrea", 
+                            "productoUsuarioModifica", "productoFechaModifica"];
     public $timestamps = false;
 
     public function sublinea() {

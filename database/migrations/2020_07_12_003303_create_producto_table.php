@@ -17,6 +17,7 @@ class CreateProductoTable extends Migration
             $table->bigIncrements("productoId");
             $table->string("productoNombre",30);
             $table->string("productoNombreCorto",10);
+            $table->string("productoNombreExtenso",100);
             $table->string("productoObservacion",50)->nullable();
             $table->bigInteger("productoUnidadMedidaId")->unsigned();
             $table->bigInteger("productoSublineaId")->unsigned();

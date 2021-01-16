@@ -33,7 +33,7 @@
       <div class="modal-body">
 	  	<div class="row">
 		  <div class="col-md-12" >
-	  		<strong><span id="idSpanProductoObservacion"></span></strong>
+	  		<strong><span id="idSpanProductoNombreExtenso"></span></strong>
 		  </div>
 		</div><br>
 	  	<div class="row">
@@ -78,6 +78,7 @@
   </div>
 </div>
 
+<!-- Modal que muestra mensaje que el local está fuera del horario de atención -->
 <div class="modal fade" id="idDivModalLocalSinAtencion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -91,7 +92,36 @@
 	  	<div class="row">
 		  <div class="col-md-12" id="idCuerpoModalLocalSinAtenciion">
 	  			<div id="idDivMensajeLocalSinAtencion"></div>
-		  		<strong>Si tuviera alguna consulta por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387 </strong></div>
+		  		<strong style='color:#28a745'>Si tuviera alguna consulta por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387 </strong></div>
+		</div>
+      </div>
+      <div class="modal-footer">
+		<div class="container">
+			<div class="row">
+			<div class="col-xs-4"><button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button></div>
+			<div class="col-xs-8 ml-auto"></div>
+			</div>
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal que muestra mensaje que el local no tiene habilitado realizar delivery -->
+<div class="modal fade" id="idDivModalLocalSinDeliveryHabilitado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+		<div id="idDivTituloLocalSinDeliveryHabilitado"></div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+	  	<div class="row">
+		  <div class="col-md-12" id="idCuerpoModalLocalSinDeliveryHabilitado">
+	  			<div id="idDivMensajeLocalSinDeliveryHabilitado"></div>
+		  		<strong style='color:#28a745'>Si tuviera alguna consulta por favor comuníquese con nosotros al área de Soporte-Pagolibre al 993083387 </strong></div>
 		</div>
       </div>
       <div class="modal-footer">
@@ -246,6 +276,7 @@
 							<input type="hidden" name="localHoraApertura" class="form-control required"  id="idLocalHoraApertura" value="{{$local->localHoraApertura}}">
 							<input type="hidden" name="localHoraCierre" class="form-control required"  id="idLocalHoraCierre" value="{{$local->localHoraCierre}}">
 							<input type="hidden" name="localNombre" class="form-control required"  id="idLocalNombre" value="{{$local->localNombre}}">
+							<input type="hidden" name="indLocalDeliveryHabilitado" class="form-control required"  id="idIndLocalDeliveryHabilitado" value="{{$indLocalDeliveryHabilitado}}">
 							<table class="table table-hover" style="font-size: calc(0.6em + 0.6vw)">
 								<thead>
 									<tr>
@@ -259,12 +290,12 @@
 								@foreach($aProducto as $producto)
 									<tr>
 										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-											trProductoObservacion= "{{$producto->producto->productoObservacion}}">
+											trProductoNombreExtenso="{{$producto->producto->productoNombreExtenso}}">
 										<span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
 										<input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
 										</td>
 										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-											trProductoObservacion= "{{$producto->producto->productoObservacion}}">
+											trProductoNombreExtenso="{{$producto->producto->productoNombreExtenso}}">
 											<span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->LLSPPrecio}}</span>
 											<input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
 										</td>
@@ -279,7 +310,7 @@
 											</select>
 										</td>
 										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-											trProductoObservacion= "{{$producto->producto->productoObservacion}}" align="right">
+											trProductoNombreExtenso="{{$producto->producto->productoNombreExtenso}}" align="right">
 											<strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
 											<input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
 										</td>
