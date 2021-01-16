@@ -123,13 +123,21 @@
                     $("#idHiddenDescripcion").val(texto);
 
                     if (idSublineaId == 1) {
+                        //Se obtiene la cantidad anterior del mismo producto en el modal ya registrado
+                        //Recorremos la clase table_IdProducto del modal idDivModalElegirSalsa
+                        let numElementosEncontrados = 0;
+
+                        $(".table_" + idProducto + "").each(function(){
+                            numElementosEncontrados++;
+                        });
+
                         var datos = {};
 
                         $.ajax({
                             data: datos,
                             type: "GET",
                             dataType: "json",
-                            url:"listarProductoSalsa/" + idProducto + "/" + cantidad + "/" + localId,
+                            url:"listarProductoSalsa/" + idProducto + "/" + cantidad + "/" + localId + "/" + numElementosEncontrados,
                             success:function(respuesta){
                                 $("#idCuerpoModalElegirSalsa").append(respuesta);
 
