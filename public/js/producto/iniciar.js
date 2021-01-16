@@ -319,13 +319,21 @@ $(".claseSelectCantidad").on("change", function(){
                 $("#idHiddenDescripcion").val(texto);
 
                 if (idSublineaId == 1) {
+                    //Se obtiene la cantidad anterior del mismo producto en el modal ya registrado
+                    //Recorremos la clase table_IdProducto del modal idDivModalElegirSalsa
+                    let numElementosEncontrados = 0;
+
+                    $(".table_" + idProducto + "").each(function(){
+                        numElementosEncontrados++;
+                    });
+
                     var datos = {};
 
                     $.ajax({
                         data: datos,
                         type: "GET",
                         dataType: "json",
-                        url:"listarProductoSalsa/" + idProducto + "/" + cantidad + "/" + localId,
+                        url:"listarProductoSalsa/" + idProducto + "/" + cantidad + "/" + localId + "/" + numElementosEncontrados,
                         success:function(respuesta){
                             $("#idCuerpoModalElegirSalsa").append(respuesta);
 
@@ -335,7 +343,6 @@ $(".claseSelectCantidad").on("change", function(){
                         }
                     });
                 }
-
             }
         });
         
@@ -467,7 +474,7 @@ $(".claseBotonEnviar").on("click", function(event){
 
         let tituloMensajeLocalSinDeliveryHabilitado = "<strong style='color:#28a745'><p>Nuestro Local de " + localNombre + " Anuncia lo siguiente:</p></strong>";
         let mensajeLocalSinDeliveryHabilitado       = "<strong><p>Lo sentimos pero en estos momentos nuestro local de " + localNombre + 
-            " no está realizando delivery. Solo tiene habilitado la opción de Recojo en Local </p></strong>";
+            " no está realizando delivery.<br><br> Si usted desea realizar un pedido seleccione la opción de 'Recojo en Local' </p></strong>";
 
         $("#idDivTituloLocalSinDeliveryHabilitado").html(tituloMensajeLocalSinDeliveryHabilitado);
         $("#idDivMensajeLocalSinDeliveryHabilitado").html(mensajeLocalSinDeliveryHabilitado);

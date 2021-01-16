@@ -1,7 +1,7 @@
 @foreach($aProducto as $producto)
     <?php $imagen = $producto['productoImagen'];?>
-    @for($j = 1; $j <= $producto['productoCantidad']; $j++)
-        <table id="{{$producto['productoId']}}_{{$j}}" class="table table-hover" style="font-size: calc(0.5em + 0.5vw)">
+    @for($j = ($numElementosEncontrados + 1); $j <= $producto['productoCantidad']; $j++)
+        <table id="{{$producto['productoId']}}_{{$j}}" class="table table-hover table_{{$producto['productoId']}}" style="font-size: calc(0.5em + 0.5vw)">
             <thead>
                 <tr>
                     <th>Cant.</th>

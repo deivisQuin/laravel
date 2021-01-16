@@ -334,11 +334,11 @@
 @if ($_SERVER['SERVER_NAME'] == "localhost")
     <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
     <script src="{{url('estilo/bootstrap4/bootstrap.min.js')}}"></script>
-	<script src="{{url('js/producto/iniciar.js?version=1')}}"></script>
+	<script src="{{url('js/producto/iniciar.js?version=2')}}"></script>
 @else
 <script src="https://comparadordeventas.com/pagolibre/public/js/jquery/jquery-3.0.0.min.js"></script>
 <script src="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.js"></script>
-<script src="https://comparadordeventas.com/pagolibre/public/js/producto/iniciar.js?version=1"></script>
+<script src="https://comparadordeventas.com/pagolibre/public/js/producto/iniciar.js?version=2"></script>
 @endif
 
 </body>

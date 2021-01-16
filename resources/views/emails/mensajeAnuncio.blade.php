@@ -19,10 +19,10 @@
 		</tr>
 		@if($oOrden->ordenDelivery == "S")
 			<tr>
-				<td>Local de Despacho : <strong>{{$oLocalUbigeoDelivery->local->localNombre}}</strong></td>
+				<td><strong>El cliente realizó un pedido por Delivery</strong></td>
 			</tr>
 			<tr>
-				<td>El pedido es para Delivery.</td>
+				<td>Local de Despacho : <strong>{{$oLocalUbigeoDelivery->local->localNombre}}</strong></td>
 			</tr>
 			<tr>
 				<td>Distrito de Entrega : <strong>{{$oLocalUbigeoDelivery->ubigeo->ubigeoNombre}}</strong></td>
@@ -35,10 +35,7 @@
 			</tr>
 		@else 
 			<tr>
-				<td><strong>El cliente recogerá su pedido en el local</strong></td>
-			</tr>
-			<tr>
-				<td>Local de Despacho : <strong>{{$localNombre}}</strong></td>
+				<td><strong>El cliente recogerá su pedido en el local de {{$localNombre}}</strong></td>
 			</tr>
 			<tr>
 				<td><h1></h1><br></td>

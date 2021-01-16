@@ -147,7 +147,7 @@ class ProductoController extends Controller
         return response()->json(["success" => false, "mensajeError"=>false]);
     }
 
-    public function listarProductoSalsa($productoId, $productoCantidad, $localId) {
+    public function listarProductoSalsa($productoId, $productoCantidad, $localId, $numElementosEncontrados) {
         //Se obtiene la empresa
         $aLocal = Local::findOrFail($localId);
 
@@ -169,6 +169,6 @@ class ProductoController extends Controller
             $i++;
         }
         
-        return response()->json(view("producto.productoSalsa", compact("aProducto", "empresaRuc", "aSalsa"))->render());
+        return response()->json(view("producto.productoSalsa", compact("aProducto", "empresaRuc", "aSalsa", "numElementosEncontrados"))->render());
     }
 }
