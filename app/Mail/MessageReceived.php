@@ -58,8 +58,8 @@ class MessageReceived extends Mailable
     public function build()
     {
         if ($this->enviarCorreoTipo === "1") {
-            $this->view('emails.mensajeAnuncio')->subject("Pago Libre - Informe del Pedido");
-            //$this->view('emails.mensajeAnuncio')->subject("Pago Libre (Testing) - Informe del Pedido");
+            //$this->view('emails.mensajeAnuncio')->subject("Pago Libre - Informe del Pedido");
+            $this->view('emails.mensajeAnuncio')->subject("Pago Libre (Testing) - Informe del Pedido");
         }
         if ($this->enviarCorreoTipo === "2") {
             $this->view('emails.mensajeConfirmacion')->subject("Pago Libre - Confirmar Entrega del Pedido");
