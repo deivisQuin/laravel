@@ -55,7 +55,7 @@ class ProductoController extends Controller
             $aProducto = LocalLineaSublineaProducto::where("LLSPLocalId", "=", $aLocal[0]->localId)->where("LLSPEstadoId", "=", 1)->orderBy('LLSPPosicion', 'Asc')->get();
             
             //Se obtiene los lugares de delivery de la empresa
-            $aLocalUbigeoDelivery = LocalUbigeoDelivery::where("LULocalId", "=", $aLocal[0]->localId)->get();
+            $aLocalUbigeoDelivery = LocalUbigeoDelivery::where("LULocalId", "=", $aLocal[0]->localId)->where("LUEstadoId", "=", 1)->get();
 
             $mostrarLocales = "";
 
