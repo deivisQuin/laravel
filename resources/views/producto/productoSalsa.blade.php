@@ -22,8 +22,13 @@
                     <strong>{{$producto['productoNombre']}}</strong>
                     </td>
                     <td>
+                        <input type="checkbox" class="checkElegirSalsa" id="{{$producto['productoId']}}_{{$j}}_0" name="Sin_Cremas" 
+                                check_productoNombre="{{$producto['productoNombre']}}" check_productoId="{{$producto['productoId']}}" check_salsaNombre="Sin Cremas" 
+                                check_orden="{{$j}}" value="Bike" checked>
+                            <label for="salsa" style="color:blue"><strong>Sin Cremas</strong></label><br>
+
                         @foreach($aSalsa as $salsa)
-                            <input type="checkbox" class="checkElegirSalsa" id="{{$producto['productoId']}}_{{$j}}_{{$salsa['salsaId']}}" name="{{$salsa['salsaNombre']}}" 
+                            <input type="checkbox" class="checkElegirSalsa claseCheck_{{$producto['productoId']}}_{{$j}}" id="{{$producto['productoId']}}_{{$j}}_{{$salsa['salsaId']}}" name="{{$salsa['salsaNombre']}}" 
                                 check_productoNombre="{{$producto['productoNombre']}}" check_productoId="{{$producto['productoId']}}" check_salsaNombre="{{$salsa['salsaNombre']}}" 
                                 check_orden="{{$j}}" value="Bike">
                             <label for="salsa"><strong>{{$salsa['salsaNombre']}}</strong></label><br>
@@ -34,3 +39,9 @@
         </table>
     @endfor
 @endforeach
+
+@if ($_SERVER['SERVER_NAME'] == "localhost")
+	<script src="{{url('js/producto/productoSalsa.js?version=1')}}"></script>
+@else
+    <script src="https://comparadordeventas.com/pagolibre/public/js/producto/productoSalsa.js?version=1"></script>
+@endif

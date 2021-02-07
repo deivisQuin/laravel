@@ -51,14 +51,16 @@
             </tr>
             <tr>
                 <td><strong style='color:#28a745'>Monto a Recibir</strong></td>
-                <td align="right">{{$aTransaccion->transaccionComercioMontoDepositar}}</td>
+                <td align="right"><strong>{{$aTransaccion->transaccionComercioMontoDepositar}}</strong></td>
             </tr>
         </tbody>
         <tfoot>
+            <?php if ($aTransaccion->transaccionComercioEstado == 1) { ?>
             <tr>
                 <th><button type="button" class="btn btn-primary claseEntregarPedido" id="idBotonEntregarPedido_{{$aTransaccion->transaccionId}}" >Pedido Entregado</button></th>
                 
             </tr>
+            <?php } ?>
         </tfoot>
     </table>
 @endif

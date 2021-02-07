@@ -146,6 +146,7 @@ $("#idBotonSalsa").on("click", function() {
     })
 })
 
+//Se muestra las salsas elegidas por cada producto
 $("#idBotonElegirSalsa").on("click", function(){
     let cantidadProductoSeleccionado = 0;
     let i = 0;
@@ -180,14 +181,15 @@ $("#idBotonElegirSalsa").on("click", function(){
     }
 })
 
+//Se agregan las salsas en idHiddenDescripcion
 $("#idBotonGrabarSalsa").on("click", function() {
     let productoSalsa = "";
     let check_identificadorAnterior = "";
 
     $(".checkElegirSalsa").each(function() {
         let salsaElegidaId = this.id;
+
         if ($("#" + salsaElegidaId + "").is(':checked')) {
-    
             let salsaNombre    = $("#" + salsaElegidaId + "").attr("check_salsaNombre");
             let productoNombre = $("#" + salsaElegidaId + "").attr("check_productoNombre");
             let productoId     = $("#" + salsaElegidaId + "").attr("check_productoId");
@@ -474,7 +476,7 @@ $(".claseBotonEnviar").on("click", function(event){
 
         let tituloMensajeLocalSinDeliveryHabilitado = "<strong style='color:#28a745'><p>Nuestro Local de " + localNombre + " Anuncia lo siguiente:</p></strong>";
         let mensajeLocalSinDeliveryHabilitado       = "<strong><p>Lo sentimos pero en estos momentos nuestro local de " + localNombre + 
-            " no está realizando delivery.<br><br> Si usted desea realizar un pedido seleccione la opción de 'Recojo en Local' </p></strong>";
+            " no está realizando entregas por delivery.<br><br> Si usted desea realizar un pedido de nuestro local de " + localNombre + " cambie la opción de: 'Delivery' por: 'Recojo en Local' </p></strong>";
 
         $("#idDivTituloLocalSinDeliveryHabilitado").html(tituloMensajeLocalSinDeliveryHabilitado);
         $("#idDivMensajeLocalSinDeliveryHabilitado").html(mensajeLocalSinDeliveryHabilitado);

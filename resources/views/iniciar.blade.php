@@ -307,6 +307,8 @@
 												<option value="2">2</option>
 												<option value="3">3</option>
 												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
 											</select>
 										</td>
 										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
@@ -334,11 +336,11 @@
 @if ($_SERVER['SERVER_NAME'] == "localhost")
     <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
     <script src="{{url('estilo/bootstrap4/bootstrap.min.js')}}"></script>
-	<script src="{{url('js/producto/iniciar.js?version=2')}}"></script>
+	<script src="{{url('js/producto/iniciar.js?version=4')}}"></script>
 @else
 <script src="https://comparadordeventas.com/pagolibre/public/js/jquery/jquery-3.0.0.min.js"></script>
 <script src="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.js"></script>
-<script src="https://comparadordeventas.com/pagolibre/public/js/producto/iniciar.js?version=2"></script>
+<script src="https://comparadordeventas.com/pagolibre/public/js/producto/iniciar.js?version=4"></script>
 @endif
 
 </body>

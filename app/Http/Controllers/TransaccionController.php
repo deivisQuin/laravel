@@ -63,7 +63,7 @@ class TransaccionController extends Controller
             $aTransaccion = Transaccion::where([["transaccionId", "=", $transaccionId],["transaccionComercioPasswordLink", "=", $transaccionCienteComercioPasswordLink], ["transaccionComercioPassword", "=", $password]])->first();
         } elseif ($transaccionTipo == 2) {
             //Se verifica que e comercio haya entregado el producto y/o servicio
-            $aTransaccionComercio = Transaccion::where([["transaccionId", "=", $transaccionId],["transaccionComercioEstado", "=", 2]])->first();
+            $aTransaccionComercio = Transaccion::where([["transaccionId", "=", $transaccionId],["transaccionComercioEstado", "=", 5]])->first();
 
             if ($aTransaccionComercio) {
                 //Se actualiza el estado del cliente
@@ -81,9 +81,9 @@ class TransaccionController extends Controller
 
         // Se modifica el estado 
         if ($transaccionTipo == 1 || $transaccionTipo == 3) {
-            $update = DB::update("update transaccion set transaccionComercioEstado = 2 where transaccionId  = ?", [$transaccionId]);
+            $update = DB::update("update transaccion set transaccionComercioEstado = 5 where transaccionId  = ?", [$transaccionId]);
         } else {
-            $update = DB::update("update transaccion set transaccionClienteEstado = 2 where transaccionId  = ?", [$transaccionId]);
+            $update = DB::update("update transaccion set transaccionClienteEstado = 6 where transaccionId  = ?", [$transaccionId]);
         }
 
         if ($update == 0) {
