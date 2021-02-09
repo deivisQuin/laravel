@@ -4,15 +4,15 @@
         <table id="{{$producto['productoId']}}_{{$j}}" class="table table-hover table_{{$producto['productoId']}}" style="font-size: calc(0.5em + 0.5vw)">
             <thead>
                 <tr>
-                    <th>Cant.</th>
-                    <th>Producto</th>
-                    <th>Salsas</th>
+                    <th tyle="width:5%">Cant.</th>
+                    <th tyle="width:60%">Producto</th>
+                    <th tyle="width:35%">Salsas</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>
+                    <td style="width:5%">1</td>
+                    <td style="width:60%">
                     @if ($_SERVER['SERVER_NAME'] == "localhost")
                         <img src="{{url('/imagen/' . $empresaRuc . '/' . $imagen. '')}}" width="100" height="100">
                     @else
@@ -20,8 +20,11 @@
                     @endif
                     <br>
                     <strong>{{$producto['productoNombre']}}</strong>
+                    <br>
+                        
+                        <div><?php echo $producto['productoIngrediente']; ?></div>
                     </td>
-                    <td>
+                    <td style="width:35%">
                         <input type="checkbox" class="checkElegirSalsa" id="{{$producto['productoId']}}_{{$j}}_0" name="Sin_Cremas" 
                                 check_productoNombre="{{$producto['productoNombre']}}" check_productoId="{{$producto['productoId']}}" check_salsaNombre="Sin Cremas" 
                                 check_orden="{{$j}}" value="Bike" checked>
@@ -41,7 +44,7 @@
 @endforeach
 
 @if ($_SERVER['SERVER_NAME'] == "localhost")
-	<script src="{{url('js/producto/productoSalsa.js?version=1')}}"></script>
+	<script src="{{url('js/producto/productoSalsa.js?version=2')}}"></script>
 @else
-    <script src="https://comparadordeventas.com/pagolibre/public/js/producto/productoSalsa.js?version=1"></script>
+    <script src="https://comparadordeventas.com/pagolibre/public/js/producto/productoSalsa.js?version=2"></script>
 @endif

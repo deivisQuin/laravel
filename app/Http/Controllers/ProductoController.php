@@ -162,10 +162,11 @@ class ProductoController extends Controller
         $i = 0;
 
         foreach ($aLocalLineaSublineaProducto as $localLineaSublineaProducto) {
-            $aProducto[$i]["productoId"]       = $localLineaSublineaProducto->LLSPProductoId;
-            $aProducto[$i]["productoNombre"]   = $localLineaSublineaProducto->producto->productoNombre;
-            $aProducto[$i]["productoImagen"]   = $localLineaSublineaProducto->LLSPImagen;
-            $aProducto[$i]["productoCantidad"] = $productoCantidad;
+            $aProducto[$i]["productoId"]          = $localLineaSublineaProducto->LLSPProductoId;
+            $aProducto[$i]["productoNombre"]      = $localLineaSublineaProducto->producto->productoNombre;
+            $aProducto[$i]["productoIngrediente"] = $localLineaSublineaProducto->producto->productoIngrediente;
+            $aProducto[$i]["productoImagen"]      = $localLineaSublineaProducto->LLSPImagen;
+            $aProducto[$i]["productoCantidad"]    = $productoCantidad;
             $i++;
         }
         

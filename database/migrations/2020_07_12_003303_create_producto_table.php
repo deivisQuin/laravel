@@ -19,6 +19,7 @@ class CreateProductoTable extends Migration
             $table->string("productoNombreCorto",10);
             $table->string("productoNombreExtenso",100);
             $table->string("productoObservacion",50)->nullable();
+            $table->longText("productoIngrediente")->nullable();
             $table->bigInteger("productoUnidadMedidaId")->unsigned();
             $table->bigInteger("productoSublineaId")->unsigned();
             $table->bigInteger("productoEstadoId")->unsigned();

@@ -16,12 +16,12 @@
     @foreach($aProducto as $producto)
         <tr>
             <td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-                trProductoNombreExtenso= "{{$producto->producto->productoNombreExtenso}}">
+                trProductoIngrediente= "{{$producto->producto->productoIngrediente}}">
             <span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
             <input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
             </td>
             <td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-                trProductoNombreExtenso= "{{$producto->producto->productoNombreExtenso}}">
+                trProductoIngrediente= "{{$producto->producto->productoIngrediente}}">
                 <span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->LLSPPrecio}}</span>
                 <input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
             </td>
@@ -38,7 +38,7 @@
                 </select>
             </td>
             <td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}"
-                trProductoNombreExtenso="{{$producto->producto->productoNombreExtenso}}" align="right">
+                trProductoIngrediente="{{$producto->producto->productoIngrediente}}" align="right">
                 <strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
                 <input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
             </td>
@@ -50,5 +50,5 @@
 @if ($_SERVER['SERVER_NAME'] == "localhost")
 	<script src="{{url('js/producto/productoLocalPartial.js?version=1')}}"></script>
 @else
-    <script src="https://comparadordeventas.com/pagolibre/public/js/producto/productoLocalPartial.js?version=1"></script>
+    <script src="https://comparadordeventas.com/pagolibre/public/js/producto/productoLocalPartial.js?version=2"></script>
 @endif

@@ -60,7 +60,7 @@ $(document).ready(function() {
 				type:"POST",
 				dataType: "json",
 				url: "nuevoEstado",
-				success: function(respuesta) {console.log("se ejecuta");
+				success: function(respuesta) {
 					window.location.reload(true);
 				}
 			})

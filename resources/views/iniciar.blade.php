@@ -33,7 +33,7 @@
       <div class="modal-body">
 	  	<div class="row">
 		  <div class="col-md-12" >
-	  		<strong><span id="idSpanProductoNombreExtenso"></span></strong>
+	  		<strong><span id="idSpanProductoIngrediente"></span></strong>
 		  </div>
 		</div><br>
 	  	<div class="row">
@@ -290,12 +290,12 @@
 								@foreach($aProducto as $producto)
 									<tr>
 										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-											trProductoNombreExtenso="{{$producto->producto->productoNombreExtenso}}">
+											trProductoIngrediente="{{$producto->producto->productoIngrediente}}">
 										<span id="idSpanProductoNombre_{{$producto->producto->productoId}}">{{$producto->producto->productoNombre}}</span>
 										<input type="hidden" id="idHiddenProductoNombre_{{$producto->producto->productoId}}" value="">
 										</td>
 										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-											trProductoNombreExtenso="{{$producto->producto->productoNombreExtenso}}">
+											trProductoIngrediente="{{$producto->producto->productoIngrediente}}">
 											<span id="idSpanProductoPrecio_{{$producto->producto->productoId}}">{{$producto->LLSPPrecio}}</span>
 											<input type="hidden" id="idHiddenProductoPrecio_{{$producto->producto->productoId}}" value="">
 										</td>
@@ -312,7 +312,7 @@
 											</select>
 										</td>
 										<td class="claseTdProducto" trProductoImagen="{{$producto->LLSPImagen}}" trProductoNombre="{{$producto->producto->productoNombre}}" 
-											trProductoNombreExtenso="{{$producto->producto->productoNombreExtenso}}" align="right">
+											trProductoIngrediente="{{$producto->producto->productoIngrediente}}" align="right">
 											<strong><span id="idSpanMonto_{{$producto->producto->productoId}}"></span></strong>
 											<input type="hidden" id="idHiddenMonto_{{$producto->producto->productoId}}" class="claseHiddenMonto" value="">
 										</td>
@@ -336,11 +336,11 @@
 @if ($_SERVER['SERVER_NAME'] == "localhost")
     <script src="{{url('js/jquery/jquery-3.0.0.min.js')}}"></script>
     <script src="{{url('estilo/bootstrap4/bootstrap.min.js')}}"></script>
-	<script src="{{url('js/producto/iniciar.js?version=4')}}"></script>
+	<script src="{{url('js/producto/iniciar.js?version=5')}}"></script>
 @else
 <script src="https://comparadordeventas.com/pagolibre/public/js/jquery/jquery-3.0.0.min.js"></script>
 <script src="https://comparadordeventas.com/pagolibre/public/estilo/bootstrap4/bootstrap.min.js"></script>
-<script src="https://comparadordeventas.com/pagolibre/public/js/producto/iniciar.js?version=4"></script>
+<script src="https://comparadordeventas.com/pagolibre/public/js/producto/iniciar.js?version=5"></script>
 @endif
 
 </body>

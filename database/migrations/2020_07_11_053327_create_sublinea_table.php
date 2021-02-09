@@ -15,8 +15,8 @@ class CreateSublineaTable extends Migration
     {
         Schema::create('sublinea', function (Blueprint $table) {
             $table->bigIncrements("sublineaId");
-            $table->string("sublineaNombre",20);
-            $table->string("sublineaNombreCorto",10)->nullable();
+            $table->string("sublineaNombre",30);
+            $table->string("sublineaNombreCorto",15)->nullable();
             $table->bigInteger("sublineaLineaId")->unsigned();
             $table->bigInteger("sublineaEstadoId")->unsigned();
             $table->foreign('sublineaLineaId')->references('lineaId')->on('linea')->onDelete('cascade')->onUpdate('cascade');
